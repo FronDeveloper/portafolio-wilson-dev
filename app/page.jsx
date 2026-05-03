@@ -1,7 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Projects from "@/components/Projects";
-import Footer from "@/components/Footer";
 import Link from "next/link";
 
 export default function Home() {
@@ -12,11 +11,6 @@ export default function Home() {
 
       {/* HERO */}
       <Hero />
-      <section className="px-8 md:px-20 py-10 max-w-4xl">
-      <p className="text-gray-400 text-lg">
-        He desarrollado proyectos reales como ecommerce, sitios web y aplicaciones móviles enfocadas en resolver necesidades reales.
-      </p>
-    </section>
 
       {/* 💡 QUÉ HAGO */}
       <section className="px-8 md:px-20 py-16 max-w-5xl">
@@ -98,8 +92,6 @@ export default function Home() {
           Hablemos
         </Link>
       </section>
-
-      <Footer />
 
     </main>
   );
