@@ -1,35 +1,55 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
 export default function Navbar() {
+  const [open, setOpen] = useState(false);
+
   return (
     <nav className="sticky top-0 z-50 backdrop-blur bg-black/60 border-b border-gray-800">
-  
-  <div className="flex justify-between items-center px-8 md:px-20 py-4">
-    
-    {/* LOGO */}
-    <Link href="/" className="flex items-center">
-      <Image
-        src="/logo.png"
-        alt="Wilson logo"
-        width={55}
-        height={55}
-        className="object-contain"
-      />
-    </Link>
+      
+      <div className="flex justify-between items-center px-6 md:px-20 py-4">
 
-    {/* MENÚ */}
-    <div className="flex gap-6 text-sm">
-      <Link href="/" className="hover:text-[#C2B280]">Inicio</Link>
-      <Link href="/about" className="hover:text-[#C2B280]">Sobre mí</Link>
-      <Link href="/projects" className="hover:text-[#C2B280]">Proyectos</Link>
-      <Link href="/contact" className="hover:text-[#C2B280]">Contacto</Link>
-    </div>
+        {/* LOGO */}
+        <Link href="/" onClick={() => setOpen(false)}>
+          <Image
+            src="/logo.png"
+            alt="Wilson logo"
+            width={60}
+            height={60}
+            className="object-contain"
+          />
+        </Link>
 
-  </div>
+        {/* MENU DESKTOP */}
+        <div className="hidden md:flex gap-8 text-sm">
+          <Link href="/">Inicio</Link>
+          <Link href="/about">Sobre mí</Link>
+          <Link href="/projects">Proyectos</Link>
+          <Link href="/contact">Contacto</Link>
+        </div>
 
-</nav>
+        {/* BOTÓN HAMBURGUESA */}
+        <button
+          onClick={() => setOpen(!open)}
+          className="md:hidden text-white text-2xl"
+        >
+          {open ? "✕" : "☰"}
+        </button>
+      </div>
+
+      {/* MENU MOBILE */}
+      {open && (
+        <div className="md:hidden px-6 pb-6 flex flex-col gap-4 text-sm bg-black/90">
+          <Link href="/" onClick={() => setOpen(false)}>Inicio</Link>
+          <Link href="/about" onClick={() => setOpen(false)}>Sobre mí</Link>
+          <Link href="/projects" onClick={() => setOpen(false)}>Proyectos</Link>
+          <Link href="/contact" onClick={() => setOpen(false)}>Contacto</Link>
+        </div>
+      )}
+
+    </nav>
   );
 }
