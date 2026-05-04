@@ -13,7 +13,7 @@ const playfair = Playfair_Display({
 
 export default function Hero() {
   return (
-    <section className="flex flex-col md:flex-row justify-between items-center px-8 md:px-20 min-h-screen pt-15 md:pt-32">
+    <section className="flex flex-col md:flex-row justify-between items-center px-8 md:px-20 min-h-screen pt-16 md:pt-24 lg:pt-20 xl:pt-0">
       
       {/* IZQUIERDA */}
       <div className="max-w-xl">
