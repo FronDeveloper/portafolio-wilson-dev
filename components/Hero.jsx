@@ -20,14 +20,17 @@ export default function Hero() {
 
         {/* NOMBRE */}
         <motion.p
-          className="text-base md:text-xl font-semibold text-[#C2B280] mb-3 tracking-wide"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="text-base sm:text-lg md:text-xl font-semibold text-[#C2B280] mb-3 tracking-wide leading-snug"
         >
           Wilson Valencia
-          <span className="hidden md:inline"> • </span>
-          <br className="md:hidden" />
-          <span>Web Developer</span>
+          <span className="hidden sm:inline"> • </span>
+          <br className="sm:hidden" />
+          <span className="block sm:inline">Web Developer</span>
         </motion.p>
-
+        
         {/* TITULO */}
         <motion.h1
           initial={{ opacity: 0, y: 40 }}
