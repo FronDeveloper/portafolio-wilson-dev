@@ -2,7 +2,15 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import { Inter, Playfair_Display } from "next/font/google";
 
+
+const inter = Inter({ subsets: ["latin"] });
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["600", "700"],
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,7 +53,10 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children} <WhatsAppButton /></body>
+      <body className={`${inter.className} min-h-full flex flex-col`}>
+        {children}
+        <WhatsAppButton />
+      </body>
     </html>
   );
 }

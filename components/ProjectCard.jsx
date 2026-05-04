@@ -20,15 +20,8 @@ export default function ProjectCard({
           hidden: { opacity: 0, y: 40 },
           visible: { opacity: 1, y: 0 },
         }}
-        whileHover={{ 
-        scale: 1.04,
-        y: -5
-        }}
-        transition={{ 
-        type: "spring",
-        stiffness: 200,
-        damping: 15
-        }}
+        whileHover={{ scale: 1.03, y: -5 }}
+        transition={{ type: "spring", stiffness: 200, damping: 15 }}
         whileTap={{ scale: 0.98 }}
         className="bg-[#111] border border-gray-800 rounded-2xl overflow-hidden hover:border-[#C2B280] transition flex flex-col cursor-pointer"
       >
