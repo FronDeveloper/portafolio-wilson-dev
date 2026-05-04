@@ -13,24 +13,27 @@ const playfair = Playfair_Display({
 
 export default function Hero() {
   return (
-    <section className="flex flex-col md:flex-row justify-between items-center px-8 md:px-20 h-[80vh]">
+    <section className="flex flex-col md:flex-row justify-between items-center px-8 md:px-20 min-h-screen pt-15 md:pt-32">
       
       {/* IZQUIERDA */}
       <div className="max-w-xl">
 
         {/* NOMBRE */}
-        <motion.p
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-base sm:text-lg md:text-xl font-semibold text-[#C2B280] mb-3 tracking-wide leading-snug"
+          className="mb-6 text-center md:text-left"
         >
-          Wilson Valencia
-          <span className="hidden sm:inline"> • </span>
-          <br className="sm:hidden" />
-          <span className="block sm:inline">Web Developer</span>
-        </motion.p>
-        
+          <p className="text-xl md:text-2xl font-bold text-white">
+            Wilson Valencia
+          </p>
+
+          <p className="text-sm md:text-base text-gray-400 mt-1 tracking-wide">
+            Web Developer
+          </p>
+        </motion.div>
+
         {/* TITULO */}
         <motion.h1
           initial={{ opacity: 0, y: 40 }}
