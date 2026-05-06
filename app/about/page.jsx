@@ -50,7 +50,7 @@ export default function AboutPage() {
               <div className="bg-[#111] p-6 rounded-xl border border-gray-800">
                 <h3 className="text-lg font-semibold mb-4 text-[#C2B280]">Contacto directo</h3>
                 <div className="space-y-2 text-gray-400">
-                  <p>📍 Bogotá, Colombia</p>
+                  <p>📍 Medellín, Colombia</p>
                   <p>💻 Trabajo remoto global</p>
                   <p>📧 wilson.arroyo12@gmail.com</p>
                   <p>📱 +57 301 2821174</p>
