@@ -2,60 +2,100 @@ import Navbar from "@/components/Navbar";
 import Image from "next/image";
 import Link from "next/link";
 
+export const metadata = {
+  title: "Ecommerce de Calzado | Wilson Dev",
+  description: "Tienda online real con pasarela de pago, productos físicos y diseño optimizado para conversiones."
+};
+
 export default function EcommerceProject() {
   return (
     <main className="bg-[#0B0B0B] text-white min-h-screen">
       <Navbar />
 
-      <section className="px-8 md:px-20 py-20 max-w-4xl">
-
-        {/* 🔙 BOTÓN VOLVER */}
-        <Link href="/projects" className="text-sm text-gray-400 hover:text-white">
-          ← Volver
+      <section className="px-8 md:px-20 py-20 max-w-4xl mx-auto">
+        <Link href="/projects" className="text-sm text-gray-400 hover:text-[#C2B280] transition inline-block mb-6">
+          ← Volver a proyectos
         </Link>
 
-        <h1 className="text-4xl md:text-5xl font-bold mt-6 mb-8 text-[#C2B280]">
+        <h1 className="text-4xl md:text-5xl font-bold mb-6 text-[#C2B280]">
           Ecommerce de Calzado
         </h1>
 
-        <Image
-          src="/images/ecommerce.jpg"
-          alt="Ecommerce"
-          width={1200}
-          height={600}
-          className="rounded-xl mb-10"
-        />
+        <div className="relative w-full h-96 mb-10 rounded-xl overflow-hidden">
+          <Image
+            src="/images/ecommerce.jpg"
+            alt="Ecommerce PisarteOficial"
+            fill
+            className="object-cover object-top"
+          />
+        </div>
 
-        <h2 className="text-2xl font-semibold mb-4">Descripción</h2>
-        <p className="text-gray-400 mb-6">
-          Plataforma de comercio electrónico diseñada para ofrecer una experiencia
-          de compra rápida, intuitiva y optimizada para conversiones.
-        </p>
+        <div className="grid md:grid-cols-2 gap-8 mb-10">
+          <div>
+            <h2 className="text-2xl font-semibold mb-3">Descripción</h2>
+            <p className="text-gray-400">
+              Tienda online real con productos físicos, carrito de compras y pasarela de pago integrada.
+              Actualmente en funcionamiento con clientes reales.
+            </p>
+          </div>
 
-        <h2 className="text-2xl font-semibold mb-4">Problema</h2>
-        <p className="text-gray-400 mb-6">
-          El cliente necesitaba una solución digital para vender productos sin
-          complicaciones y con un proceso de compra claro.
-        </p>
+          <div>
+            <h2 className="text-2xl font-semibold mb-3">Problema que resuelve</h2>
+            <p className="text-gray-400">
+              El cliente necesitaba vender sus productos de calzado en línea sin complicaciones técnicas.
+              Se requería un sistema de inventario simple y pagos seguros.
+            </p>
+          </div>
+        </div>
 
-        <h2 className="text-2xl font-semibold mb-4">Solución</h2>
-        <p className="text-gray-400 mb-6">
-          Se desarrolló un ecommerce con navegación sencilla, carrito optimizado
-          y diseño enfocado en mejorar la experiencia del usuario.
-        </p>
+        <div className="mb-10">
+          <h2 className="text-2xl font-semibold mb-3">Solución implementada</h2>
+          <p className="text-gray-400">
+            Desarrollé un ecommerce completo con Next.js, Tailwind CSS y pasarela de pago.
+            El sitio permite navegación por categorías, filtro de productos, carrito persistente
+            y checkout optimizado para móviles.
+          </p>
+        </div>
 
-        <h2 className="text-2xl font-semibold mb-4">Tecnologías</h2>
-        <p className="text-gray-400 mb-6">
-          Next.js / Tailwind / Stripe
-        </p>
+        <div className="mb-10">
+          <h2 className="text-2xl font-semibold mb-3">Tecnologías utilizadas</h2>
+          <div className="flex flex-wrap gap-2">
+            {["Next.js", "Tailwind CSS", "Stripe", "MongoDB", "Vercel"].map(tech => (
+              <span key={tech} className="bg-[#111] border border-gray-800 px-3 py-1 rounded-full text-sm text-gray-300">
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
 
-        <a
-          href="#"
-          className="inline-block mt-6 px-6 py-3 bg-[#C2B280] text-black rounded-xl font-semibold"
-        >
-          Ver demo
-        </a>
+        <div className="bg-[#111] p-6 rounded-xl border border-gray-800 mb-6">
+          <h3 className="text-xl font-semibold mb-2 text-[#C2B280]">📊 Resultados</h3>
+          <p className="text-gray-400">
+            • Sitio 100% funcional con productos reales<br />
+            • Procesamiento de pagos seguro<br />
+            • Diseño responsive optimizado para móviles<br />
+            • Tiempo de carga menor a 2 segundos
+          </p>
+        </div>
 
+        <div className="flex gap-4 flex-wrap">
+          <a
+            href="https://pisarteoficial.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block px-6 py-3 bg-[#C2B280] text-black rounded-xl font-semibold hover:opacity-80 transition"
+          >
+            🌐 Ver sitio en vivo →
+          </a>
+          <a
+            href="https://github.com/FronDeveloper/ecommerce-pisarte"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block px-6 py-3 border border-gray-600 rounded-xl font-semibold hover:bg-white hover:text-black transition"
+          >
+            📦 Ver código en GitHub
+          </a>
+        </div>
       </section>
     </main>
   );
