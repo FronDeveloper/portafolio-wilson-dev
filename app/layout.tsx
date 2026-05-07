@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import WhatsAppButton from "@/components/WhatsAppButton";
-import AnimatedCSSBackground from "@/components/AnimatedCSSBackground"; // 👈 Importar
+import ScrollToTop from "@/components/ScrollToTop";
+import ParticleBackground from "@/components/ParticleBackground";
 import { Inter, Playfair_Display } from "next/font/google";
-import ScrollToTop from "@/components/ScrollToTop";  // 👈 IMPORTAR
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,14 +23,14 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Wilson | Desarrollador Web",
   description:
     "Desarrollo sitios web modernos, ecommerce y aplicaciones enfocadas en resultados",
   openGraph: {
     title: "Wilson Dev",
     description: "Portafolio profesional de desarrollo web",
-    url: "https://tudominio.com",
+    url: "https://portafolio-wilson-dev.vercel.app",
     siteName: "Wilson Dev",
     images: [
       {
@@ -40,7 +40,9 @@ export const metadata = {
       },
     ],
     type: "website",
-  }
+  },
+  keywords: ["desarrollador web", "freelancer", "ecommerce", "next.js", "react", "colombia"],
+  authors: [{ name: "Wilson Valencia" }],
 };
 
 export default function RootLayout({
@@ -49,12 +51,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
-      <body className={`${inter.className} min-h-full flex flex-col`}>
-        <AnimatedCSSBackground />
+    <html
+      lang="es"
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+    >
+      <body className={`${inter.className} min-h-full flex flex-col relative bg-[#0B0B0B]`}>
+        {/* Fondo animado con partículas */}
+        <ParticleBackground />
+        
+        {/* Contenido principal */}
         {children}
+        
+        {/* Botones flotantes */}
         <WhatsAppButton />
-        <ScrollToTop />  {/* 👈 AGREGAR AQUÍ, DESPUÉS DE WHATSAPP */}
+        <ScrollToTop />
       </body>
     </html>
   );
