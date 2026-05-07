@@ -1,6 +1,8 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Projects from "@/components/Projects";
+import Testimonials from "@/components/Testimonials";
+import Pricing from "@/components/Pricing";
 import Footer from "@/components/Footer";
 import Link from "next/link";
 
@@ -9,8 +11,8 @@ export default function Home() {
     <main className="bg-[#0B0B0B] text-white min-h-screen pb-24">
       <Navbar />
       <Hero />
-      
-      {/* Estadísticas rápidas - NUEVO */}
+
+      {/* Estadísticas rápidas */}
       <section className="px-8 md:px-20 py-10 max-w-5xl mx-auto">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           <div>
@@ -94,6 +96,12 @@ export default function Home() {
 
       {/* 🚀 PROYECTOS */}
       <Projects />
+
+      {/* ⭐ TESTIMONIOS */}
+      <Testimonials />
+
+      {/* 💰 PRECIOS */}
+      <Pricing />
 
       {/* 📞 CTA FINAL */}
       <section className="px-8 md:px-20 py-20 text-center max-w-3xl mx-auto">

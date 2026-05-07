@@ -4,6 +4,7 @@ import "./globals.css";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import AnimatedCSSBackground from "@/components/AnimatedCSSBackground"; // 👈 Importar
 import { Inter, Playfair_Display } from "next/font/google";
+import ScrollToTop from "@/components/ScrollToTop";  // 👈 IMPORTAR
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -48,14 +49,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
+    <html lang="es">
       <body className={`${inter.className} min-h-full flex flex-col`}>
-        <AnimatedCSSBackground /> {/* 👈 AGREGAR AQUÍ */}
+        <AnimatedCSSBackground />
         {children}
         <WhatsAppButton />
+        <ScrollToTop />  {/* 👈 AGREGAR AQUÍ, DESPUÉS DE WHATSAPP */}
       </body>
     </html>
   );
