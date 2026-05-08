@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://portafolio-wilson-dev.vercel.app/sitemap.xml

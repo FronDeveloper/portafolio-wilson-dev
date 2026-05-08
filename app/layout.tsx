@@ -41,8 +41,25 @@ export const metadata: Metadata = {
     ],
     type: "website",
   },
-  keywords: ["desarrollador web", "freelancer", "ecommerce", "next.js", "react", "colombia"],
-  authors: [{ name: "Wilson Valencia" }],
+  keywords: [
+    "desarrollador web freelancer",
+    "crear página web",
+    "ecommerce colombia",
+    "desarrollador next.js",
+    "programador freelance bogotá",
+    "tienda online profesional"
+  ],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
+  alternates: {
+    canonical: "https://portafolio-wilson-dev.vercel.app",
+  },
 };
 
 export default function RootLayout({
