@@ -60,6 +60,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://portafolio-wilson-dev.vercel.app",
   },
+  verification: {
+    google: '<meta name="google-site-verification" content="J2D9fhF-07xUjupnLJnm7QjZMsDwrmSORoJmaVK91cA" />',
+  },
 };
 
 export default function RootLayout({
