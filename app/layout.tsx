@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Wilson Dev",
     description: "Portafolio profesional de desarrollo web",
-    url: "https://portafolio-wilson-dev.vercel.app",
+    url: "https://wvalencia-dev.vercel.app/",
     siteName: "Wilson Dev",
     images: [
       {
@@ -38,6 +38,7 @@ export const metadata: Metadata = {
         width: 1200,
         height: 630,
       },
+      
     ],
     type: "website",
   },
@@ -58,10 +59,17 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "https://portafolio-wilson-dev.vercel.app",
+    canonical: "https://wvalencia-dev.vercel.app/",
   },
   verification: {
     google: "J2D9fhF-07xUjupnLJnm7QjZMsDwrmSORoJmaVK91cA",
+  },
+  icons: {
+    icon: [
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: '/apple-touch-icon.png',
   },
 };
 

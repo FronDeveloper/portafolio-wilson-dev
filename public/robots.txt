@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://portafolio-wilson-dev.vercel.app
+Host: https://wvalencia-dev.vercel.app
 
 # Sitemaps
-Sitemap: https://portafolio-wilson-dev.vercel.app/sitemap.xml
+Sitemap: https://wvalencia-dev.vercel.app/sitemap.xml
