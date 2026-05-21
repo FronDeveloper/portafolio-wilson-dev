@@ -100,7 +100,7 @@ export default function AgendaProProject() {
 
         <div className="flex gap-4 flex-wrap">
           <a
-            href="https://agendapro.vercel.app"
+            href="https://agendaprocol.vercel.app"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block px-6 py-3 bg-[#C2B280] text-black rounded-xl font-semibold hover:opacity-80 transition"
