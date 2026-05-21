@@ -19,6 +19,18 @@ export default function Projects() {
         className="grid md:grid-cols-3 gap-8"
       >
         <ProjectCard
+          title="AgendaPro"
+          description="Sistema de agendamiento de citas para negocios locales con notificaciones automáticas."
+          problem="Negocios locales necesitan gestionar citas sin sistemas complejos ni costosos."
+          solution="Desarrollé un sistema completo con calendario interactivo, portal de reservas, emails y WhatsApp automáticos."
+          tech="Next.js 14 / Supabase / Resend / Twilio / Tailwind"
+          link="/projects/agenda-pro"
+          image="/images/agenda-pro.jpg"
+          status="completado"
+          liveUrl="https://agendapro.vercel.app"
+        />
+
+        <ProjectCard
           title="InsightAI Dashboard"
           description="Dashboard de gestión con IA para tiendas de productos naturales."
           problem="Los dueños de tiendas necesitan visualizar métricas clave sin conocimientos técnicos."
