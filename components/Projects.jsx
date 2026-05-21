@@ -27,7 +27,7 @@ export default function Projects() {
           link="/projects/agenda-pro"
           image="/images/agenda-pro.jpg"
           status="completado"
-          liveUrl="https://agendapro.vercel.app"
+          liveUrl="https://agendaprocol.vercel.app"
         />
 
         <ProjectCard
