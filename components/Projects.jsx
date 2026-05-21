@@ -19,6 +19,18 @@ export default function Projects() {
         className="grid md:grid-cols-3 gap-8"
       >
         <ProjectCard
+          title="InsightAI Dashboard"
+          description="Dashboard de gestión con IA para tiendas de productos naturales."
+          problem="Los dueños de tiendas necesitan visualizar métricas clave sin conocimientos técnicos."
+          solution="Desarrollé un dashboard intuitivo con gráficos interactivos, gestión de inventario y análisis de ventas con IA."
+          tech="Next.js / Supabase / Recharts / Tailwind"
+          link="/projects/insightai-dashboard"
+          image="/images/insightai-dashboard.jpg"
+          status="completado"
+          liveUrl="https://vitainsight.vercel.app"
+        />
+
+        <ProjectCard
           title="Ecommerce de Calzado"
           description="Tienda online 100% funcional con productos reales y pasarela de pago."
           problem="El cliente necesitaba vender productos online de forma sencilla y rápida."

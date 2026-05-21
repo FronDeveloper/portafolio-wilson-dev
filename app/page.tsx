@@ -16,7 +16,7 @@ export default function Home() {
       <section className="px-8 md:px-20 py-10 max-w-5xl mx-auto">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           <div>
-            <p className="text-3xl font-bold text-[#C2B280]">3+</p>
+            <p className="text-3xl font-bold text-[#C2B280]">4+</p>
             <p className="text-gray-400 text-sm">Proyectos entregados</p>
           </div>
           <div>
