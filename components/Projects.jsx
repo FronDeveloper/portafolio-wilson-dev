@@ -77,6 +77,18 @@ export default function Projects() {
           status="proximamente"
           liveUrl={null}
         />
+
+        <ProjectCard
+          title="Mínimo Studio"
+          description="Tienda de ropa minimalista con sistema completo de e-commerce."
+          problem="Necesidad de una plataforma de comercio electrónico moderna para vender ropa con diseño minimalista."
+          solution="Desarrollé un e-commerce completo con Next.js, Prisma y PostgreSQL, incluyendo autenticación, carrito y pasarela de pagos."
+          tech="Next.js / Prisma / PostgreSQL / Stripe / NextAuth / Tailwind"
+          link="/projects/minimo-studio"
+          image="/images/ecommerce.jpg"
+          status="completado"
+          liveUrl={null}
+        />
       </motion.div>
 
     </section>
