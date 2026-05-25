@@ -85,7 +85,7 @@ export default function Projects() {
           solution="Desarrollé un e-commerce completo con Next.js, Prisma y PostgreSQL, incluyendo autenticación, carrito y pasarela de pagos."
           tech="Next.js / Prisma / PostgreSQL / Stripe / NextAuth / Tailwind"
           link="/projects/minimo-studio"
-          image="/images/ecommerce.jpg"
+          image="/images/minimo-studio.jpg"
           status="completado"
           liveUrl={null}
         />
