@@ -80,14 +80,14 @@ export default function Projects() {
 
         <ProjectCard
           title="Mínimo Studio"
-          description="Tienda de ropa minimalista con sistema completo de e-commerce."
+          description="E-commerce de ropa minimalista con panel admin, pagos con Stripe + Wompi + PSE y gestión de inventario."
           problem="Necesidad de una plataforma de comercio electrónico moderna para vender ropa con diseño minimalista."
-          solution="Desarrollé un e-commerce completo con Next.js, Prisma y PostgreSQL, incluyendo autenticación, carrito y pasarela de pagos."
-          tech="Next.js / Prisma / PostgreSQL / Stripe / NextAuth / Tailwind"
+          solution="Desarrollé un e-commerce completo con Next.js 15, Prisma y PostgreSQL, incluyendo autenticación, carrito, pasarela de pagos y panel admin."
+          tech="Next.js 15 / Prisma / PostgreSQL / Stripe / Wompi / PSE / NextAuth / Tailwind"
           link="/projects/minimo-studio"
           image="/images/minimo-studio.jpg"
           status="completado"
-          liveUrl={null}
+          liveUrl="https://minimo-studio.vercel.app"
         />
       </motion.div>
 
