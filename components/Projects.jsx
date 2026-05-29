@@ -19,6 +19,18 @@ export default function Projects() {
         className="grid md:grid-cols-3 gap-8"
       >
         <ProjectCard
+          title="FlowBill"
+          description="Sistema completo de gestión de proyectos y facturación para agencias creativas, con portal del cliente integrado."
+          problem="Las agencias pequeñas gestionan proyectos en Excel, facturas en Word y se comunican con clientes por WhatsApp. Todo disperso."
+          solution="Desarrollé un SaaS completo: Kanban, facturación con IVA, reportes financieros y un portal donde el cliente ve su proyecto en vivo, aprueba entregables y descarga facturas."
+          tech="Next.js 14 / TypeScript / Supabase / Tailwind / Recharts"
+          link="/projects/flowbill"
+          image="/images/flowbill.jpg"
+          status="completado"
+          liveUrl="https://flowbill-web.vercel.app"
+        />
+
+        <ProjectCard
           title="AgendaPro"
           description="Sistema de agendamiento de citas para negocios locales con notificaciones automáticas."
           problem="Negocios locales necesitan gestionar citas sin sistemas complejos ni costosos."
@@ -55,6 +67,18 @@ export default function Projects() {
         />
 
         <ProjectCard
+          title="Mínimo Studio"
+          description="E-commerce de ropa minimalista con panel admin, pagos con Stripe + Wompi + PSE y gestión de inventario."
+          problem="Necesidad de una plataforma de comercio electrónico moderna para vender ropa con diseño minimalista."
+          solution="Desarrollé un e-commerce completo con Next.js 15, Prisma y PostgreSQL, incluyendo autenticación, carrito, pasarela de pagos y panel admin."
+          tech="Next.js 15 / Prisma / PostgreSQL / Stripe / Wompi / PSE / NextAuth / Tailwind"
+          link="/projects/minimo-studio"
+          image="/images/minimo-studio.jpg"
+          status="completado"
+          liveUrl="https://minimo-studio.vercel.app"
+        />
+
+        <ProjectCard
           title="Fundación FAEBO"
           description="Plataforma web institucional para visibilizar impacto social."
           problem="La fundación no tenía presencia digital ni canal de contacto eficiente."
@@ -78,17 +102,6 @@ export default function Projects() {
           liveUrl={null}
         />
 
-        <ProjectCard
-          title="Mínimo Studio"
-          description="E-commerce de ropa minimalista con panel admin, pagos con Stripe + Wompi + PSE y gestión de inventario."
-          problem="Necesidad de una plataforma de comercio electrónico moderna para vender ropa con diseño minimalista."
-          solution="Desarrollé un e-commerce completo con Next.js 15, Prisma y PostgreSQL, incluyendo autenticación, carrito, pasarela de pagos y panel admin."
-          tech="Next.js 15 / Prisma / PostgreSQL / Stripe / Wompi / PSE / NextAuth / Tailwind"
-          link="/projects/minimo-studio"
-          image="/images/minimo-studio.jpg"
-          status="completado"
-          liveUrl="https://minimo-studio.vercel.app"
-        />
       </motion.div>
 
     </section>
