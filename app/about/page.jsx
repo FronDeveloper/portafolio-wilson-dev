@@ -95,7 +95,7 @@ export default function AboutPage() {
                 </p>
 
                 <p>
-                  Empecé en el desarrollo por curiosidad, y me quedé porque
+                  Empecé en el desarrollo por curiosidad gracias a un amigo que me mostró este mundo, y me quedé porque
                   me apasiona el momento en que una idea se convierte en algo
                   que la gente realmente usa. Trabajo principalmente con
                   Next.js, TypeScript y Supabase, aunque lo que más me
