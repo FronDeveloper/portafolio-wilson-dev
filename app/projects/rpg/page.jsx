@@ -3,8 +3,25 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const metadata = {
-  title: "App RPG Fitness | Wilson Dev",
-  description: "Aplicación móvil gamificada que convierte el entrenamiento físico en experiencia RPG."
+  title: "App RPG Fitness — App de entrenamiento gamificada | Wilson Valencia Dev",
+  description:
+    "App móvil que convierte el entrenamiento físico en un juego de rol. Niveles, misiones y recompensas por cada entreno. Desarrollada con Flutter y Firebase. En revisión en Google Play.",
+  keywords: [
+    "app fitness gamificada flutter",
+    "aplicación entrenamiento rpg",
+    "flutter firebase app colombia",
+    "desarrollo app móvil colombia",
+    "gamificación fitness app",
+  ],
+  openGraph: {
+    title: "App RPG Fitness — Entrenamiento gamificado | Wilson Valencia",
+    description:
+      "App que convierte tu entrenamiento en un RPG. Construida con Flutter y Firebase. En revisión final en Google Play.",
+    url: "https://wvalencia-dev.vercel.app/projects/rpg",
+  },
+  alternates: {
+    canonical: "https://wvalencia-dev.vercel.app/projects/rpg",
+  },
 };
 
 export default function RPGProject() {

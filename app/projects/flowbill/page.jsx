@@ -3,9 +3,25 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const metadata = {
-  title: "FlowBill — Sistema de gestión y facturación | Wilson Dev",
+  title: "FlowBill — Sistema de gestión y facturación para agencias | Wilson Valencia Dev",
   description:
-    "Sistema SaaS completo de gestión de proyectos, Kanban y facturación para agencias creativas, con portal del cliente integrado.",
+    "¿Tu agencia gestiona proyectos en Excel y facturas en Word? Mira cómo construí FlowBill: sistema SaaS completo con Kanban, facturación con IVA y portal del cliente en Next.js y Supabase.",
+  keywords: [
+    "sistema de gestión proyectos next.js",
+    "software facturación agencias colombia",
+    "saas gestión proyectos supabase",
+    "portal cliente proyectos",
+    "kanban next.js typescript",
+  ],
+  openGraph: {
+    title: "FlowBill — Sistema SaaS de gestión y facturación | Wilson Valencia",
+    description:
+      "Sistema completo para agencias creativas: Kanban, facturación con IVA, portal del cliente y reportes financieros. Construido con Next.js 14 y Supabase.",
+    url: "https://wvalencia-dev.vercel.app/projects/flowbill",
+  },
+  alternates: {
+    canonical: "https://wvalencia-dev.vercel.app/projects/flowbill",
+  },
 };
 
 const tech = [

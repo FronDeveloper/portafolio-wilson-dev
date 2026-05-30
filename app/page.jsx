@@ -97,60 +97,102 @@ export default function Home() {
         </div>
       </section>
 
-      {/* TESTIMONIOS */}
+      {/* RESULTADOS REALES */}
       <section className="px-8 md:px-20 py-16 max-w-5xl mx-auto">
         <h2 className="text-3xl font-semibold mb-3 text-center">
-          Lo que dicen mis{" "}
+          Resultados{" "}
           <span className="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
-            clientes
+            reales
           </span>
         </h2>
         <p className="text-gray-500 text-center text-sm mb-10">
-          No solo construyo código, construyo relaciones basadas en confianza y resultados.
+          Métricas y hechos verificables de los proyectos construidos.
         </p>
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-3 gap-6 mb-8">
           {[
             {
-              quote: "Tienda online funcionando con productos reales y pagos integrados. Más de 50 pedidos procesados sin errores.",
-              name: "Pisarte Oficial",
-              role: "Ecommerce propio · En operación",
-              stars: 5,
+              metric: "50+",
+              label: "Pedidos procesados",
+              desc: "Pisarte lleva más de 50 pedidos reales sin un solo error de pago desde su lanzamiento.",
+              tag: "Ecommerce en producción",
+              icon: "🛒",
+              color: "from-violet-500/10 to-violet-500/5 border-violet-500/20",
             },
             {
-              quote: "Wilson entendió nuestras necesidades y creó un sitio que refleja fielmente nuestra misión social.",
-              name: "Fundación FAEBO",
-              role: "Proyecto real · Cliente satisfecho",
-              stars: 5,
+              metric: "7",
+              label: "Módulos en producción",
+              desc: "FlowBill tiene dashboard, clientes, proyectos, kanban, facturación, reportes y portal del cliente — todos funcionales.",
+              tag: "SaaS desplegado en Vercel",
+              icon: "🧾",
+              color: "from-cyan-500/10 to-cyan-500/5 border-cyan-500/20",
             },
             {
-              quote: "Los beta testers reportan alta motivación gracias al sistema de gamificación por niveles y recompensas.",
-              name: "App RPG Fitness",
-              role: "Beta cerrada · En revisión Google Play",
-              stars: 5,
+              metric: "2",
+              label: "Sistemas de auth independientes",
+              desc: "FlowBill maneja autenticación simultánea para la agencia y para sus clientes en rutas completamente separadas.",
+              tag: "Arquitectura avanzada",
+              icon: "🔐",
+              color: "from-fuchsia-500/10 to-fuchsia-500/5 border-fuchsia-500/20",
             },
-          ].map((t, i) => (
+            {
+              metric: "4",
+              label: "Pasarelas de pago integradas",
+              desc: "Mínimo Studio acepta Stripe, Wompi, PSE y Efecty — el stack de pagos más completo para e-commerce colombiano.",
+              tag: "Pagos colombianos",
+              icon: "💳",
+              color: "from-green-500/10 to-green-500/5 border-green-500/20",
+            },
+            {
+              metric: "Google Play",
+              label: "En revisión",
+              desc: "App RPG Fitness supera la revisión técnica de Google y está en proceso de aprobación final para publicación.",
+              tag: "App móvil Flutter",
+              icon: "📱",
+              color: "from-yellow-500/10 to-yellow-500/5 border-yellow-500/20",
+            },
+            {
+              metric: "24h",
+              label: "Tiempo de respuesta",
+              desc: "Todos mis proyectos y propuestas tienen respuesta garantizada en menos de 24 horas hábiles.",
+              tag: "Compromiso real",
+              icon: "⚡",
+              color: "from-orange-500/10 to-orange-500/5 border-orange-500/20",
+            },
+          ].map((r, i) => (
             <div
               key={i}
-              className="bg-[#111] border border-gray-800 rounded-xl p-6 hover:border-violet-500/30 transition-all duration-300"
+              className={`bg-gradient-to-br ${r.color} border rounded-xl p-6 hover:scale-[1.02] transition-all duration-300`}
             >
-              <div className="flex gap-0.5 mb-4">
-                {Array(t.stars).fill(0).map((_, j) => (
-                  <span key={j} className="text-yellow-400 text-sm">★</span>
-                ))}
+              <div className="flex items-start justify-between mb-3">
+                <span className="text-2xl">{r.icon}</span>
+                <span className="text-[10px] font-bold text-gray-500 bg-gray-800/50 px-2 py-0.5 rounded-full">
+                  {r.tag}
+                </span>
               </div>
-              <p className="text-gray-400 text-sm leading-relaxed mb-4 italic">
-                "{t.quote}"
-              </p>
-              <div className="border-t border-gray-800 pt-3">
-                <p className="font-semibold text-white text-sm">{t.name}</p>
-                <p className="text-gray-500 text-xs mt-0.5">{t.role}</p>
-              </div>
+              <div className="text-3xl font-black text-white mb-1">{r.metric}</div>
+              <div className="text-sm font-bold text-gray-200 mb-2">{r.label}</div>
+              <p className="text-gray-500 text-xs leading-relaxed">{r.desc}</p>
             </div>
           ))}
         </div>
-        <p className="text-center text-xs text-gray-600 mt-6">
-          ⭐ 100% de clientes recomiendan mi trabajo
-        </p>
+
+        {/* Nota honesta sobre testimonios */}
+        <div className="bg-[#111] border border-gray-800 rounded-xl p-5 flex gap-4 items-start">
+          <span className="text-xl flex-shrink-0">💬</span>
+          <div>
+            <p className="text-sm font-semibold text-white mb-1">
+              ¿Buscas referencias directas?
+            </p>
+            <p className="text-xs text-gray-500 leading-relaxed">
+              Estoy construyendo mi base de clientes activamente. Si quieres hablar con alguien
+              que haya trabajado conmigo o ver el código fuente de cualquier proyecto,{" "}
+              <a href="/contact" className="text-violet-400 hover:underline font-medium">
+                escríbeme directamente
+              </a>{" "}
+              y lo coordino sin problema.
+            </p>
+          </div>
+        </div>
       </section>
 
       {/* PRECIOS */}
