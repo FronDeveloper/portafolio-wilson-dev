@@ -91,15 +91,15 @@ export default function Projects() {
         />
 
         <ProjectCard
-          title="App RPG Fitness"
-          description="App móvil gamificada que convierte el entrenamiento en RPG."
-          problem="Falta de motivación en usuarios para mantener rutinas de ejercicio."
-          solution="Diseñé una app tipo RPG donde el progreso físico se traduce en niveles y recompensas."
-          tech="Flutter / Firebase"
+          title="ARISE — App RPG Fitness"
+          description="App móvil que convierte tu entrenamiento en un RPG al estilo Solo Leveling. Niveles, XP y misiones diarias."
+          problem="Las apps de fitness no retienen usuarios porque no hay progresión visual ni motivación emocional para volver."
+          solution="Construí una app donde cada entreno otorga XP, sube niveles y desbloquea recompensas — como un RPG real."
+          tech="Flutter · Dart · Firebase"
           link="/projects/rpg"
           image="/images/rpg-app.jpg"
-          status="proximamente"
-          liveUrl={null}
+          status="completado"
+          liveUrl="https://play.google.com/store/apps/details?id=com.arisesystem.arise_app"
         />
 
       </motion.div>
