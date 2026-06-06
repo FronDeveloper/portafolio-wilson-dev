@@ -144,8 +144,8 @@ export default function Home() {
             },
             {
               metric: "Google Play",
-              label: "En revisión",
-              desc: "App RPG Fitness supera la revisión técnica de Google y está en proceso de aprobación final para publicación.",
+              label: "Publicada ✓",
+              desc: "ARISE Shadow System está disponible en Google Play. App RPG de fitness inspirada en Solo Leveling, construida con Flutter y Firebase.",
               tag: "App móvil Flutter",
               icon: "📱",
               color: "from-yellow-500/10 to-yellow-500/5 border-yellow-500/20",
