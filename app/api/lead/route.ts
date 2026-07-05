@@ -1,7 +1,22 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Evitar que Vercel intente evaluar esta ruta durante el build
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
+// Inicialización lazy — solo se crea cuando llega una request,
+// nunca durante el build cuando las env vars no están disponibles
+let _resend: Resend | null = null;
+function getResend() {
+  if (_resend) return _resend;
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    throw new Error("RESEND_API_KEY no está configurada");
+  }
+  _resend = new Resend(apiKey);
+  return _resend;
+}
 
 export async function POST(request: Request) {
   try {
@@ -11,6 +26,18 @@ export async function POST(request: Request) {
       return NextResponse.json(
         { error: "Email inválido" },
         { status: 400 }
+      );
+    }
+
+    // Inicializar Resend solo cuando se necesita (runtime, no build)
+    let resend: Resend;
+    try {
+      resend = getResend();
+    } catch (err) {
+      console.error("Resend init error:", err);
+      return NextResponse.json(
+        { error: "Servicio de email no configurado" },
+        { status: 503 }
       );
     }
 
