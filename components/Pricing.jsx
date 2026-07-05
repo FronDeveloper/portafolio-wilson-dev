@@ -8,7 +8,7 @@ const plans = [
   {
     name: "Landing Page",
     icon: <FaRocket className="text-3xl" />,
-    price: "desde $300",
+    price: "desde $1.200.000 COP",
     description: "Ideal para empezar tu presencia online",
     features: [
       "Diseño responsive",
@@ -23,7 +23,7 @@ const plans = [
   {
     name: "Ecommerce",
     icon: <FaStore className="text-3xl" />,
-    price: "desde $800",
+    price: "desde $3.200.000 COP",
     description: "Vende tus productos online sin complicaciones",
     features: [
       "Catálogo de productos",
@@ -38,7 +38,7 @@ const plans = [
   {
     name: "App a Medida",
     icon: <FaCogs className="text-3xl" />,
-    price: "desde $1500",
+    price: "desde $6.000.000 COP",
     description: "Soluciones personalizadas para tu negocio",
     features: [
       "Desarrollo a medida",
@@ -98,7 +98,7 @@ export default function Pricing() {
               <p className="text-gray-400 text-sm mb-4">{plan.description}</p>
               <p className="text-3xl font-bold text-[#C2B280] mb-6">
                 {plan.price}
-                <span className="text-sm text-gray-500 font-normal"> + IVA</span>
+                <span className="text-sm text-gray-500 font-normal"> COP</span>
               </p>
 
               <ul className="space-y-3 mb-8">

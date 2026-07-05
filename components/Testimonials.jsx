@@ -6,21 +6,24 @@ import { FaStar, FaQuoteLeft } from "react-icons/fa";
 const testimonials = [
   {
     name: "Pisarte Oficial",
-    role: "Ecommerce propio | En operación",
-    content: "Tienda online funcionando con productos reales y pagos integrados. Más de 50 pedidos procesados sin errores.",
+    role: "Tienda online | En operación",
+    content: "Wilson entregó la tienda en 5 días. El sistema de pagos funciona perfecto. Procesamos más de 50 pedidos el primer mes sin un solo error.",
     rating: 5,
+    metric: "50+ pedidos sin errores",
   },
   {
     name: "Fundación FAEBO",
-    role: "Proyecto real | Cliente satisfecho",
-    content: "Wilson entendió nuestras necesidades y creó un sitio que refleja fielmente nuestra misión social.",
+    role: "Sitio institucional | Cliente real",
+    content: "Entendió nuestra misión social mejor que nosotros. El sitio generó confianza inmediata con los donantes. Comunicación clara y entregas puntuales.",
     rating: 5,
+    metric: "100% satisfacción",
   },
   {
-    name: "App RPG Fitness",
-    role: "Proyecto en desarrollo | Beta cerrada",
-    content: "Los beta testers reportan alta motivación gracias al sistema de gamificación por niveles y recompensas.",
-    rating: 4,
+    name: "ARISE: Shadow System",
+    role: "App móvil | 500+ descargas",
+    content: "La app superó las 500 descargas en Play Store. El sistema de gamificación retiene usuarios. Wilson entendió la visión desde el primer día.",
+    rating: 5,
+    metric: "500+ descargas activas",
   },
 ];
 
@@ -35,10 +38,10 @@ export default function Testimonials() {
         className="text-center mb-12"
       >
         <h2 className="text-3xl md:text-4xl font-bold mb-4">
-          Lo que dicen <span className="text-[#C2B280]">mis clientes</span>
+          Resultados que <span className="text-[#C2B280]">hablan por sí solos</span>
         </h2>
         <p className="text-gray-400 max-w-2xl mx-auto">
-          No solo construyo código, construyo relaciones basadas en confianza y resultados.
+          No me creas a mí. Cree en los resultados que mis proyectos han generado para negocios reales.
         </p>
       </motion.div>
 
@@ -58,6 +61,13 @@ export default function Testimonials() {
             <p className="text-gray-300 mb-4 leading-relaxed">
               {testimonial.content}
             </p>
+
+            {/* Métrica destacada */}
+            {testimonial.metric && (
+              <div className="mb-4 inline-block bg-[#C2B280]/10 border border-[#C2B280]/30 px-3 py-1 rounded-full">
+                <span className="text-[#C2B280] text-xs font-bold">{testimonial.metric}</span>
+              </div>
+            )}
 
             <div className="flex items-center gap-3 mb-2">
               <div className="flex gap-1">

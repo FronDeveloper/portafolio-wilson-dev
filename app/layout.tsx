@@ -4,6 +4,7 @@ import "./globals.css";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import ScrollToTop from "@/components/ScrollToTop";
 import ParticleBackground from "@/components/ParticleBackground";
+import Script from "next/script";
 import { Inter, Playfair_Display } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -90,10 +91,25 @@ export default function RootLayout({
         className={`${inter.className} min-h-full flex flex-col relative bg-[#0B0B0B]`}
       >
         <ParticleBackground />
-        {children}
+        <div className="relative z-10 flex flex-col min-h-screen">
+          {children}
+        </div>
         <WhatsAppButton />
         <ScrollToTop />
       </body>
+      {/* Google Analytics 4 — Measurement ID: G-09M3XYKZ1L */}
+      <Script
+        src={`https://www.googletagmanager.com/gtag/js?id=G-09M3XYKZ1L`}
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-09M3XYKZ1L');
+        `}
+      </Script>
     </html>
   );
 }

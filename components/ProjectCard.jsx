@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { FaCheckCircle, FaArrowRight } from "react-icons/fa";
 
 export default function ProjectCard({
   title,
@@ -12,8 +13,9 @@ export default function ProjectCard({
   tech,
   link,
   image,
-  status = "completado", // 'completado', 'proximamente', 'demo'
-  liveUrl = null
+  status = "completado",
+  liveUrl = null,
+  metrics = [],
 }) {
   return (
     <motion.div
@@ -39,7 +41,7 @@ export default function ProjectCard({
             </div>
           )}
           <div className="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 transition flex items-center justify-center">
-            <span className="text-white text-sm">Ver proyecto</span>
+            <span className="text-white text-sm">Ver caso de estudio</span>
           </div>
         </div>
       </Link>
@@ -54,12 +56,31 @@ export default function ProjectCard({
             {description}
           </p>
 
+          {/* Métricas / Resultados */}
+          {metrics.length > 0 && (
+            <div className="mt-4 grid grid-cols-3 gap-2">
+              {metrics.map((metric, idx) => (
+                <div
+                  key={idx}
+                  className="bg-[#0B0B0B] border border-gray-800 rounded-lg p-2 text-center"
+                >
+                  <p className="text-[#C2B280] font-bold text-lg leading-tight">
+                    {metric.value}
+                  </p>
+                  <p className="text-gray-500 text-[10px] leading-tight mt-1">
+                    {metric.label}
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+
           <div className="mt-4 text-sm text-gray-500">
             <p>
-              <span className="text-white">Problema:</span> {problem}
+              <span className="text-white font-medium">Problema:</span> {problem}
             </p>
             <p className="mt-2">
-              <span className="text-white">Solución:</span> {solution}
+              <span className="text-white font-medium">Solución:</span> {solution}
             </p>
           </div>
 
@@ -72,20 +93,20 @@ export default function ProjectCard({
           </div>
         </div>
 
-        <div className="mt-4">
+        <div className="mt-4 flex items-center gap-3">
           {liveUrl && (
             <a
               href={liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-[#C2B280] hover:underline inline-block mr-3"
+              className="text-sm text-[#C2B280] hover:underline inline-flex items-center gap-1"
               onClick={(e) => e.stopPropagation()}
             >
-              Ver sitio en vivo →
+              Ver en vivo <FaArrowRight className="text-[10px]" />
             </a>
           )}
-          <Link href={link} className="text-sm text-white hover:text-[#C2B280] underline inline-block">
-            Ver detalles →
+          <Link href={link} className="text-sm text-white hover:text-[#C2B280] underline inline-flex items-center gap-1">
+            Caso de estudio <FaArrowRight className="text-[10px]" />
           </Link>
         </div>
       </div>

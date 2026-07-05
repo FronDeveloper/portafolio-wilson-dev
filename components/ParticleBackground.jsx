@@ -58,12 +58,13 @@ export default function ParticleBackground() {
         ctx.fillStyle = this.color;
         ctx.globalAlpha = this.opacity;
         ctx.fill();
-        
+
         // Brillo sutil alrededor
         ctx.shadowBlur = 8;
         ctx.shadowColor = this.color;
         ctx.fill();
         ctx.shadowBlur = 0;
+        ctx.globalAlpha = 1;
       }
     }
 
@@ -99,19 +100,16 @@ export default function ParticleBackground() {
     // Animación principal
     const animate = () => {
       if (!ctx) return;
+      // Limpiar canvas sin pintar fondo — el body ya tiene el color #0B0B0B
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      // Fondo transparente para ver el color del body
-      ctx.fillStyle = "#0B0B0B";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      
+
       particles.forEach(particle => {
         particle.update();
         particle.draw();
       });
-      
+
       drawConnections();
-      
+
       animationId = requestAnimationFrame(animate);
     };
 
@@ -121,14 +119,15 @@ export default function ParticleBackground() {
     animate();
 
     // Manejar redimensionamiento
-    window.addEventListener("resize", () => {
+    const handleResize = () => {
       resizeCanvas();
       initParticles();
-    });
+    };
+    window.addEventListener("resize", handleResize);
 
     // Limpiar al desmontar
     return () => {
-      window.removeEventListener("resize", resizeCanvas);
+      window.removeEventListener("resize", handleResize);
       cancelAnimationFrame(animationId);
     };
   }, []);
@@ -136,11 +135,11 @@ export default function ParticleBackground() {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed top-0 left-0 w-full h-full -z-10"
-      style={{ 
+      className="fixed top-0 left-0 w-full h-full"
+      style={{
         pointerEvents: "none",
         display: "block",
-        backgroundColor: "#0B0B0B"
+        zIndex: 0,
       }}
     />
   );

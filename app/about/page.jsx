@@ -30,7 +30,7 @@ export default function AboutPage() {
   ];
 
   return (
-    <main className="bg-[#0B0B0B] text-white min-h-screen">
+    <main className="text-white min-h-screen">
       <Navbar />
 
       <section className="px-8 md:px-20 py-24">

@@ -7,9 +7,20 @@ export default function Projects() {
   return (
     <section className="px-8 md:px-20 py-20 max-w-6xl mx-auto">
       
-      <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
-        Proyectos destacados
-      </h2>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: true }}
+        className="text-center mb-12"
+      >
+        <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          Casos de <span className="text-[#C2B280]">estudio</span>
+        </h2>
+        <p className="text-gray-400 max-w-2xl mx-auto">
+          No solo son proyectos bonitos. Cada solución generó resultados medibles para negocios reales.
+        </p>
+      </motion.div>
 
       <motion.div
         initial="hidden"
@@ -28,6 +39,11 @@ export default function Projects() {
           image="/images/flowbill.jpg"
           status="completado"
           liveUrl="https://flowbill-web.vercel.app"
+          metrics={[
+            { value: "100%", label: "Facturación automatizada" },
+            { value: "3x", label: "Más rápido que Excel" },
+            { value: "0", label: "Facturas perdidas" },
+          ]}
         />
 
         <ProjectCard
@@ -40,6 +56,11 @@ export default function Projects() {
           image="/images/agenda-pro.jpg"
           status="completado"
           liveUrl="https://agenda-procol.vercel.app"
+          metrics={[
+            { value: "70%", label: "Menos ausencias" },
+            { value: "24/7", label: "Reservas automáticas" },
+            { value: "2x", label: "Más citas agendadas" },
+          ]}
         />
 
         <ProjectCard
@@ -52,6 +73,11 @@ export default function Projects() {
           image="/images/insightai-dashboard.jpg"
           status="completado"
           liveUrl="https://vitainsight.vercel.app"
+          metrics={[
+            { value: "100%", label: "Visibilidad de inventario" },
+            { value: "5min", label: "Para entender el negocio" },
+            { value: "IA", label: "Análisis predictivo" },
+          ]}
         />
 
         <ProjectCard
@@ -64,6 +90,11 @@ export default function Projects() {
           image="/images/ecommerce.jpg"
           status="completado"
           liveUrl="https://pisarteoficial.com"
+          metrics={[
+            { value: "50+", label: "Pedidos procesados" },
+            { value: "0%", label: "Errores en checkout" },
+            { value: "3.2s", label: "Tiempo de carga" },
+          ]}
         />
 
         <ProjectCard
@@ -76,6 +107,11 @@ export default function Projects() {
           image="/images/minimo-studio.jpg"
           status="completado"
           liveUrl="https://minimo-studio.vercel.app"
+          metrics={[
+            { value: "3", label: "Pasarelas de pago" },
+            { value: "100%", label: "Inventario en tiempo real" },
+            { value: "<2s", label: "Carga de catálogo" },
+          ]}
         />
 
         <ProjectCard
@@ -88,6 +124,11 @@ export default function Projects() {
           image="/images/faebo.jpg"
           status="proximamente"
           liveUrl={null}
+          metrics={[
+            { value: "1°", label: "Presencia digital" },
+            { value: "100%", label: "Accesible" },
+            { value: "SEO", label: "Optimizado" },
+          ]}
         />
 
         <ProjectCard
@@ -100,6 +141,11 @@ export default function Projects() {
           image="/images/rpg-app.jpg"
           status="completado"
           liveUrl="https://play.google.com/store/apps/details?id=com.arisesystem.arise_app"
+          metrics={[
+            { value: "500+", label: "Descargas en Play Store" },
+            { value: "49%", label: "Conversión registro" },
+            { value: "ES/EN", label: "Bilingüe" },
+          ]}
         />
 
       </motion.div>

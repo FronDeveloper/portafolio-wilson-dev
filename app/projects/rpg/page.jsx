@@ -39,7 +39,7 @@ const features = [
 
 export default function RPGProject() {
   return (
-    <main className="bg-[#0B0B0B] text-white min-h-screen">
+    <main className="text-white min-h-screen">
       <Navbar />
 
       <section className="px-8 md:px-20 py-20 max-w-4xl mx-auto">

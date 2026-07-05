@@ -7,7 +7,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="bg-[#0B0B0B] text-white min-h-screen pb-24">
+    <main className="text-white min-h-screen pb-24">
 
       <Navbar />
       <Hero />
