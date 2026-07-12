@@ -148,6 +148,23 @@ export default function Projects() {
           ]}
         />
 
+        <ProjectCard
+          title="Plataforma Educativa"
+          description="Plataforma web multi-institución para colegios: sitio público + panel admin + portales para rector, docentes, estudiantes y padres de familia."
+          problem="Los colegios pequeños no tienen presencia digital ni un sistema para comunicarse con padres, gestionar admisiones o publicar calificaciones. Todo se hace por WhatsApp y papel."
+          solution="Desarrollé una plataforma multi-tenant completa: cada colegio tiene su propia URL, colores y logo. Incluye 6 roles, circulares digitales, autorizaciones firmadas, citas padre-docente, galería y más."
+          tech="PHP / MySQL / JavaScript / HTML5 / CSS3 / Multi-tenant"
+          link="/projects/plataforma-educativa"
+          image="/images/plataforma-educativa.jpg"
+          status="completado"
+          liveUrl="https://plataformaeducativa.infinityfree.me/colegio-demo/"
+          metrics={[
+            { value: "6", label: "Roles de usuario" },
+            { value: "27", label: "Tablas en BD" },
+            { value: "Multi", label: "Institución" },
+          ]}
+        />
+
       </motion.div>
 
     </section>
