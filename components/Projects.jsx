@@ -157,7 +157,7 @@ export default function Projects() {
           link="/projects/plataforma-educativa"
           image="/images/plataforma-educativa.jpg"
           status="completado"
-          liveUrl="https://plataformaeducativa.co/colegio-demo/"
+          liveUrl="https://plataformaeducativa.co"
           metrics={[
             { value: "6", label: "Roles de usuario" },
             { value: "27", label: "Tablas en BD" },

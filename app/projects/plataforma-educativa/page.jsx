@@ -293,7 +293,7 @@ export default function PlataformaEducativaProject() {
         {/* CTAs */}
         <div className="flex gap-4 flex-wrap">
           <a
-            href="https://plataformaeducativa.co/colegio-demo/"
+            href="https://plataformaeducativa.co"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block px-6 py-3 bg-[#C2B280] text-black rounded-xl font-semibold hover:bg-[#D4C090] transition"
