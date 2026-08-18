@@ -42,6 +42,7 @@ export default function EcommerceProject() {
             src="/images/ecommerce.jpg"
             alt="Ecommerce PisarteOficial"
             fill
+            sizes="(max-width: 768px) 100vw, 1000px"
             className="object-cover object-top"
           />
         </div>

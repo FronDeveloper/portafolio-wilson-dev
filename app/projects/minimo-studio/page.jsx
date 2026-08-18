@@ -86,6 +86,7 @@ export default function MinimoStudioProject() {
             src="/images/minimo-studio.jpg"
             alt="Mínimo Studio - E-commerce"
             fill
+            sizes="(max-width: 768px) 100vw, 1000px"
             className="object-cover"
             priority
           />

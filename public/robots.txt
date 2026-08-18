@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://wvalencia-dev.vercel.app
+Host: https://wvalencia-dev.vercel.app/
 
 # Sitemaps
 Sitemap: https://wvalencia-dev.vercel.app/sitemap.xml

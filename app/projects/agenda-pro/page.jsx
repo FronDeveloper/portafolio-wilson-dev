@@ -43,6 +43,7 @@ export default function AgendaProProject() {
             src="/images/agenda-pro.jpg"
             alt="AgendaPro"
             fill
+            sizes="(max-width: 768px) 100vw, 1000px"
             className="object-cover object-top"
           />
         </div>

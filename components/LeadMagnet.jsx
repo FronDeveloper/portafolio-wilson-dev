@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { FaDownload, FaCheckCircle } from "react-icons/fa";
+import { trackMetaEvent } from "@/lib/analytics/meta-events";
 
 export default function LeadMagnet() {
   const [email, setEmail] = useState("");
@@ -26,6 +27,11 @@ export default function LeadMagnet() {
 
       if (response.ok) {
         setSubmitted(true);
+        trackMetaEvent("Lead", {
+          content_name: "Descarga guía SaaS multi-tenant",
+          content_category: "Lead Magnet",
+          status: "email_submitted",
+        });
       } else {
         setError(true);
       }
@@ -48,7 +54,6 @@ export default function LeadMagnet() {
         <div className="absolute top-0 right-0 w-64 h-64 bg-[#C2B280]/5 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 grid md:grid-cols-2 gap-8 items-center">
-          {/* Izquierda */}
           <div>
             <div className="inline-flex items-center gap-2 bg-[#C2B280]/10 border border-[#C2B280]/30 px-3 py-1 rounded-full mb-4">
               <FaDownload className="text-[#C2B280] text-xs" />
@@ -82,7 +87,6 @@ export default function LeadMagnet() {
             </ul>
           </div>
 
-          {/* Derecha — Formulario */}
           <div>
             {!submitted ? (
               <form onSubmit={handleSubmit} className="space-y-3">

@@ -111,7 +111,7 @@ export default function Pricing() {
               </ul>
 
               <Link
-                href="/contact"
+                href="/cotizar"
                 className={`block text-center py-3 rounded-xl font-semibold transition ${
                   plan.recommended
                     ? "bg-[#C2B280] text-black hover:opacity-80"

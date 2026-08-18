@@ -4,8 +4,13 @@ import "./globals.css";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import ScrollToTop from "@/components/ScrollToTop";
 import ParticleBackground from "@/components/ParticleBackground";
+import { MetaPixel } from "@/components/MetaPixel";
 import Script from "next/script";
 import { Inter, Playfair_Display } from "next/font/google";
+
+// Forzar renderizado dinámico para que MetaPixel (usePathname) funcione
+// sin romper el prerender estático de /_not-found
+export const dynamic = "force-dynamic";
 
 const inter = Inter({ subsets: ["latin"] });
 const playfair = Playfair_Display({ subsets: ["latin"], weight: ["600", "700"] });
@@ -13,6 +18,7 @@ const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://wvalencia-dev.vercel.app"),
   title: {
     default: "Wilson Valencia — Desarrollador Full-Stack Freelance en Colombia",
     template: "%s | Wilson Valencia Dev",
@@ -96,20 +102,45 @@ export default function RootLayout({
         </div>
         <WhatsAppButton />
         <ScrollToTop />
+        <MetaPixel />
+        {/* Google Analytics 4 — Measurement ID: G-09M3XYKZ1L */}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=G-09M3XYKZ1L`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-09M3XYKZ1L');
+          `}
+        </Script>
+        {/* Meta Pixel — ID: 864423433128485 (compartido con AgendaPro) */}
+        <Script id="meta-pixel" strategy="afterInteractive">
+          {`
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '864423433128485');
+            fbq('track', 'PageView');
+          `}
+        </Script>
+        <noscript>
+          <img
+            height="1"
+            width="1"
+            style={{ display: "none" }}
+            src="https://www.facebook.com/tr?id=864423433128485&ev=PageView&noscript=1"
+            alt=""
+          />
+        </noscript>
       </body>
-      {/* Google Analytics 4 — Measurement ID: G-09M3XYKZ1L */}
-      <Script
-        src={`https://www.googletagmanager.com/gtag/js?id=G-09M3XYKZ1L`}
-        strategy="afterInteractive"
-      />
-      <Script id="google-analytics" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-09M3XYKZ1L');
-        `}
-      </Script>
     </html>
   );
 }

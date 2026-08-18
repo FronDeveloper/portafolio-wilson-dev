@@ -98,7 +98,7 @@ export default function HowIWork() {
       >
         <div className="flex gap-4 justify-center flex-wrap">
           <a
-            href="/contact"
+            href="/cotizar"
             className="px-6 py-3 bg-gradient-to-r from-violet-600 to-cyan-600 text-white rounded-xl font-semibold hover:opacity-90 transition shadow-lg shadow-violet-500/20"
           >
             Iniciar un proyecto →

@@ -186,7 +186,7 @@ export default function Home() {
             <p className="text-xs text-gray-500 leading-relaxed">
               Estoy construyendo mi base de clientes activamente. Si quieres hablar con alguien
               que haya trabajado conmigo o ver el código fuente de cualquier proyecto,{" "}
-              <a href="/contact" className="text-violet-400 hover:underline font-medium">
+              <a href="/cotizar" className="text-violet-400 hover:underline font-medium">
                 escríbeme directamente
               </a>{" "}
               y lo coordino sin problema.
@@ -263,7 +263,7 @@ export default function Home() {
                 ))}
               </ul>
               <Link
-                href="/contact"
+                href="/cotizar"
                 className={`block text-center py-2.5 rounded-xl font-semibold text-sm transition ${
                   plan.highlight
                     ? "bg-gradient-to-r from-violet-600 to-cyan-600 text-white hover:opacity-90"
@@ -293,7 +293,7 @@ export default function Home() {
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
             <Link
-              href="/contact"
+              href="/cotizar"
               className="px-8 py-3 bg-gradient-to-r from-violet-600 to-cyan-600 text-white rounded-xl font-semibold hover:opacity-90 transition shadow-lg shadow-violet-500/25"
             >
               Escribirme ahora →

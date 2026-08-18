@@ -93,7 +93,7 @@ export default function FlowBillProject() {
           </span>
         </div>
         <p className="text-gray-400 text-lg mb-10">
-          Sistema SaaS de gestión de proyectos y facturación para agencias creativas y consultoras pequeñas.
+          Sistema SaaS de gestión de proyectos y facturación para agencias creativas y consultoras pequeñas. Su demo pública ya funciona con layout responsive y cuenta con base PWA en el front.
         </p>
 
         {/* Hero image */}
@@ -102,6 +102,7 @@ export default function FlowBillProject() {
             src="/images/flowbill.jpg"
             alt="FlowBill — Sistema de gestión y facturación"
             fill
+            sizes="(max-width: 768px) 100vw, 768px"
             className="object-cover object-top"
           />
         </div>

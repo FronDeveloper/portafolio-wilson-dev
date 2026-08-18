@@ -75,6 +75,7 @@ export default function RPGProject() {
             src="/images/rpg-app.jpg"
             alt="ARISE — App RPG de entrenamiento"
             fill
+            sizes="(max-width: 768px) 100vw, 1000px"
             className="object-cover object-top"
           />
           {/* Overlay glow */}

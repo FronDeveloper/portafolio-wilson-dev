@@ -65,7 +65,7 @@ export default function AboutPage() {
                   <p>📱 +57 301 2821174</p>
                 </div>
                 <a
-                  href="/contact"
+                  href="/cotizar"
                   className="inline-block mt-4 w-full text-center px-4 py-2 bg-[#C2B280] text-black font-semibold rounded-xl hover:opacity-80 transition"
                 >
                   Contáctame
@@ -174,7 +174,7 @@ export default function AboutPage() {
               ¿Tienes un proyecto en mente o quieres saber más sobre mi trabajo?
             </p>
             <a
-              href="/contact"
+              href="/cotizar"
               className="inline-block px-8 py-3 bg-[#C2B280] text-black font-semibold rounded-xl hover:opacity-80 transition"
             >
               Hablemos de tu proyecto

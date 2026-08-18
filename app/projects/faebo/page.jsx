@@ -42,6 +42,7 @@ export default function FaeboProject() {
             src="/images/faebo.jpg"
             alt="Fundación FAEBO"
             fill
+            sizes="(max-width: 768px) 100vw, 1000px"
             className="object-cover object-top"
           />
         </div>

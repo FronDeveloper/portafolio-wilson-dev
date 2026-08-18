@@ -31,7 +31,7 @@ export default function Projects() {
       >
         <ProjectCard
           title="FlowBill"
-          description="Sistema completo de gestión de proyectos y facturación para agencias creativas, con portal del cliente integrado."
+          description="Sistema completo de gestión de proyectos y facturación para agencias creativas, con portal del cliente integrado, interfaz responsive mobile-first y base PWA."
           problem="Las agencias pequeñas gestionan proyectos en Excel, facturas en Word y se comunican con clientes por WhatsApp. Todo disperso."
           solution="Desarrollé un SaaS completo: Kanban, facturación con IVA, reportes financieros y un portal donde el cliente ve su proyecto en vivo, aprueba entregables y descarga facturas."
           tech="Next.js 14 / TypeScript / Supabase / Tailwind / Recharts"
@@ -157,7 +157,7 @@ export default function Projects() {
           link="/projects/plataforma-educativa"
           image="/images/plataforma-educativa.jpg"
           status="completado"
-          liveUrl="https://plataformaeducativa.infinityfree.me/colegio-demo/"
+          liveUrl="https://plataformaeducativa.co/colegio-demo/"
           metrics={[
             { value: "6", label: "Roles de usuario" },
             { value: "27", label: "Tablas en BD" },

@@ -108,7 +108,7 @@ export default function Hero() {
             Ver casos de estudio
           </a>
           <a
-            href="/contact"
+            href="/cotizar"
             className="px-6 py-3 border border-gray-600 rounded-xl hover:border-violet-500 hover:text-violet-400 transition hover:scale-105 transform"
           >
             Cotizar mi proyecto

@@ -43,6 +43,7 @@ export default function InsightAIDashboardProject() {
             src="/images/insightai-dashboard.jpg"
             alt="InsightAI Dashboard"
             fill
+            sizes="(max-width: 768px) 100vw, 1000px"
             className="object-cover object-top"
           />
         </div>

@@ -120,7 +120,7 @@ export default function PlataformaEducativaProject() {
           </span>
         </div>
         <p className="text-gray-400 text-lg mb-10">
-          Plataforma web multi-institución para colegios: sitio público + panel admin + portales para rector, docentes, estudiantes y padres de familia.
+          Plataforma web multi-institución para colegios: sitio público + panel admin + portales para rector, docentes, estudiantes y padres de familia. Actualmente alojada en Hostinger bajo el dominio plataformaeducativa.co.
         </p>
 
         {/* Hero image */}
@@ -129,6 +129,7 @@ export default function PlataformaEducativaProject() {
             src="/images/plataforma-educativa.jpg"
             alt="Plataforma Educativa Multi-Institución"
             fill
+            sizes="(max-width: 768px) 100vw, 1000px"
             className="object-cover"
             priority
           />
@@ -292,7 +293,7 @@ export default function PlataformaEducativaProject() {
         {/* CTAs */}
         <div className="flex gap-4 flex-wrap">
           <a
-            href="https://plataformaeducativa.infinityfree.me/colegio-demo/"
+            href="https://plataformaeducativa.co/colegio-demo/"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block px-6 py-3 bg-[#C2B280] text-black rounded-xl font-semibold hover:bg-[#D4C090] transition"
@@ -300,7 +301,7 @@ export default function PlataformaEducativaProject() {
             🌐 Ver demo en vivo
           </a>
           <a
-            href="https://plataformaeducativa.infinityfree.me/"
+            href="https://plataformaeducativa.co/"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block px-6 py-3 border border-gray-600 rounded-xl font-semibold hover:bg-white hover:text-black transition"
