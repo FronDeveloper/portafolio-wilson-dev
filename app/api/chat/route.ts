@@ -111,7 +111,7 @@ function transcriptHtml(messages: ChatMsg[]): string {
   return messages
     .map((m) => {
       const isUser = m.role === "user";
-      const label = isUser ? "👤 Visitante" : `🤖 ${ASSISTANT_NAME}`;
+      const label = isUser ? "👤 Visitante" : `✨ ${ASSISTANT_NAME}`;
       const color = isUser ? "#fff" : "#C2B280";
       return `
       <div style="margin-bottom: 14px;">
@@ -139,12 +139,12 @@ async function notifyLeadByEmail(lead: LeadData, messages: ChatMsg[]): Promise<b
     const { error } = await resend.emails.send({
       from: "Chatbot Portafolio <onboarding@resend.dev>",
       to: [to],
-      subject: `🤖 Nuevo lead del chatbot — ${lead.name}`,
+      subject: `✨ Nuevo lead de ${ASSISTANT_NAME} — ${lead.name}`,
       html: `
         <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; background: #0B0B0B; padding: 40px; border-radius: 12px;">
           <div style="text-align: center; margin-bottom: 30px;">
-            <h1 style="color: #C2B280; font-size: 24px; margin-bottom: 5px;">¡Nuevo lead del chatbot Vali!</h1>
-            <p style="color: #888; font-size: 13px;">Capturado automáticamente en wvalencia-dev.vercel.app</p>
+            <h1 style="color: #C2B280; font-size: 24px; margin-bottom: 5px;">¡Nuevo lead de ${ASSISTANT_NAME}!</h1>
+            <p style="color: #888; font-size: 13px;">Tu asistente virtual capturó un interés en wvalencia-dev.vercel.app</p>
           </div>
 
           <div style="background: #111; border: 1px solid #333; border-radius: 8px; padding: 25px; margin-bottom: 20px;">
@@ -176,7 +176,7 @@ async function notifyLeadByEmail(lead: LeadData, messages: ChatMsg[]): Promise<b
 
           <div style="text-align: center; margin-top: 30px;">
             <p style="color: #555; font-size: 11px;">
-              Lead capturado por el chatbot del portafolio<br>
+              Lead capturado por ${ASSISTANT_NAME}, la asistente virtual del portafolio<br>
               ${new Date().toLocaleString("es-CO", { timeZone: "America/Bogota" })}
             </p>
           </div>

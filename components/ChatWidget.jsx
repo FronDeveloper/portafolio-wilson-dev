@@ -2,31 +2,34 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaRobot, FaTimes, FaPaperPlane, FaWhatsapp, FaCheckCircle } from "react-icons/fa";
+import { GiButterfly } from "react-icons/gi";
+import { FaTimes, FaPaperPlane, FaWhatsapp, FaCheckCircle } from "react-icons/fa";
 import { trackMetaEvent } from "@/lib/analytics/meta-events";
 
 /**
- * ChatWidget — Asistente virtual "Vali" del portafolio.
+ * ChatWidget — Asistente virtual "Alma" del portafolio.
  *
- * - Flotante abajo-IZQUIERDA (no choca con el botón verde de WhatsApp ni con
- *   el ScrollToTop, que viven en la esquina inferior derecha).
+ * - Flotante abajo-DERECHA (posición estándar de los chats; el botón verde
+ *   de WhatsApp vive abajo-izquierda y ScrollToTop se apila encima).
  * - Guarda la conversación en sessionStorage (sobrevive a cambios de página).
- * - Cuando la IA captura un lead, muestra confirmación + acceso directo a WhatsApp.
+ * - Cuando la IA captura un lead, muestra confirmación + acceso directo a
+ *   WhatsApp con mensaje prellenado (solo en ese momento, el header no
+ *   duplica el acceso a WhatsApp porque ya existe el botón flotante).
  *
  * Personalización rápida:
  *   - SALUDO, SUGERENCIAS y textos → constantes aquí abajo.
- *   - Conocimiento del negocio (precios, servicios, reglas) → lib/assistant.ts
+ *   - Identidad, proyectos, precios y reglas → lib/assistant.ts
  */
 
-const STORAGE_KEY = "vali_chat_v1";
+const STORAGE_KEY = "alma_chat_v1";
 const WHATSAPP_PHONE = "573012821174";
 
 const SALUDO_INICIAL =
-  "¡Hola! 👋 Soy Vali, la asistente de Wilson. Cuéntame qué tienes en mente para tu negocio y te oriento al instante.";
+  "¡Hola! 👋 Soy Alma, tu asistente virtual. ¿Buscas una página web, una tienda online, una app o un sistema a medida? Cuéntame qué tienes en mente.";
 
 const SUGERENCIAS = [
   "Quiero una página web para mi negocio",
-  "Me interesa un chatbot de WhatsApp con IA",
+  "Me interesa una app o sistema a medida",
   "¿Cuánto cuesta un proyecto?",
 ];
 
@@ -89,7 +92,7 @@ export default function ChatWidget() {
   useEffect(() => {
     let dismissed = false;
     try {
-      dismissed = sessionStorage.getItem("vali_bubble_dismissed") === "1";
+      dismissed = sessionStorage.getItem("alma_bubble_dismissed") === "1";
     } catch {}
     if (dismissed) return;
     const timer = setTimeout(() => setShowBubble(true), 2500);
@@ -115,10 +118,10 @@ export default function ChatWidget() {
         setUnreadBadge(false);
         setShowBubble(false);
         try {
-          sessionStorage.setItem("vali_bubble_dismissed", "1");
+          sessionStorage.setItem("alma_bubble_dismissed", "1");
         } catch {}
         trackMetaEvent("Contact", {
-          content_name: "Chat Vali abierto",
+          content_name: "Chat Alma abierto",
           content_category: "ChatWidget",
           status: "chat_opened",
         });
@@ -158,7 +161,7 @@ export default function ChatWidget() {
           setLeadSaved(true);
           if (data.leadName) setLeadName(data.leadName);
           trackMetaEvent("Lead", {
-            content_name: "Lead chatbot Vali",
+            content_name: "Lead chatbot Alma",
             content_category: "ChatWidget",
             status: "lead_captured",
           });
@@ -186,7 +189,7 @@ export default function ChatWidget() {
 
   const whatsappDirecto = () => {
     const texto = encodeURIComponent(
-      `Hola Wilson, soy ${leadName || "un visitante"} — hablé con tu asistente Vali en tu portafolio y me interesa un proyecto`
+      `Hola Wilson, soy ${leadName || "un visitante"} — hablé con Alma, tu asistente virtual, y me interesa un proyecto`
     );
     return `https://wa.me/${WHATSAPP_PHONE}?text=${texto}`;
   };
@@ -200,17 +203,17 @@ export default function ChatWidget() {
             initial={{ opacity: 0, y: 10, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.95 }}
-            className="fixed bottom-24 left-4 sm:left-6 z-40 max-w-[240px] bg-[#111] border border-[#C2B280]/40 rounded-2xl rounded-bl-sm px-4 py-3 shadow-xl"
+            className="fixed bottom-24 right-4 sm:right-6 z-40 max-w-[240px] bg-[#111] border border-[#C2B280]/40 rounded-2xl rounded-br-sm px-4 py-3 shadow-xl"
           >
             <button
               onClick={() => setShowBubble(false)}
               aria-label="Cerrar sugerencia"
-              className="absolute -top-2 -right-2 bg-[#333] text-gray-300 rounded-full w-5 h-5 text-xs flex items-center justify-center hover:bg-[#444]"
+              className="absolute -top-2 -left-2 bg-[#333] text-gray-300 rounded-full w-5 h-5 text-xs flex items-center justify-center hover:bg-[#444]"
             >
               <FaTimes className="text-[9px]" />
             </button>
             <p className="text-xs text-gray-200 leading-relaxed">
-              ¿Buscas un desarrollo a medida? <span className="text-[#C2B280] font-semibold">Pregúntame lo que quieras</span> 🤖
+              ¿Buscas un desarrollo a medida? <span className="text-[#C2B280] font-semibold">Pregúntame lo que quieras</span> ✨
             </p>
           </motion.div>
         )}
@@ -224,40 +227,27 @@ export default function ChatWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.96 }}
             transition={{ duration: 0.18 }}
-            className="fixed z-50 bottom-20 left-4 right-4 sm:right-auto sm:left-6 sm:bottom-24 sm:w-[380px] h-[min(560px,70dvh)] flex flex-col bg-[#0B0B0B] border border-gray-800 rounded-2xl shadow-2xl overflow-hidden"
+            className="fixed z-50 bottom-20 left-4 right-4 sm:left-auto sm:right-6 sm:bottom-24 sm:w-[380px] h-[min(560px,70dvh)] flex flex-col bg-[#0B0B0B] border border-gray-800 rounded-2xl shadow-2xl overflow-hidden"
             role="dialog"
-            aria-label="Chat con Vali, asistente de Wilson Valencia"
+            aria-label="Chat con Alma, asistente virtual de Wilson Valencia"
           >
             {/* Header */}
             <div className="flex items-center gap-3 px-4 py-3 bg-[#111] border-b border-gray-800 shrink-0">
               <div className="relative">
                 <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#C2B280] to-[#a08b5f] flex items-center justify-center">
-                  <FaRobot className="text-black text-lg" />
+                  <GiButterfly className="text-black text-xl" />
                 </div>
                 <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-[#111]" />
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <p className="text-white font-semibold text-sm">Vali</p>
+                  <p className="text-white font-semibold text-sm">Alma</p>
                   <span className="text-[10px] text-green-400 bg-green-500/10 border border-green-500/20 px-1.5 py-0.5 rounded-full">
                     En línea
                   </span>
                 </div>
-                <p className="text-gray-500 text-[11px] truncate">
-                  Asistente de Wilson · Él revisa cada conversación
-                </p>
+                <p className="text-gray-500 text-[11px] truncate">Tu asistente virtual</p>
               </div>
-              <a
-                href={`https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(
-                  "Hola Wilson, vi tu portafolio y quiero hablar contigo"
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Escribir por WhatsApp"
-                className="text-green-500 hover:text-green-400 transition p-1"
-              >
-                <FaWhatsapp className="text-xl" />
-              </a>
               <button
                 onClick={handleOpen}
                 aria-label="Cerrar chat"
@@ -373,13 +363,13 @@ export default function ChatWidget() {
         )}
       </AnimatePresence>
 
-      {/* Botón flotante (abajo-izquierda) */}
+      {/* Botón flotante (abajo-derecha, posición estándar de chat) */}
       <motion.button
         onClick={handleOpen}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.92 }}
-        aria-label={open ? "Cerrar chat" : "Abrir chat con Vali"}
-        className="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-50 w-14 h-14 bg-gradient-to-br from-[#C2B280] to-[#a08b5f] text-black rounded-full shadow-lg shadow-[#C2B280]/20 flex items-center justify-center"
+        aria-label={open ? "Cerrar chat" : "Abrir chat con Alma"}
+        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-14 h-14 bg-gradient-to-br from-[#C2B280] to-[#a08b5f] text-black rounded-full shadow-lg shadow-[#C2B280]/20 flex items-center justify-center"
       >
         <AnimatePresence mode="wait" initial={false}>
           {open ? (
@@ -394,13 +384,13 @@ export default function ChatWidget() {
             </motion.span>
           ) : (
             <motion.span
-              key="bot"
+              key="alma"
               initial={{ rotate: 90, opacity: 0 }}
               animate={{ rotate: 0, opacity: 1 }}
               exit={{ rotate: -90, opacity: 0 }}
               transition={{ duration: 0.15 }}
             >
-              <FaRobot className="text-xl" />
+              <GiButterfly className="text-2xl" />
             </motion.span>
           )}
         </AnimatePresence>
