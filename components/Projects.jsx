@@ -30,6 +30,23 @@ export default function Projects() {
         className="grid md:grid-cols-3 gap-8"
       >
         <ProjectCard
+          title="VentaChat AI"
+          description="Bot de WhatsApp con IA que atiende clientes 24/7: responde preguntas, cotiza y deriva a humano cuando hace falta. Incluye demo web funcional donde la IA responde en vivo."
+          problem="Los negocios pierden ventas por responder el WhatsApp horas después: el cliente pregunta, nadie contesta y termina comprando en otra parte."
+          solution="Construí un bot que conecta WhatsApp con IA (Groq): responde al instante con el contexto del negocio, guarda las conversaciones en Supabase y deriva a humano ante casos sensibles. La demo web permite probarlo sin instalar nada."
+          tech="Next.js 15 / Baileys / Groq IA / Supabase / Prisma / Docker"
+          link="/projects/ventachat-ai"
+          image="/images/ventachat-ai.jpg"
+          status="completado"
+          liveUrl="https://ventachat-ai-demo.vercel.app"
+          metrics={[
+            { value: "24/7", label: "Atención automática" },
+            { value: "~2s", label: "Respuesta de la IA" },
+            { value: "$0", label: "Costo de IA (Groq)" },
+          ]}
+        />
+
+        <ProjectCard
           title="FlowBill"
           description="Sistema completo de gestión de proyectos y facturación para agencias creativas, con portal del cliente integrado, interfaz responsive mobile-first y base PWA."
           problem="Las agencias pequeñas gestionan proyectos en Excel, facturas en Word y se comunican con clientes por WhatsApp. Todo disperso."
