@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import ChatWidget from "@/components/ChatWidget";
 import ScrollToTop from "@/components/ScrollToTop";
 import ParticleBackground from "@/components/ParticleBackground";
 import { MetaPixel } from "@/components/MetaPixel";
@@ -101,6 +102,7 @@ export default function RootLayout({
           {children}
         </div>
         <WhatsAppButton />
+        <ChatWidget />
         <ScrollToTop />
         <MetaPixel />
         {/* Google Analytics 4 — Measurement ID: G-09M3XYKZ1L */}
