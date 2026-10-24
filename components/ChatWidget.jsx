@@ -15,6 +15,9 @@ import { trackMetaEvent } from "@/lib/analytics/meta-events";
  * - Cuando la IA captura un lead, muestra confirmación + acceso directo a
  *   WhatsApp con mensaje prellenado (solo en ese momento, el header no
  *   duplica el acceso a WhatsApp porque ya existe el botón flotante).
+ * - Estados del lead: "saved" (llegó a Wilson por algún canal) o "pending"
+ *   (quedó registrado en el servidor pero falló la entrega — se guía al
+ *   visitante a WhatsApp directo para no perder el contacto).
  *
  * Personalización rápida:
  *   - SALUDO, SUGERENCIAS y textos → constantes aquí abajo.
@@ -34,7 +37,7 @@ const SUGERENCIAS = [
 ];
 
 function loadHistory() {
-  if (typeof window === "undefined") return { messages: [], leadSaved: false };
+  if (typeof window === "undefined") return { messages: [], leadState: null };
   try {
     const raw = sessionStorage.getItem(STORAGE_KEY);
     if (raw) {
@@ -42,20 +45,22 @@ function loadHistory() {
       if (Array.isArray(parsed.messages) && parsed.messages.length > 0) {
         return {
           messages: parsed.messages,
-          leadSaved: !!parsed.leadSaved,
+          // Compatibilidad con sesiones v1/v2 que guardaban leadSaved booleano
+          leadState: parsed.leadState || (parsed.leadSaved ? "saved" : null),
         };
       }
     }
   } catch {
     // storage corrupto: empezar de cero
   }
-  return { messages: [], leadSaved: false };
+  return { messages: [], leadState: null };
 }
 
 export default function ChatWidget() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([]);
-  const [leadSaved, setLeadSaved] = useState(false);
+  // "saved" → lead entregado a Wilson · "pending" → capturado pero falló la entrega
+  const [leadState, setLeadState] = useState(null);
   const [leadName, setLeadName] = useState(null);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -74,7 +79,7 @@ export default function ChatWidget() {
         ? saved.messages
         : [{ role: "assistant", content: SALUDO_INICIAL }]
     );
-    setLeadSaved(saved.leadSaved);
+    setLeadState(saved.leadState);
     setHydrated(true);
   }, []);
 
@@ -82,11 +87,11 @@ export default function ChatWidget() {
   useEffect(() => {
     if (!hydrated || typeof window === "undefined") return;
     try {
-      sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ messages, leadSaved }));
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ messages, leadState }));
     } catch {
       // storage lleno: ignorar
     }
-  }, [messages, leadSaved, hydrated]);
+  }, [messages, leadState, hydrated]);
 
   // Burbuja teaser (una vez por sesión)
   useEffect(() => {
@@ -157,13 +162,15 @@ export default function ChatWidget() {
 
         setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
 
-        if (data?.leadSaved) {
-          setLeadSaved(true);
+        // leadCaptured = la IA obtuvo nombre+contacto+necesidad del visitante.
+        // leadSaved = además logró entregarlo (email y/o aviso push).
+        if (data?.leadCaptured) {
+          setLeadState(data.leadSaved ? "saved" : "pending");
           if (data.leadName) setLeadName(data.leadName);
           trackMetaEvent("Lead", {
             content_name: "Lead chatbot Alma",
             content_category: "ChatWidget",
-            status: "lead_captured",
+            status: data.leadSaved ? "lead_captured" : "lead_pending_delivery",
           });
         }
       } catch {
@@ -296,17 +303,40 @@ export default function ChatWidget() {
               )}
 
               {/* Confirmación de lead capturado */}
-              {leadSaved && (
-                <div className="bg-green-500/10 border border-green-500/30 rounded-xl px-4 py-3">
+              {leadState && (
+                <div
+                  className={`rounded-xl px-4 py-3 border ${
+                    leadState === "saved"
+                      ? "bg-green-500/10 border-green-500/30"
+                      : "bg-amber-500/10 border-amber-500/30"
+                  }`}
+                >
                   <div className="flex items-start gap-2.5">
-                    <FaCheckCircle className="text-green-400 mt-0.5 shrink-0" />
+                    <FaCheckCircle
+                      className={`mt-0.5 shrink-0 ${
+                        leadState === "saved" ? "text-green-400" : "text-amber-400"
+                      }`}
+                    />
                     <div>
-                      <p className="text-green-300 text-xs font-semibold">
-                        ¡Listo! Wilson ya recibió tu mensaje en su correo
-                      </p>
-                      <p className="text-gray-400 text-xs mt-1">
-                        Te responderá personalmente muy pronto. ¿Prefieres ir más rápido?
-                      </p>
+                      {leadState === "saved" ? (
+                        <>
+                          <p className="text-green-300 text-xs font-semibold">
+                            ¡Listo! Wilson ya recibió tu mensaje
+                          </p>
+                          <p className="text-gray-400 text-xs mt-1">
+                            Te responderá personalmente muy pronto. ¿Prefieres ir más rápido?
+                          </p>
+                        </>
+                      ) : (
+                        <>
+                          <p className="text-amber-300 text-xs font-semibold">
+                            Tu mensaje quedó registrado ✅
+                          </p>
+                          <p className="text-gray-400 text-xs mt-1">
+                            Para una respuesta más rápida, escríbele directo a Wilson:
+                          </p>
+                        </>
+                      )}
                       <a
                         href={whatsappDirecto()}
                         target="_blank"
@@ -321,7 +351,7 @@ export default function ChatWidget() {
               )}
 
               {/* Chips de sugerencias */}
-              {!leadSaved && messages.length <= 1 && !loading && (
+              {!leadState && messages.length <= 1 && !loading && (
                 <div className="flex flex-wrap gap-2 pt-1">
                   {SUGERENCIAS.map((s) => (
                     <button

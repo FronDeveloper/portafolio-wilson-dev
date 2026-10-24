@@ -185,12 +185,89 @@ async function notifyLeadByEmail(lead: LeadData, messages: ChatMsg[]): Promise<b
     });
 
     if (error) {
-      console.error("Resend error (chat lead):", error);
+      console.error("[Alma] Resend error (chat lead):", JSON.stringify(error));
       return false;
     }
+    console.log("[Alma] Email del lead enviado ✅ →", to);
     return true;
   } catch (err) {
-    console.error("Email notify error (chat lead):", err);
+    console.error("[Alma] Email notify error (chat lead):", err);
+    return false;
+  }
+}
+
+// ── Avisos push instantáneos (opcionales, con variables de entorno) ─────────
+// Telegram: gratuito y disponible ya (canal recomendado para aviso inmediato).
+// CallMeBot: WhatsApp real hacia el número de Wilson (requiere apikey propia;
+// el bot gratuito estuvo sin cupos — si se activa, solo agregar las env vars).
+
+function leadText(lead: LeadData): string {
+  return [
+    "🔔 NUEVO LEAD — Alma (portafolio)",
+    "",
+    `👤 Nombre: ${lead.name}`,
+    `📞 Contacto: ${lead.contact}`,
+    `💰 Presupuesto: ${lead.budget || "No indicó"}`,
+    `💬 Necesidad: ${lead.need}`,
+    "",
+    `Hora: ${new Date().toLocaleString("es-CO", { timeZone: "America/Bogota" })}`,
+  ].join("\n");
+}
+
+async function notifyByTelegram(lead: LeadData): Promise<boolean> {
+  const token = process.env.TELEGRAM_BOT_TOKEN;
+  const chatId = process.env.TELEGRAM_CHAT_ID;
+  if (!token || !chatId) {
+    console.log("[Alma] Telegram no configurado (TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID) — sin aviso por Telegram");
+    return false;
+  }
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8000);
+    const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ chat_id: chatId, text: leadText(lead) }),
+      signal: controller.signal,
+    });
+    clearTimeout(timeout);
+    if (!res.ok) {
+      const t = await res.text().catch(() => "");
+      console.error(`[Alma] Telegram error ${res.status}:`, t.slice(0, 300));
+      return false;
+    }
+    console.log("[Alma] Aviso por Telegram enviado ✅");
+    return true;
+  } catch (err) {
+    console.error("[Alma] Telegram excepción:", err);
+    return false;
+  }
+}
+
+async function notifyByCallMeBot(lead: LeadData): Promise<boolean> {
+  const phone = process.env.CALLMEBOT_PHONE; // formato +573012821174
+  const apikey = process.env.CALLMEBOT_APIKEY;
+  if (!phone || !apikey) {
+    console.log("[Alma] CallMeBot no configurado (CALLMEBOT_PHONE / CALLMEBOT_APIKEY) — sin aviso por WhatsApp");
+    return false;
+  }
+  try {
+    const url = `https://api.callmebot.com/whatsapp.php?phone=${encodeURIComponent(
+      phone
+    )}&text=${encodeURIComponent(leadText(lead))}&apikey=${encodeURIComponent(apikey)}`;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8000);
+    const res = await fetch(url, { signal: controller.signal });
+    clearTimeout(timeout);
+    const body = await res.text().catch(() => "");
+    if (!res.ok) {
+      console.error(`[Alma] CallMeBot error ${res.status}:`, body.slice(0, 300));
+      return false;
+    }
+    console.log("[Alma] Aviso por WhatsApp (CallMeBot) enviado ✅");
+    return true;
+  } catch (err) {
+    console.error("[Alma] CallMeBot excepción:", err);
     return false;
   }
 }
@@ -282,6 +359,15 @@ export async function POST(request: Request) {
     // Extraer lead si viene
     const { visibleReply, lead } = extractLead(rawReply);
 
+    // Diagnóstico: la IA intentó capturar un lead pero los datos no pasaron
+    // la validación (falta nombre, contacto válido o necesidad).
+    if (!lead && rawReply.includes(LEAD_MARKER)) {
+      console.warn(
+        "[Alma] Marcador @@LEAD@@ presente pero inválido. Cola de la respuesta:",
+        rawReply.slice(-400)
+      );
+    }
+
     // Historial completo para el email del lead
     const fullHistory: ChatMsg[] = [...history];
     if (lead) {
@@ -289,17 +375,53 @@ export async function POST(request: Request) {
     }
 
     let leadSaved = false;
+    const channels: Record<string, boolean | null> = {
+      email: null,
+      telegram: null,
+      whatsapp_callmebot: null,
+    };
+
     if (lead) {
-      leadSaved = await notifyLeadByEmail(lead, fullHistory);
+      console.log("[Alma] Lead detectado:", JSON.stringify(lead));
+
+      // Email (canal principal) + avisos push opcionales, en paralelo
+      const [emailRes, tgRes, cbRes] = await Promise.allSettled([
+        notifyLeadByEmail(lead, fullHistory),
+        notifyByTelegram(lead),
+        notifyByCallMeBot(lead),
+      ]);
+
+      const emailOk = emailRes.status === "fulfilled" ? emailRes.value : false;
+      const telegramOk = tgRes.status === "fulfilled" ? tgRes.value : false;
+      const callmebotOk = cbRes.status === "fulfilled" ? cbRes.value : false;
+
+      channels.email = emailOk;
+      channels.telegram = telegramOk;
+      channels.whatsapp_callmebot = callmebotOk;
+
+      leadSaved = emailOk || telegramOk || callmebotOk;
+
+      if (!emailOk) {
+        console.error(
+          "[Alma] ⚠️ Email del lead NO enviado — corre /api/chat-diagnostics?key=TU_CLAVE o revisa resend.com → Logs:",
+          JSON.stringify(lead)
+        );
+      }
       if (!leadSaved) {
-        console.error("Lead NO notificado por email (falló Resend):", JSON.stringify(lead));
+        // Copia de seguridad: el lead completo queda en los logs de Vercel
+        console.error(
+          "[Alma] ⚠️⚠️ Lead NO entregado por ningún canal. Copia para contacto manual:",
+          JSON.stringify(lead)
+        );
       }
     }
 
     return NextResponse.json({
       reply: visibleReply || FALLBACK_REPLY,
       leadSaved,
+      leadCaptured: !!lead,
       leadName: lead?.name || null,
+      channels,
     });
   } catch (error) {
     console.error("API chat error:", error);
