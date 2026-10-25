@@ -7,7 +7,7 @@
  * ============================================================
  *  v2.0: chat con IA (Groq) + captura de leads (@@LEAD@@)
  *  v2.1: estados saved/pending de entrega + WhatsApp directo
- *  v2.2: NUEVO — botón "Generar mi propuesta" que abre el
+ *  v2.2: NUEVO — botón "Solicitar mi propuesta" que abre el
  *        formulario prellenado; el borrador va al email de
  *        Wilson para su aprobación (nunca se envía solo)
  * ============================================================
@@ -42,6 +42,7 @@ export default function ChatWidget() {
   const [leadState, setLeadState] = useState(null); // "saved" | "pending" | null
   const [leadNombre, setLeadNombre] = useState("");
   const [showPropuesta, setShowPropuesta] = useState(false);
+  const [yaAbrio, setYaAbrio] = useState(false); // controla el badge de notificación
   const finMensajesRef = useRef(null);
 
   /* ---------------- Persistencia (sessionStorage) ---------------- */
@@ -161,7 +162,10 @@ export default function ChatWidget() {
       {/* Botón flotante */}
       <button
         onClick={() => {
-          if (!open) loadHistory(); // restaura la conversación al abrir
+          if (!open) {
+            loadHistory(); // restaura la conversación al abrir
+            setYaAbrio(true); // apaga la notificación pendiente
+          }
           setOpen((v) => !v);
         }}
         aria-label={open ? "Cerrar chat" : "Abrir chat con Alma"}
@@ -170,6 +174,11 @@ export default function ChatWidget() {
         {open ? <FaTimes className="text-xl" /> : <FaFeatherAlt className="text-xl" />}
         {!open && (
           <span className="absolute inset-0 rounded-full bg-[#C2B280] animate-ping opacity-20 pointer-events-none" />
+        )}
+        {!open && !yaAbrio && (
+          <span className="absolute -top-1 -right-1 min-w-[20px] h-5 px-1 rounded-full bg-[#25D366] text-black text-[11px] font-bold flex items-center justify-center shadow-lg pointer-events-none">
+            1
+          </span>
         )}
       </button>
 
@@ -261,7 +270,7 @@ export default function ChatWidget() {
                     onClick={() => setShowPropuesta(true)}
                     className="w-full bg-[#C2B280] hover:bg-[#d4c69a] text-black font-bold text-xs py-2.5 rounded-lg transition flex items-center justify-center gap-1.5"
                   >
-                    📝 Generar mi propuesta con IA
+                    📝 Solicitar mi propuesta
                   </button>
                 </div>
               )}
@@ -285,7 +294,7 @@ export default function ChatWidget() {
                     onClick={() => setShowPropuesta(true)}
                     className="w-full bg-[#C2B280] hover:bg-[#d4c69a] text-black font-bold text-xs py-2.5 rounded-lg transition flex items-center justify-center gap-1.5"
                   >
-                    📝 Generar mi propuesta con IA
+                    📝 Solicitar mi propuesta
                   </button>
                 </div>
               )}

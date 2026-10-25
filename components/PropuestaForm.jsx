@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * PropuestaForm — formulario "Generar mi propuesta con IA"
+ * PropuestaForm — formulario "Solicitar propuesta personalizada"
  * ============================================================
  * Se abre desde el chat de Alma cuando el lead ya fue capturado.
  * - Prellenado con lo que el cliente ya contó (nombre + detalle)
@@ -90,8 +90,8 @@ export default function PropuestaForm({ lead, historial, onClose }) {
               <FaFeatherAlt />
             </div>
             <div>
-              <h3 className="text-white font-bold leading-tight">Propuesta con IA</h3>
-              <p className="text-gray-500 text-xs">En minutos, con los precios reales de Wilson</p>
+              <h3 className="text-white font-bold leading-tight">Solicita tu propuesta</h3>
+              <p className="text-gray-500 text-xs">Wilson la prepara con sus precios reales y la envía por WhatsApp</p>
             </div>
           </div>
           <button
@@ -203,12 +203,13 @@ export default function PropuestaForm({ lead, historial, onClose }) {
                 type="submit"
                 className="w-full bg-[#C2B280] hover:bg-[#d4c69a] text-black font-bold py-3.5 rounded-xl transition text-sm flex items-center justify-center gap-2"
               >
-                <FaFeatherAlt /> Generar mi propuesta ✨
+                <FaFeatherAlt /> Enviar mi solicitud ✨
               </button>
 
               <p className="text-gray-600 text-[11px] text-center leading-relaxed">
-                Wilson revisa cada propuesta antes de enviarla. Tu información solo se usa para
-                cotizar, nunca se comparte.
+                Wilson revisa tu solicitud personalmente y te envía la propuesta
+                por WhatsApp. Tu información solo se usa para cotizar, nunca se
+                comparte.
               </p>
             </form>
           )}
@@ -217,7 +218,7 @@ export default function PropuestaForm({ lead, historial, onClose }) {
           {estado === "loading" && (
             <div className="text-center py-10">
               <div className="w-14 h-14 mx-auto mb-6 rounded-full border-2 border-[#333] border-t-[#C2B280] animate-spin" />
-              <p className="text-white font-semibold mb-2">Alma está redactando tu propuesta…</p>
+              <p className="text-white font-semibold mb-2">Alma está preparando tu solicitud…</p>
               <p className="text-gray-500 text-xs">
                 Está revisando tu proyecto y los servicios de Wilson.
                 <br />
@@ -238,30 +239,12 @@ export default function PropuestaForm({ lead, historial, onClose }) {
                   Te escribirá por WhatsApp muy pronto 🚀
                 </span>
               </p>
-              <a
-                href={`https://wa.me/${WILSON_WA}?text=${encodeURIComponent(
-                  `Hola Wilson! Soy ${nombre}, acabo de pedir una propuesta en tu portafolio 👋`
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() =>
-                  trackMetaEvent("Contact", {
-                    content_name: "chat_propuesta_whatsapp",
-                    status: "whatsapp_clicked",
-                  })
-                }
-                className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#1fb857] text-black font-semibold text-sm py-3 px-6 rounded-xl transition mb-3"
+              <button
+                onClick={onClose}
+                className="bg-[#C2B280] hover:bg-[#d4c69a] text-black font-semibold text-sm py-3 px-8 rounded-xl transition"
               >
-                <FaWhatsapp /> Hablar con Wilson mientras tanto
-              </a>
-              <div>
-                <button
-                  onClick={onClose}
-                  className="text-gray-500 hover:text-gray-300 text-xs underline mt-3 transition"
-                >
-                  Volver al chat
-                </button>
-              </div>
+                Entendido, listo ✅
+              </button>
             </div>
           )}
 
