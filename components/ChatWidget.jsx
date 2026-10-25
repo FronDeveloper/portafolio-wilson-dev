@@ -61,10 +61,8 @@ export default function ChatWidget() {
       /* historial corrupto: se ignora y arranca limpio */
     }
   };
-
-  useEffect(() => {
-    if (open) loadHistory();
-  }, [open]);
+  // Nota: la carga del historial se hace en el onClick del botón
+  // flotante (setState desde event handler, no dentro de un effect).
 
   useEffect(() => {
     try {
@@ -105,7 +103,7 @@ export default function ChatWidget() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           message: contenido,
-          history: nuevos.slice(-12),
+          messages: nuevos.slice(-12),
         }),
       });
       const data = await res.json();
@@ -162,7 +160,10 @@ export default function ChatWidget() {
     <>
       {/* Botón flotante */}
       <button
-        onClick={() => setOpen((v) => !v)}
+        onClick={() => {
+          if (!open) loadHistory(); // restaura la conversación al abrir
+          setOpen((v) => !v);
+        }}
         aria-label={open ? "Cerrar chat" : "Abrir chat con Alma"}
         className="fixed bottom-6 right-6 z-[70] w-14 h-14 rounded-full bg-gradient-to-br from-[#C2B280] to-[#9a8a5e] text-black shadow-xl shadow-black/40 flex items-center justify-center hover:scale-110 active:scale-95 transition"
       >
