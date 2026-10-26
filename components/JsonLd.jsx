@@ -17,26 +17,29 @@
 
 const SITE_URL = "https://wvalencia-dev.vercel.app";
 
-// Servicios con los precios reales del portafolio (coherentes con
-// la home y con el generador de propuestas de Alma)
+// Servicios con los precios reales del portafolio, en ambas monedas
+// (coherentes con la home, con el chatbot de Alma y con las propuestas)
 const SERVICIOS = [
   {
     nombre: "Landing Page / Sitio web profesional",
     descripcion:
       "Landing page o sitio institucional responsive con SEO básico, formulario de contacto y entrega en 5-7 días.",
-    precio: 1200000,
+    cop: 1200000,
+    usd: 300,
   },
   {
     nombre: "E-commerce / Tienda online",
     descripcion:
       "Tienda online con catálogo, carrito, pasarelas de pago colombianas (Wompi, PSE, Efecty) y panel de administración.",
-    precio: 3200000,
+    cop: 3200000,
+    usd: 800,
   },
   {
     nombre: "Aplicación web a medida",
     descripcion:
       "Sistema de gestión, SaaS o dashboard con panel administrativo, base de datos propia y despliegue incluido.",
-    precio: 6000000,
+    cop: 6000000,
+    usd: 1500,
   },
 ];
 
@@ -91,7 +94,7 @@ export default function JsonLd() {
           "Desarrollo de software a medida en Colombia: landing pages, tiendas online y sistemas de gestión empresarial. Cotización en menos de 24 horas.",
         email: "wilson.arroyo12@gmail.com",
         telephone: "+57 301 2821174",
-        priceRange: "COP $1.200.000 - $6.000.000+",
+        priceRange: "COP $1.200.000 - $6.000.000 · USD $300 - $1.500",
         areaServed: {
           "@type": "Country",
           name: "Colombia",
@@ -112,22 +115,42 @@ export default function JsonLd() {
         hasOfferCatalog: {
           "@type": "OfferCatalog",
           name: "Servicios de desarrollo web y móvil",
-          itemListElement: SERVICIOS.map((s) => ({
-            "@type": "Offer",
-            itemOffered: {
-              "@type": "Service",
-              name: s.nombre,
-              description: s.descripcion,
-            },
-            priceCurrency: "COP",
-            price: s.precio,
-            priceSpecification: {
-              "@type": "PriceSpecification",
+          // Dos ofertas por servicio: una en COP (Colombia) y una en USD
+          // (internacional), igual que muestra el portafolio al visitante.
+          itemListElement: SERVICIOS.flatMap((s) => [
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: s.nombre,
+                description: s.descripcion,
+              },
               priceCurrency: "COP",
-              price: s.precio,
-              valueAddedTaxIncluded: false,
+              price: s.cop,
+              priceSpecification: {
+                "@type": "PriceSpecification",
+                priceCurrency: "COP",
+                price: s.cop,
+                valueAddedTaxIncluded: false,
+              },
             },
-          })),
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: s.nombre,
+                description: s.descripcion,
+              },
+              priceCurrency: "USD",
+              price: s.usd,
+              priceSpecification: {
+                "@type": "PriceSpecification",
+                priceCurrency: "USD",
+                price: s.usd,
+                valueAddedTaxIncluded: false,
+              },
+            },
+          ]),
         },
       },
     ],

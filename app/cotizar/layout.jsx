@@ -1,8 +1,6 @@
-import type { Metadata } from "next";
-
 // Metadata de /cotizar — página clave de conversión.
 // El page.jsx es client component, por eso la metadata vive aquí.
-export const metadata: Metadata = {
+export const metadata = {
   title: "Cotiza tu proyecto — Propuesta en menos de 24 horas",
   description:
     "Cotiza tu landing page, tienda online o sistema a medida con Wilson Valencia. Recibe una propuesta clara con precio, plazo y alcance en menos de 24 horas. Sin compromiso.",
@@ -21,10 +19,6 @@ export const metadata: Metadata = {
   },
 };
 
-export default function CotizarLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function CotizarLayout({ children }) {
   return children;
 }

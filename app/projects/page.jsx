@@ -1,9 +1,8 @@
-import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Projects from "@/components/Projects";
 import Footer from "@/components/Footer";
 
-export const metadata: Metadata = {
+export const metadata = {
   title: "Proyectos — E-commerce, SaaS y apps en producción",
   description:
     "Proyectos reales de Wilson Valencia: FlowBill (SaaS de gestión), tiendas online con pasarelas colombianas, dashboards y apps publicadas en Google Play.",

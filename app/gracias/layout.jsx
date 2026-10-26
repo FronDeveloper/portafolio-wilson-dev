@@ -1,8 +1,6 @@
-import type { Metadata } from "next";
-
 // /gracias es una página de conversión post-formulario: no debe
 // aparecer en Google ni competir con la home. Por eso noindex.
-export const metadata: Metadata = {
+export const metadata = {
   title: "¡Gracias! Tu solicitud quedó registrada",
   robots: {
     index: false,
@@ -10,10 +8,6 @@ export const metadata: Metadata = {
   },
 };
 
-export default function GraciasLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function GraciasLayout({ children }) {
   return children;
 }

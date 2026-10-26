@@ -1,8 +1,6 @@
-import type { Metadata } from "next";
-
 // Metadata de /contact — el page.jsx de esta ruta es client component,
 // por eso vive aquí (los layouts server sí pueden exportar metadata).
-export const metadata: Metadata = {
+export const metadata = {
   title: "Contacto — Respuesta en menos de 24 horas",
   description:
     "Escríbele a Wilson Valencia sobre tu proyecto: formulario directo, WhatsApp o correo. Respuesta garantizada en menos de 24 horas hábiles.",
@@ -15,10 +13,6 @@ export const metadata: Metadata = {
   },
 };
 
-export default function ContactLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function ContactLayout({ children }) {
   return children;
 }

@@ -1,8 +1,6 @@
-import type { Metadata } from "next";
-
 // Metadata de /about — el page.jsx de esta ruta es client component,
 // por eso vive aquí (los layouts server sí pueden exportar metadata).
-export const metadata: Metadata = {
+export const metadata = {
   title: "Sobre mí — Desarrollador Full-Stack Freelance en Colombia",
   description:
     "Conoce a Wilson Valencia: desarrollador full-stack freelance en Colombia. Next.js, TypeScript, Supabase y Flutter. Código propio, comunicación directa y entrega puntual.",
@@ -15,10 +13,6 @@ export const metadata: Metadata = {
   },
 };
 
-export default function AboutLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function AboutLayout({ children }) {
   return children;
 }
