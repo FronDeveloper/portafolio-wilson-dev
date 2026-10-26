@@ -4,6 +4,8 @@ import Projects from "@/components/Projects";
 import HowIWork from "@/components/HowIWork";
 import Footer from "@/components/Footer";
 import Link from "next/link";
+import SeccionPrecios from "@/components/SeccionPrecios";
+import Faq from "@/components/Faq";
 
 export default function Home() {
   return (
@@ -195,90 +197,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* PRECIOS */}
-      <section className="px-8 md:px-20 py-16 max-w-5xl mx-auto">
-        <h2 className="text-3xl font-semibold mb-3 text-center">
-          Inversión{" "}
-          <span className="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
-            transparente
-          </span>
-        </h2>
-        <p className="text-gray-500 text-center text-sm mb-10">
-          Precios base orientativos. Cada proyecto se cotiza según necesidades. Sin letras pequeñas.
-        </p>
-        <div className="grid md:grid-cols-3 gap-6">
-          {[
-            {
-              title: "Landing Page",
-              sub: "Ideal para empezar tu presencia online",
-              price: "$300 USD",
-              features: ["Diseño responsive", "Hasta 5 secciones", "Formulario de contacto", "SEO básico", "Entrega 5-7 días", "1 mes de soporte"],
-              highlight: false,
-            },
-            {
-              title: "Ecommerce",
-              sub: "Vende tus productos sin complicaciones",
-              price: "$800 USD",
-              features: ["Catálogo de productos", "Carrito de compras", "Pasarela de pagos", "Panel de administración", "Optimización conversiones", "3 meses de soporte"],
-              highlight: true,
-            },
-            {
-              title: "App a Medida",
-              sub: "Soluciones personalizadas para tu negocio",
-              price: "$1500 USD",
-              features: ["Desarrollo a medida", "Panel de administración", "Base de datos propia", "Integraciones personalizadas", "Despliegue incluido", "6 meses de soporte"],
-              highlight: false,
-            },
-          ].map((plan) => (
-            <div
-              key={plan.title}
-              className={`rounded-xl p-6 border transition-all duration-300 ${
-                plan.highlight
-                  ? "bg-gradient-to-b from-violet-600/10 to-cyan-600/5 border-violet-500/50 shadow-lg shadow-violet-500/10 relative"
-                  : "bg-[#111] border-gray-800 hover:border-gray-600"
-              }`}
-            >
-              {plan.highlight && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-violet-600 to-cyan-600 text-white text-[10px] font-bold px-3 py-1 rounded-full">
-                  RECOMENDADO
-                </span>
-              )}
-              <h3 className="font-bold text-white text-lg mb-1">{plan.title}</h3>
-              <p className="text-gray-500 text-xs mb-4">{plan.sub}</p>
-              <p className="text-3xl font-extrabold mb-1">
-                <span className={plan.highlight
-                  ? "bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent"
-                  : "text-white"
-                }>
-                  desde {plan.price}
-                </span>
-              </p>
-              <p className="text-gray-600 text-xs mb-5">+ IVA</p>
-              <ul className="space-y-2 mb-6">
-                {plan.features.map((f) => (
-                  <li key={f} className="flex items-center gap-2 text-gray-400 text-xs">
-                    <span className={plan.highlight ? "text-violet-400" : "text-green-400"}>✓</span>
-                    {f}
-                  </li>
-                ))}
-              </ul>
-              <Link
-                href="/cotizar"
-                className={`block text-center py-2.5 rounded-xl font-semibold text-sm transition ${
-                  plan.highlight
-                    ? "bg-gradient-to-r from-violet-600 to-cyan-600 text-white hover:opacity-90"
-                    : "border border-gray-700 hover:border-violet-500 hover:text-violet-400"
-                }`}
-              >
-                Solicitar cotización
-              </Link>
-            </div>
-          ))}
-        </div>
-        <p className="text-gray-600 text-xs text-center mt-4">
-          * Los precios son referenciales. Plazos, complejidad e integraciones pueden modificar la cotización.
-        </p>
-      </section>
+      {/* PRECIOS — moneda automática: Colombia ve COP, resto del mundo USD */}
+      <SeccionPrecios />
+
+      {/* FAQ — acordeón SEO-friendly con schema FAQPage */}
+      <Faq />
 
       {/* CTA FINAL */}
       <section className="px-8 md:px-20 py-16 max-w-5xl mx-auto">
