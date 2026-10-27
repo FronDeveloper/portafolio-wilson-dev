@@ -3,12 +3,8 @@
 import { motion } from "framer-motion";
 import { FaLinkedin, FaGithub } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
-import { Playfair_Display } from "next/font/google";
-
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  weight: ["600", "700"],
-});
+import Link from "next/link";
+import { playfair } from "@/lib/fonts";
 
 export default function Hero() {
   return (
@@ -81,15 +77,15 @@ export default function Hero() {
           className="mt-8 flex gap-8 text-sm"
         >
           {[
-            { value: "7+", label: "Proyectos en producción" },
-            { value: "500+", label: "Usuarios activos" },
+            { value: "9", label: "Casos de estudio" },
             { value: "<24h", label: "Tiempo de respuesta" },
+            { value: "100%", label: "Trabajo remoto" },
           ].map((k) => (
             <div key={k.label}>
               <p className="text-2xl font-bold bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
                 {k.value}
               </p>
-              <p className="text-gray-500 text-xs">{k.label}</p>
+              <p className="text-gray-400 text-xs">{k.label}</p>
             </div>
           ))}
         </motion.div>
@@ -101,18 +97,18 @@ export default function Hero() {
           transition={{ delay: 0.4, duration: 0.6 }}
           className="mt-8 flex gap-4 flex-wrap"
         >
-          <a
+          <Link
             href="/projects"
             className="px-6 py-3 bg-gradient-to-r from-violet-600 to-cyan-600 text-white font-semibold rounded-xl hover:opacity-90 transition hover:scale-105 transform shadow-lg shadow-violet-500/25"
           >
             Ver casos de estudio
-          </a>
-          <a
+          </Link>
+          <Link
             href="/cotizar"
             className="px-6 py-3 border border-gray-600 rounded-xl hover:border-violet-500 hover:text-violet-400 transition hover:scale-105 transform"
           >
             Cotizar mi proyecto
-          </a>
+          </Link>
         </motion.div>
       </div>
 
@@ -127,23 +123,26 @@ export default function Hero() {
           href="https://www.linkedin.com/in/wilson-valencia-939069408/"
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Perfil de LinkedIn de Wilson Valencia"
           className="hover:text-violet-400 transition hover:scale-110 transform"
         >
-          <FaLinkedin />
+          <FaLinkedin aria-hidden="true" />
         </a>
         <a
           href="https://github.com/FronDeveloper"
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Perfil de GitHub de Wilson Valencia"
           className="hover:text-violet-400 transition hover:scale-110 transform"
         >
-          <FaGithub />
+          <FaGithub aria-hidden="true" />
         </a>
         <a
           href="mailto:wilson.arroyo12@gmail.com"
+          aria-label="Escribir un correo a Wilson Valencia"
           className="hover:text-cyan-400 transition hover:scale-110 transform"
         >
-          <MdEmail />
+          <MdEmail aria-hidden="true" />
         </a>
       </motion.div>
 

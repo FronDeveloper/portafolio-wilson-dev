@@ -1,7 +1,12 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import {
+  getConsent,
+  onConsentChange,
+  type ConsentValue,
+} from "@/lib/analytics/consent";
 
 declare global {
   interface Window {
@@ -9,28 +14,56 @@ declare global {
   }
 }
 
+const rutasEnviadas = new Set<string>();
+
 /**
- * Componente que dispara PageView automáticamente en cada navegación SPA.
- *
- * VERSIÓN SIMPLIFICADA: solo usa usePathname (no useSearchParams)
- * para evitar conflictos con prerender estático de Next.js.
+ * PageView de Meta en cada navegación SPA.
+ * - Solo con consentimiento.
+ * - Espera a que fbq exista (el script se carga después de aceptar).
+ * - Deduplica por ruta para no contar el mismo pageview dos veces.
  */
 export function MetaPixel() {
   const pathname = usePathname();
+  const [consent, setConsent] = useState<ConsentValue | null>(null);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    setConsent(getConsent());
+    return onConsentChange(setConsent);
+  }, []);
+
+  useEffect(() => {
+    if (consent !== "granted") return;
+
+    const ruta = pathname || "/";
+    let cancelado = false;
+    let intentos = 0;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+
+    const intentar = () => {
+      if (cancelado) return;
       if (typeof window.fbq === "function") {
-        window.fbq("track", "PageView");
+        if (!rutasEnviadas.has(ruta)) {
+          rutasEnviadas.add(ruta);
+          window.fbq("track", "PageView");
+          if (process.env.NODE_ENV === "development") {
+            console.debug("[Meta Pixel] PageView:", ruta);
+          }
+        }
+        return;
       }
-
-      if (process.env.NODE_ENV === "development") {
-        console.debug("[Meta Pixel] PageView:", pathname);
+      if (intentos < 40) {
+        intentos += 1;
+        timer = setTimeout(intentar, 100);
       }
-    }, 100);
+    };
 
-    return () => clearTimeout(timer);
-  }, [pathname]);
+    intentar();
+
+    return () => {
+      cancelado = true;
+      if (timer) clearTimeout(timer);
+    };
+  }, [pathname, consent]);
 
   return null;
 }

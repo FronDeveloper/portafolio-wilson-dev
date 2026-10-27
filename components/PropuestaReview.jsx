@@ -15,7 +15,7 @@ import { useMemo, useState } from "react";
 import { FaWhatsapp, FaCopy, FaCheck, FaTrash, FaExternalLinkAlt } from "react-icons/fa";
 import {
   PROYECTO_LABELS,
-  PRESUPUESTO_LABELS,
+  etiquetaPresupuesto,
   fechaBogota,
 } from "@/lib/catalogo";
 
@@ -26,6 +26,8 @@ export default function PropuestaReview({ payload, token }) {
   const [copiado, setCopiado] = useState(false);
   const [aprobada, setAprobada] = useState(false);
   const [descartando, setDescartando] = useState(false);
+  const [descartada, setDescartada] = useState(false);
+  const [errorDescarte, setErrorDescarte] = useState("");
 
   const clienteWa = payload.w || "";
   const tieneWa = clienteWa.length >= 10;
@@ -71,18 +73,66 @@ export default function PropuestaReview({ payload, token }) {
     }
   };
 
-  const descartar = () => {
+  const descartar = async () => {
     if (
-      window.confirm(
-        "¿Descartar esta propuesta? No se enviará nada al cliente y el enlace dejará de funcionar."
+      !window.confirm(
+        "¿Descartar esta propuesta? No se enviará nada al cliente."
       )
     ) {
-      setDescartando(true);
-      window.location.href = `/api/propuesta/descartar?t=${token}`;
+      return;
+    }
+
+    setDescartando(true);
+    setErrorDescarte("");
+
+    try {
+      const res = await fetch("/api/propuesta/descartar", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ t: token }),
+      });
+
+      if (!res.ok) throw new Error("No se pudo registrar el descarte");
+
+      setDescartada(true);
+    } catch {
+      setErrorDescarte(
+        "No se pudo registrar el descarte. Revisa tu conexión e intenta de nuevo."
+      );
+    } finally {
+      setDescartando(false);
     }
   };
 
   const contactoCliente = payload.e ? payload.e : null;
+
+  if (descartada) {
+    return (
+      <div className="max-w-xl mx-auto text-center">
+        <div className="text-5xl mb-4" aria-hidden="true">
+          🗑️
+        </div>
+        <h1 className="text-2xl md:text-3xl font-bold text-white mb-3">
+          Propuesta descartada
+        </h1>
+        <p className="text-gray-300 text-sm leading-relaxed mb-6">
+          No se envió nada a {payload.n || "el cliente"}. Puedes cerrar esta
+          pestaña.
+        </p>
+        <p className="text-gray-400 text-xs leading-relaxed mb-8">
+          Las propuestas no se almacenan en una base de datos: el borrador vive
+          dentro del enlace firmado, así que este enlace seguirá abriéndolo hasta
+          que expire. Simplemente no lo compartas.
+        </p>
+        <a
+          href="https://wvalencia-dev.vercel.app"
+          className="inline-block bg-[#C2B280] hover:bg-[#d4c69a] text-black font-semibold px-6 py-3 rounded-xl transition text-sm"
+        >
+          Volver al portafolio
+        </a>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-2xl mx-auto">
@@ -115,11 +165,11 @@ export default function PropuestaReview({ payload, token }) {
           </div>
           <div>
             <span className="text-gray-500">Presupuesto:</span>{" "}
-            <span className="text-white">{PRESUPUESTO_LABELS[payload.b] || payload.b || "—"}</span>
+            <span className="text-white">{etiquetaPresupuesto(payload.b)}</span>
           </div>
           <div>
             <span className="text-gray-500">Origen del borrador:</span>{" "}
-            <span className="text-[#C2B280]">{payload.m === "ia" ? "IA (Groq)" : "Plantilla"}</span>
+            <span className="text-[#C2B280]">{payload.m === "ia" ? "IA" : "Plantilla"}</span>
           </div>
           {clienteWa ? (
             <div>
@@ -163,6 +213,7 @@ export default function PropuestaReview({ payload, token }) {
           value={texto}
           onChange={(e) => setTexto(e.target.value)}
           rows={16}
+          aria-label="Borrador de la propuesta (editable)"
           className="w-full bg-[#0B0B0B] border border-[#222] focus:border-[#C2B280] rounded-lg p-4 text-gray-200 text-sm leading-relaxed resize-y outline-none transition-colors"
           placeholder="Escribe o ajusta la propuesta…"
         />
@@ -221,7 +272,13 @@ export default function PropuestaReview({ payload, token }) {
       )}
 
       {/* Pie */}
-      <p className="text-center text-gray-600 text-xs mt-8">
+      {errorDescarte && (
+        <p className="text-red-400 text-xs text-center mb-6" role="alert">
+          {errorDescarte}
+        </p>
+      )}
+
+      <p className="text-center text-gray-400 text-xs mt-8">
         Wilson Valencia Dev · Fase 2 — Propuestas con aprobación ·{" "}
         <a
           href="https://wvalencia-dev.vercel.app"

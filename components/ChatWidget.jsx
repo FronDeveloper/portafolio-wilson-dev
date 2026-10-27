@@ -2,30 +2,37 @@
 
 /**
  * ============================================================
- *  Alma v2.2 — ChatWidget con generador de propuestas (FASE 2)
- *  Wilson Valencia Dev
+ *  Alma v2.3 — ChatWidget
  * ============================================================
- *  v2.0: chat con IA (Groq) + captura de leads (@@LEAD@@)
- *  v2.1: estados saved/pending de entrega + WhatsApp directo
- *  v2.2: NUEVO — botón "Solicitar mi propuesta" que abre el
- *        formulario prellenado; el borrador va al email de
- *        Wilson para su aprobación (nunca se envía solo)
+ *  - Historial en localStorage v2 con expiración de 7 días
+ *  - Hidratación antes de volver a guardar (no se sobrescribe)
+ *  - Botón para borrar la conversación
+ *  - Prellena la propuesta con nombre, contacto y presupuesto
+ *  - Envía UTM + página de origen al capturar el lead
  * ============================================================
  */
 
 import { useState, useEffect, useRef } from "react";
+import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   FaFeatherAlt,
   FaTimes,
   FaPaperPlane,
   FaWhatsapp,
+  FaTrash,
+  FaLock,
 } from "react-icons/fa";
 import PropuestaForm from "./PropuestaForm";
-import { trackMetaEvent } from "@/lib/analytics/meta-events";
+import {
+  trackMetaEvent,
+  getAttribution,
+} from "@/lib/analytics/meta-events";
 
 const WHATSAPP_PHONE = "573012821174";
-const STORAGE_KEY = "alma_chat_v1";
+const STORAGE_KEY = "alma_chat_v2";
+const STORAGE_TTL = 1000 * 60 * 60 * 24 * 7; // 7 días
+const MAX_MENSAJES = 40;
 
 const SUGERENCIAS = [
   "Quiero una landing page",
@@ -34,56 +41,109 @@ const SUGERENCIAS = [
   "Hablar con Wilson",
 ];
 
+/** @typedef {{ role: "user" | "assistant", content: string }} Mensaje */
+/** @typedef {{ nombre: string, contacto: string, presupuesto: string, necesidad: string }} LeadGuardado */
+
+/** @type {LeadGuardado} */
+const LEAD_VACIO = {
+  nombre: "",
+  contacto: "",
+  presupuesto: "",
+  necesidad: "",
+};
+
 export default function ChatWidget() {
   const [open, setOpen] = useState(false);
   const [mensajes, setMensajes] = useState([]);
   const [input, setInput] = useState("");
   const [enviando, setEnviando] = useState(false);
-  const [leadState, setLeadState] = useState(null); // "saved" | "pending" | null
-  const [leadNombre, setLeadNombre] = useState("");
+  const [leadState, setLeadState] = useState(null);
+  const [lead, setLead] = useState(LEAD_VACIO);
   const [showPropuesta, setShowPropuesta] = useState(false);
-  const [yaAbrio, setYaAbrio] = useState(false); // controla el badge de notificación
+  const [hidratado, setHidratado] = useState(false);
   const finMensajesRef = useRef(null);
+  const leadTrackedRef = useRef(false);
 
-  /* ---------------- Persistencia (sessionStorage) ---------------- */
-
-  const loadHistory = () => {
-    try {
-      const raw = sessionStorage.getItem(STORAGE_KEY);
-      if (!raw) return;
-      const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed?.mensajes) && parsed.mensajes.length) {
-        setMensajes(parsed.mensajes);
-      }
-      // Compat hacia atrás con la v2.1 (leadSaved booleano)
-      setLeadState(parsed.leadState || (parsed.leadSaved ? "saved" : null));
-      if (parsed?.lead?.nombre) setLeadNombre(parsed.lead.nombre);
-    } catch {
-      /* historial corrupto: se ignora y arranca limpio */
-    }
-  };
-  // Nota: la carga del historial se hace en el onClick del botón
-  // flotante (setState desde event handler, no dentro de un effect).
+  /* ---------------- Hidratación (una sola vez) ---------------- */
 
   useEffect(() => {
     try {
-      sessionStorage.setItem(
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        const vigente =
+          parsed?.v === 2 &&
+          typeof parsed.ts === "number" &&
+          Date.now() - parsed.ts < STORAGE_TTL;
+
+        if (vigente) {
+          if (Array.isArray(parsed.mensajes)) {
+            setMensajes(
+              parsed.mensajes
+                .filter(
+                  (m) =>
+                    !!m &&
+                    typeof m === "object" &&
+                    (m.role === "user" || m.role === "assistant") &&
+                    typeof m.content === "string"
+                )
+                .slice(-MAX_MENSAJES)
+            );
+          }
+          if (parsed.leadState === "saved" || parsed.leadState === "pending") {
+            setLeadState(parsed.leadState);
+            leadTrackedRef.current = true;
+          }
+          if (parsed.lead && typeof parsed.lead === "object") {
+            setLead({
+              nombre: String(parsed.lead.nombre || "").slice(0, 80),
+              contacto: String(parsed.lead.contacto || "").slice(0, 120),
+              presupuesto: String(parsed.lead.presupuesto || "").slice(0, 80),
+              necesidad: String(parsed.lead.necesidad || "").slice(0, 500),
+            });
+          }
+        } else {
+          localStorage.removeItem(STORAGE_KEY);
+        }
+      }
+    } catch {
+      /* historial corrupto o modo privado: arranca limpio */
+    } finally {
+      setHidratado(true);
+    }
+  }, []);
+
+  /* ---------------- Persistencia (solo después de hidratar) ---------------- */
+
+  useEffect(() => {
+    if (!hidratado) return;
+    try {
+      if (mensajes.length === 0 && !leadState) {
+        localStorage.removeItem(STORAGE_KEY);
+        return;
+      }
+      localStorage.setItem(
         STORAGE_KEY,
         JSON.stringify({
-          mensajes: mensajes.slice(-50),
-          leadState,
-          lead: { nombre: leadNombre },
+          v: 2,
           ts: Date.now(),
+          mensajes: mensajes.slice(-MAX_MENSAJES),
+          leadState,
+          lead,
         })
       );
     } catch {
       /* modo privado / sin espacio: silencio */
     }
-  }, [mensajes, leadState, leadNombre]);
+  }, [mensajes, leadState, lead, hidratado]);
 
   useEffect(() => {
     if (finMensajesRef.current) {
-      finMensajesRef.current.scrollIntoView({ behavior: "smooth" });
+      finMensajesRef.current.scrollIntoView({
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "auto"
+          : "smooth",
+      });
     }
   }, [mensajes, enviando, open]);
 
@@ -105,6 +165,10 @@ export default function ChatWidget() {
         body: JSON.stringify({
           message: contenido,
           messages: nuevos.slice(-12),
+          origin: {
+            ...getAttribution(),
+            page: window.location.pathname,
+          },
         }),
       });
       const data = await res.json();
@@ -116,12 +180,21 @@ export default function ChatWidget() {
 
       if (data?.leadCaptured) {
         setLeadState(data.leadSaved ? "saved" : "pending");
-        if (data.leadName) setLeadNombre(data.leadName);
-        trackMetaEvent("Lead", {
-          content_name: "alma_chat",
-          content_category: "Chatbot",
-          status: data.leadSaved ? "lead_captured" : "lead_pending_delivery",
+        setLead({
+          nombre: data.leadName || lead.nombre,
+          contacto: data.leadContact || lead.contacto,
+          presupuesto: data.leadBudget || lead.presupuesto,
+          necesidad: data.leadNeed || lead.necesidad,
         });
+
+        if (!leadTrackedRef.current) {
+          leadTrackedRef.current = true;
+          trackMetaEvent("Lead", {
+            content_name: "alma_chat",
+            content_category: "Chatbot",
+            status: data.leadSaved ? "lead_captured" : "lead_pending_delivery",
+          });
+        }
       }
     } catch {
       setMensajes([
@@ -138,8 +211,8 @@ export default function ChatWidget() {
   };
 
   const whatsappDirecto = () => {
-    const saludo = leadNombre
-      ? `Hola Wilson! Soy ${leadNombre}, acabo de hablar con Alma en tu portafolio 👋`
+    const saludo = lead.nombre
+      ? `Hola Wilson! Soy ${lead.nombre}, acabo de hablar con Alma en tu portafolio 👋`
       : "Hola Wilson! Vi tu portafolio y quiero hablar de mi proyecto 👋";
     window.open(
       `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(saludo)}`,
@@ -148,12 +221,39 @@ export default function ChatWidget() {
     );
   };
 
-  // Últimos mensajes del cliente para prellenar el detalle del formulario
-  const detallePrefill = mensajes
-    .filter((m) => m.role === "user")
-    .slice(-2)
-    .map((m) => m.content)
-    .join("\n");
+  const limpiarConversacion = () => {
+    const ok = window.confirm(
+      "¿Borrar la conversación guardada en este navegador? Esta acción no se puede deshacer."
+    );
+    if (!ok) return;
+    setMensajes([]);
+    setLeadState(null);
+    setLead(LEAD_VACIO);
+    leadTrackedRef.current = false;
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch {
+      /* silencio */
+    }
+  };
+
+  // Detalle para prellenar el formulario de propuesta
+  const detallePrefill =
+    lead.necesidad ||
+    mensajes
+      .filter((m) => m.role === "user")
+      .slice(-2)
+      .map((m) => m.content)
+      .join("\n");
+
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (open) {
+      const timer = setTimeout(() => inputRef.current?.focus(), 250);
+      return () => clearTimeout(timer);
+    }
+  }, [open]);
 
   /* ---------------- UI ---------------- */
 
@@ -161,24 +261,14 @@ export default function ChatWidget() {
     <>
       {/* Botón flotante */}
       <button
-        onClick={() => {
-          if (!open) {
-            loadHistory(); // restaura la conversación al abrir
-            setYaAbrio(true); // apaga la notificación pendiente
-          }
-          setOpen((v) => !v);
-        }}
-        aria-label={open ? "Cerrar chat" : "Abrir chat con Alma"}
-        className="fixed bottom-6 right-6 z-[70] w-14 h-14 rounded-full bg-gradient-to-br from-[#C2B280] to-[#9a8a5e] text-black shadow-xl shadow-black/40 flex items-center justify-center hover:scale-110 active:scale-95 transition"
+        onClick={() => setOpen((v) => !v)}
+        aria-label={open ? "Cerrar chat con Alma" : "Abrir chat con Alma"}
+        aria-expanded={open}
+        className="fixed bottom-6 right-6 z-[70] w-14 h-14 rounded-full bg-gradient-to-br from-[#C2B280] to-[#9a8a5e] text-black shadow-xl shadow-black/40 flex items-center justify-center hover:scale-110 active:scale-95 transition motion-reduce:transform-none"
       >
         {open ? <FaTimes className="text-xl" /> : <FaFeatherAlt className="text-xl" />}
         {!open && (
-          <span className="absolute inset-0 rounded-full bg-[#C2B280] animate-ping opacity-20 pointer-events-none" />
-        )}
-        {!open && !yaAbrio && (
-          <span className="absolute -top-1 -right-1 min-w-[20px] h-5 px-1 rounded-full bg-[#25D366] text-black text-[11px] font-bold flex items-center justify-center shadow-lg pointer-events-none">
-            1
-          </span>
+          <span className="absolute inset-0 rounded-full bg-[#C2B280] animate-ping opacity-20 pointer-events-none motion-reduce:animate-none" />
         )}
       </button>
 
@@ -190,40 +280,63 @@ export default function ChatWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 24, scale: 0.96 }}
             transition={{ duration: 0.22, ease: "easeOut" }}
-            className="fixed z-[70] bottom-24 right-4 sm:right-6 w-[calc(100vw-2rem)] max-w-[380px] h-[min(600px,calc(100vh-9rem))] bg-[#0B0B0B] border border-[#333] rounded-2xl shadow-2xl shadow-black/60 flex flex-col overflow-hidden"
+            className="fixed z-[70] bottom-24 right-4 sm:right-6 w-[calc(100vw-2rem)] max-w-[400px] h-[min(620px,calc(100vh-8rem))] bg-[#0B0B0B] border border-[#333] rounded-2xl shadow-2xl shadow-black/60 flex flex-col overflow-hidden"
+            role="dialog"
+            aria-label="Chat con Alma, asistente virtual"
           >
             {/* Encabezado */}
             <div className="flex items-center gap-3 px-4 py-3.5 border-b border-[#222] bg-[#111]/60">
               <div className="w-10 h-10 rounded-full bg-[#C2B280]/15 border border-[#C2B280]/40 flex items-center justify-center text-[#C2B280]">
-                <FaFeatherAlt />
+                <FaFeatherAlt aria-hidden="true" />
               </div>
-              <div className="flex-1">
+              <div className="flex-1 min-w-0">
                 <p className="text-white font-semibold text-sm leading-tight">Alma</p>
-                <p className="text-gray-500 text-xs flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-green-400 inline-block" />
-                  tu asistente virtual
+                <p className="text-gray-400 text-xs flex items-center gap-1.5">
+                  <span
+                    className="w-1.5 h-1.5 rounded-full bg-green-400 inline-block"
+                    aria-hidden="true"
+                  />
+                  asistente virtual · IA
                 </p>
               </div>
+              {mensajes.length > 0 && (
+                <button
+                  onClick={limpiarConversacion}
+                  aria-label="Borrar conversación"
+                  title="Borrar conversación"
+                  className="text-gray-400 hover:text-red-400 transition p-1.5"
+                >
+                  <FaTrash className="text-sm" />
+                </button>
+              )}
               <button
                 onClick={() => setOpen(false)}
-                aria-label="Cerrar"
-                className="text-gray-500 hover:text-white transition p-1"
+                aria-label="Cerrar chat"
+                className="text-gray-400 hover:text-white transition p-1.5"
               >
                 <FaTimes />
               </button>
             </div>
 
             {/* Mensajes */}
-            <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3">
+            <div
+              className="flex-1 overflow-y-auto px-4 py-4 space-y-3"
+              role="log"
+              aria-live="polite"
+              aria-relevant="additions"
+            >
               {mensajes.length === 0 && (
                 <div className="text-center py-8 px-4">
-                  <FaFeatherAlt className="text-3xl text-[#C2B280]/50 mx-auto mb-3" />
-                  <p className="text-gray-300 text-sm font-medium mb-1">
+                  <FaFeatherAlt
+                    className="text-3xl text-[#C2B280]/50 mx-auto mb-3"
+                    aria-hidden="true"
+                  />
+                  <p className="text-gray-200 text-sm font-medium mb-1">
                     ¡Hola! Soy Alma 🕊
                   </p>
-                  <p className="text-gray-500 text-xs leading-relaxed">
-                    Cuéntame qué necesitas para tu proyecto y te orientaré con los
-                    precios y servicios de Wilson.
+                  <p className="text-gray-400 text-xs leading-relaxed">
+                    Cuéntame qué necesitas para tu proyecto y te orientaré con
+                    los precios y servicios de Wilson.
                   </p>
                 </div>
               )}
@@ -248,7 +361,8 @@ export default function ChatWidget() {
               {enviando && (
                 <div className="flex justify-start">
                   <div className="bg-[#1a1a1a] border border-[#262626] px-4 py-3 rounded-2xl rounded-bl-md">
-                    <div className="flex gap-1.5">
+                    <span className="sr-only">Alma está escribiendo</span>
+                    <div className="flex gap-1.5" aria-hidden="true">
                       <span className="w-2 h-2 bg-[#C2B280]/70 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
                       <span className="w-2 h-2 bg-[#C2B280]/70 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
                       <span className="w-2 h-2 bg-[#C2B280]/70 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
@@ -257,50 +371,50 @@ export default function ChatWidget() {
                 </div>
               )}
 
-              {/* Tarjeta verde: lead entregado a Wilson */}
+              {/* Lead entregado a Wilson */}
               {leadState === "saved" && (
                 <div className="bg-[#0d2013] border border-green-500/40 rounded-xl p-4 text-center">
                   <p className="text-green-300 text-sm font-semibold mb-1">
                     ✅ Wilson ya recibió tu mensaje
                   </p>
-                  <p className="text-gray-400 text-xs mb-3">
-                    Te escribirá a tu correo o WhatsApp muy pronto.
+                  <p className="text-gray-300 text-xs mb-3">
+                    Te escribirá al contacto que dejaste.
                   </p>
                   <button
                     onClick={() => setShowPropuesta(true)}
-                    className="w-full bg-[#C2B280] hover:bg-[#d4c69a] text-black font-bold text-xs py-2.5 rounded-lg transition flex items-center justify-center gap-1.5"
+                    className="w-full bg-[#C2B280] hover:bg-[#d4c69a] text-black font-bold text-xs py-2.5 rounded-lg transition"
                   >
                     📝 Solicitar mi propuesta
                   </button>
                 </div>
               )}
 
-              {/* Tarjeta ámbar: lead registrado, entrega sin confirmar */}
+              {/* Lead registrado, entrega sin confirmar */}
               {leadState === "pending" && (
                 <div className="bg-[#231d0d] border border-[#C2B280]/40 rounded-xl p-4 text-center">
                   <p className="text-[#C2B280] text-sm font-semibold mb-1">
                     📩 Tu mensaje quedó registrado
                   </p>
-                  <p className="text-gray-400 text-xs mb-3">
+                  <p className="text-gray-300 text-xs mb-3">
                     Para respuesta inmediata, escríbele directo:
                   </p>
                   <button
                     onClick={whatsappDirecto}
                     className="w-full bg-[#25D366] hover:bg-[#1fb857] text-black font-bold text-xs py-2.5 rounded-lg transition flex items-center justify-center gap-1.5 mb-2"
                   >
-                    <FaWhatsapp /> WhatsApp directo
+                    <FaWhatsapp aria-hidden="true" /> WhatsApp directo
                   </button>
                   <button
                     onClick={() => setShowPropuesta(true)}
-                    className="w-full bg-[#C2B280] hover:bg-[#d4c69a] text-black font-bold text-xs py-2.5 rounded-lg transition flex items-center justify-center gap-1.5"
+                    className="w-full bg-[#C2B280] hover:bg-[#d4c69a] text-black font-bold text-xs py-2.5 rounded-lg transition"
                   >
                     📝 Solicitar mi propuesta
                   </button>
                 </div>
               )}
 
-              {/* Chips de sugerencias (solo si aún no hay lead) */}
-              {!leadState && (
+              {/* Chips de sugerencias */}
+              {!leadState && mensajes.length === 0 && (
                 <div className="flex flex-wrap gap-2 pt-1">
                   {SUGERENCIAS.map((s) => (
                     <button
@@ -322,13 +436,20 @@ export default function ChatWidget() {
             <div className="p-3 border-t border-[#222] bg-[#111]/60">
               <div className="flex items-center gap-2">
                 <input
+                  ref={inputRef}
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && enviarMensaje()}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                      e.preventDefault();
+                      enviarMensaje();
+                    }
+                  }}
                   placeholder="Escribe tu mensaje…"
                   maxLength={600}
-                  className="flex-1 bg-[#0B0B0B] border border-[#333] focus:border-[#C2B280] rounded-full px-4 py-2.5 text-sm text-white outline-none transition-colors"
+                  aria-label="Escribe tu mensaje a Alma"
+                  className="flex-1 min-w-0 bg-[#0B0B0B] border border-[#333] focus:border-[#C2B280] rounded-full px-4 py-2.5 text-sm text-white outline-none transition-colors"
                 />
                 <button
                   onClick={() => enviarMensaje()}
@@ -339,15 +460,31 @@ export default function ChatWidget() {
                   <FaPaperPlane className="text-sm" />
                 </button>
               </div>
+
+              <p className="text-[10px] text-gray-400 leading-snug mt-2 flex items-start gap-1.5">
+                <FaLock className="mt-0.5 shrink-0" aria-hidden="true" />
+                <span>
+                  Si dejas tu contacto, la conversación se envía por correo a
+                  Wilson para responderte.{" "}
+                  <Link href="/privacidad" className="underline hover:text-[#C2B280]">
+                    Privacidad
+                  </Link>
+                </span>
+              </p>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Formulario de propuesta (FASE 2) */}
+      {/* Formulario de propuesta */}
       {showPropuesta && (
         <PropuestaForm
-          lead={{ nombre: leadNombre, detalle: detallePrefill }}
+          lead={{
+            nombre: lead.nombre,
+            contacto: lead.contacto,
+            presupuesto: lead.presupuesto,
+            detalle: detallePrefill,
+          }}
           historial={mensajes}
           onClose={() => setShowPropuesta(false)}
         />

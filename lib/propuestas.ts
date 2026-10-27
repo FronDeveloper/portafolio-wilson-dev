@@ -23,11 +23,19 @@
 import crypto from "crypto";
 import {
   CATALOGO,
-  PROYECTO_LABELS,
+  MANTENIMIENTO,
+  PLAN_POR_ID,
   PRESUPUESTO_LABELS,
+  PROYECTO_LABELS,
+  SOPORTE_NOTA,
+  etiquetaPresupuesto,
+  formatearCOP,
+  formatearUSD,
+  planParaTipo,
   type SolicitudPropuesta,
   type PropuestaPayload,
 } from "./catalogo";
+import { completarChat } from "./ai";
 
 // Re-export para que las rutas de servidor importen todo de un solo lugar
 export {
@@ -43,8 +51,6 @@ export type { SolicitudPropuesta, PropuestaPayload } from "./catalogo";
  * Constantes del motor
  * ---------------------------------------------------------- */
 
-const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
-const GROQ_MODEL = "openai/gpt-oss-120b"; // mismo modelo que Alma
 const PROPUESTA_MAX_CHARS = 1600;
 
 /* ------------------------------------------------------------
@@ -175,14 +181,20 @@ function construirSystemPrompt(): string {
   return `Eres el asesor comercial de Wilson Valencia, desarrollador full-stack freelance colombiano (portafolio: https://wvalencia-dev.vercel.app, WhatsApp +57 301 2821174). Redactas propuestas de proyecto hablando EN NOMBRE de Wilson, en español de Colombia, tono cálido, humano y profesional (de tuteo), en primera persona.
 
 CATÁLOGO REAL DE WILSON (COP):
-1. Landing Page — ${c.landing.precio} — ${c.landing.incluye.join(", ")}. Plazo: ${c.landing.plazo}.
-2. E-commerce — ${c.ecommerce.precio} — ${c.ecommerce.incluye.join(", ")}. Plazo: ${c.ecommerce.plazo}.
-3. App a Medida — ${c.app.precio} — ${c.app.incluye.join(", ")}. Plazo: ${c.app.plazo}.
+1. ${c.landing.nombre} — ${c.landing.precio} — ${c.landing.incluye.join(", ")}. Plazo: ${c.landing.plazo}. Soporte: ${c.landing.soporte}.
+2. ${c.ecommerce.nombre} — ${c.ecommerce.precio} — ${c.ecommerce.incluye.join(", ")}. Plazo: ${c.ecommerce.plazo}. Soporte: ${c.ecommerce.soporte}.
+3. ${c.saas.nombre} — ${c.saas.precio} — ${c.saas.incluye.join(", ")}. Plazo: ${c.saas.plazo}. Soporte: ${c.saas.soporte}.
+4. ${MANTENIMIENTO.nombre} — desde ${formatearCOP(MANTENIMIENTO.desde.cop)} COP/mes (${formatearUSD(MANTENIMIENTO.desde.usd)} USD/mes) — ${MANTENIMIENTO.incluye.join(", ")}.
+
+SOPORTE: ${SOPORTE_NOTA}
 
 REGLAS:
 - Los precios son "desde" y referenciales. Si el presupuesto del cliente es menor al plan recomendado, propone una versión reducida por fases (ej: empezar con una landing y escalar después) en lugar de inventar descuentos.
 - NUNCA inventes precios, plazos ni servicios que no estén en el catálogo.
 - Elige el plan del catálogo que mejor encaje con la necesidad del cliente (si dijo "no estoy seguro", deduce por la descripción y dilo con naturalidad).
+- Si el cliente pide mantenimiento, usa el plan mensual y aclara que el alcance se acuerda por escrito.
+- Pagos: puedes mencionar que Wilson integra pasarelas colombianas (Wompi, PSE, Efecty) e internacionales (Stripe, PayPal, Mercado Pago) según el país y la cuenta del cliente. No prometas un proveedor específico sin validarlo.
+- WordPress: Wilson ha trabajado con WordPress, pero no lo presentes como su especialidad principal.
 
 FORMATO (el texto se enviará por WhatsApp):
 - Máximo ${PROPUESTA_MAX_CHARS} caracteres.
@@ -191,7 +203,7 @@ FORMATO (el texto se enviará por WhatsApp):
   1) Saludo breve con el nombre del cliente.
   2) 1-2 frases mostrando que entendiste SU necesidad concreta.
   3) *Lo que te propongo* + 3 o 4 bullets con ✅ (servicios del plan elegido, ajustados a lo que pidió).
-  4) *Inversión y plazo* — precio del catálogo + plazo. Menciona el soporte gratuito.
+  4) *Inversión y plazo* — precio del catálogo + plazo. Menciona el soporte incluido.
   5) *Siguiente paso* — propon una llamada o conversación corta por WhatsApp, sin compromiso.
   6) Firma: Wilson Valencia — wvalencia-dev.vercel.app
 - Cero frases genéricas de marketing, máximo 3-4 emojis en todo el texto.
@@ -200,8 +212,7 @@ Devuelve ÚNICAMENTE el texto de la propuesta, sin introducciones tipo "aquí ti
 
 function construirUserPrompt(s: SolicitudPropuesta): string {
   const tipo = PROYECTO_LABELS[s.tipo] || s.tipo || "sin especificar";
-  const presupuesto =
-    PRESUPUESTO_LABELS[s.presupuesto] || s.presupuesto || "sin especificar";
+  const presupuesto = etiquetaPresupuesto(s.presupuesto);
 
   let conversacion = "";
   if (Array.isArray(s.historial) && s.historial.length > 0) {
@@ -228,30 +239,58 @@ function construirUserPrompt(s: SolicitudPropuesta): string {
   }${conversacion}`;
 }
 
-/** Propuesta de respaldo determinista, por si Groq falla (el flujo nunca se cae) */
+/** Propuesta de respaldo determinista, por si la IA falla (el flujo nunca se cae) */
 export function propuestaDeRespaldo(s: SolicitudPropuesta): string {
-  const plan =
-    CATALOGO[s.tipo as keyof typeof CATALOGO] ||
-    (s.presupuesto === "mas-3m5"
-      ? CATALOGO.app
-      : s.presupuesto === "1m-2m"
-      ? CATALOGO.landing
-      : CATALOGO.ecommerce);
+  if (s.tipo === "mantenimiento") {
+    const bullets = MANTENIMIENTO.incluye
+      .slice(0, 4)
+      .map((f) => `✅ ${f}`)
+      .join("\n");
 
-  const bullets = plan.incluye
-    .slice(0, 4)
-    .map((f) => `✅ ${f}`)
-    .join("\n");
+    return `Hola ${s.nombre || ""}! 👋 Gracias por escribir y contarme sobre tu proyecto.
 
-  return `Hola ${s.nombre || ""}! 👋 Gracias por escribir y contarme sobre tu proyecto.
-
-Basándome en lo que me cuentas, te propongo un ${plan.nombre} pensado a la medida de tu negocio.
+Entiendo que necesitas mantener y cuidar un sistema que ya está en funcionamiento.
 
 *Lo que te propongo*
 ${bullets}
 
 *Inversión y plazo*
-${plan.precio} · entrega estimada en ${plan.plazo}, con ${plan.soporte.toLowerCase()}.
+${MANTENIMIENTO.nombre} desde ${formatearCOP(
+      MANTENIMIENTO.desde.cop
+    )} COP/mes (${formatearUSD(
+      MANTENIMIENTO.desde.usd
+    )} USD/mes). El alcance y las horas incluidas los acordamos por escrito según el tamaño del sistema.
+
+*Siguiente paso*
+¿Te parece si hablamos 15 minutos por WhatsApp? Reviso contigo qué necesita el sistema y te confirmo el plan, sin ningún compromiso.
+
+Wilson Valencia — wvalencia-dev.vercel.app`;
+  }
+
+  const plan = planParaTipo(s.tipo, s.presupuesto);
+  const info = PLAN_POR_ID[plan.id];
+
+  const bullets = info.incluye
+    .slice(0, 4)
+    .map((f) => `✅ ${f}`)
+    .join("\n");
+
+  const soporte =
+    info.soporteMeses === 1
+      ? "1 mes de soporte incluido"
+      : `${info.soporteMeses} meses de soporte incluido`;
+
+  return `Hola ${s.nombre || ""}! 👋 Gracias por escribir y contarme sobre tu proyecto.
+
+Basándome en lo que me cuentas, te propongo un ${info.nombre} pensado a la medida de tu negocio.
+
+*Lo que te propongo*
+${bullets}
+
+*Inversión y plazo*
+Desde ${formatearCOP(info.desde.cop)} COP (${formatearUSD(
+    info.desde.usd
+  )} USD) · entrega estimada en ${info.plazo}, con ${soporte}.
 
 *Siguiente paso*
 ¿Te parece si hablamos 15 minutos por WhatsApp? Con una llamada corta ajusto el alcance a tu idea y te confirmo el precio final, sin ningún compromiso.
@@ -274,57 +313,35 @@ function limpiarSalidaModelo(texto: string): string {
 
 /**
  * Genera la propuesta. Devuelve el texto y si vino de la IA o de la plantilla.
- * Si Groq falla o no hay GROQ_API_KEY, usa la plantilla local (nunca rompe).
+ * Si todos los proveedores fallan, usa la plantilla local (nunca rompe).
  */
 export async function generarPropuesta(
   s: SolicitudPropuesta
 ): Promise<{ texto: string; modelo: "ia" | "plantilla" }> {
-  const apiKey = process.env.GROQ_API_KEY;
-  if (!apiKey) {
-    console.log("[Alma] Propuesta: GROQ_API_KEY ausente, uso plantilla local");
-    return { texto: propuestaDeRespaldo(s), modelo: "plantilla" };
-  }
-
   try {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 25000);
-
-    const res = await fetch(GROQ_URL, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: GROQ_MODEL,
-        temperature: 0.6,
-        max_tokens: 1000,
-        messages: [
-          { role: "system", content: construirSystemPrompt() },
-          { role: "user", content: construirUserPrompt(s) },
-        ],
-      }),
-      signal: controller.signal,
+    const completion = await completarChat({
+      messages: [
+        { role: "system", content: construirSystemPrompt() },
+        { role: "user", content: construirUserPrompt(s) },
+      ],
+      temperature: 0.6,
+      maxTokens: 1000,
+      timeoutMs: 30_000,
     });
 
-    clearTimeout(timeout);
-
-    if (!res.ok) {
-      console.error(`[Alma] Propuesta: Groq respondió ${res.status}`);
+    if (!completion) {
+      console.error("[Alma] Propuesta: sin respuesta de la IA, uso plantilla");
       return { texto: propuestaDeRespaldo(s), modelo: "plantilla" };
     }
 
-    const json = await res.json();
-    const texto = limpiarSalidaModelo(
-      json?.choices?.[0]?.message?.content || ""
-    );
+    const texto = limpiarSalidaModelo(completion.text);
     if (!texto || texto.length < 120) {
-      console.error("[Alma] Propuesta: respuesta de Groq vacía o muy corta");
+      console.error("[Alma] Propuesta: respuesta de IA vacía o muy corta");
       return { texto: propuestaDeRespaldo(s), modelo: "plantilla" };
     }
     return { texto, modelo: "ia" };
   } catch (err) {
-    console.error("[Alma] Propuesta: error llamando a Groq:", err);
+    console.error("[Alma] Propuesta: error llamando a la IA:", err);
     return { texto: propuestaDeRespaldo(s), modelo: "plantilla" };
   }
 }

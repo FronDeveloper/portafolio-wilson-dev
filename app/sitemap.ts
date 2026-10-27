@@ -1,72 +1,72 @@
-import { MetadataRoute } from 'next'
+import type { MetadataRoute } from "next";
+import { SITE_URL } from "@/lib/pricing";
+
+const PROYECTOS = [
+  "flowbill",
+  "agenda-pro",
+  "ventachat-ai",
+  "insightai-dashboard",
+  "minimo-studio",
+  "ecommerce",
+  "plataforma-educativa",
+  "rpg",
+  "faebo",
+];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
+  const ahora = new Date();
+
+  const estaticas: MetadataRoute.Sitemap = [
     {
-      url: 'https://wvalencia-dev.vercel.app',
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
+      url: `${SITE_URL}/`,
+      lastModified: ahora,
+      changeFrequency: "weekly",
       priority: 1,
     },
     {
-      url: 'https://wvalencia-dev.vercel.app/about',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
+      url: `${SITE_URL}/cotizar`,
+      lastModified: ahora,
+      changeFrequency: "monthly",
       priority: 0.9,
     },
     {
-      url: 'https://wvalencia-dev.vercel.app/projects',
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
+      url: `${SITE_URL}/projects`,
+      lastModified: ahora,
+      changeFrequency: "weekly",
       priority: 0.9,
     },
     {
-      url: 'https://wvalencia-dev.vercel.app/contact',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
+      url: `${SITE_URL}/about`,
+      lastModified: ahora,
+      changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: 'https://wvalencia-dev.vercel.app/projects/flowbill',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
+      url: `${SITE_URL}/contact`,
+      lastModified: ahora,
+      changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: 'https://wvalencia-dev.vercel.app/projects/agenda-pro',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
+      url: `${SITE_URL}/privacidad`,
+      lastModified: ahora,
+      changeFrequency: "yearly",
+      priority: 0.3,
     },
     {
-      url: 'https://wvalencia-dev.vercel.app/projects/insightai-dashboard',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
+      url: `${SITE_URL}/terminos`,
+      lastModified: ahora,
+      changeFrequency: "yearly",
+      priority: 0.3,
     },
-    {
-      url: 'https://wvalencia-dev.vercel.app/projects/minimo-studio',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: 'https://wvalencia-dev.vercel.app/projects/ecommerce',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: 'https://wvalencia-dev.vercel.app/projects/rpg',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.6,
-    },
-    {
-      url: 'https://wvalencia-dev.vercel.app/projects/faebo',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.6,
-    },
-  ]
+  ];
+
+  const proyectos: MetadataRoute.Sitemap = PROYECTOS.map((slug) => ({
+    url: `${SITE_URL}/projects/${slug}`,
+    lastModified: ahora,
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
+  return [...estaticas, ...proyectos];
 }

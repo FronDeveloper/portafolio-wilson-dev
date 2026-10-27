@@ -77,7 +77,7 @@ export default function Testimonials() {
                     className={`text-sm ${
                       i < testimonial.rating
                         ? "text-yellow-500"
-                        : "text-gray-600"
+                        : "text-gray-400"
                     }`}
                   />
                 ))}
@@ -86,7 +86,7 @@ export default function Testimonials() {
 
             <div>
               <p className="font-semibold text-white">{testimonial.name}</p>
-              <p className="text-gray-500 text-sm">{testimonial.role}</p>
+              <p className="text-gray-400 text-sm">{testimonial.role}</p>
             </div>
           </motion.div>
         ))}
@@ -96,7 +96,7 @@ export default function Testimonials() {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ delay: 0.4 }}
-        className="text-center mt-12 text-gray-500 text-sm"
+        className="text-center mt-12 text-gray-400 text-sm"
       >
         ⭐ 100% de clientes recomiendan mi trabajo
       </motion.div>

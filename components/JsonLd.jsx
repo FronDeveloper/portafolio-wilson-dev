@@ -1,53 +1,35 @@
 /**
  * JsonLd — Datos estructurados schema.org (JSON-LD)
  * ============================================================
- * Le dice a Google EXACTAMENTE quién es Wilson, qué servicios
- * vende y a qué precios, para aparecer con rich results
- * (tarjetas enriquecidas) en las búsquedas locales.
- *
- * Server component — cero JS en el cliente, cero costo de render.
- * El buscador lo lee y listo.
- *
- * Montaje (una vez): en app/layout.tsx
- *   import JsonLd from "@/components/JsonLd";
- *   ...
- *   <JsonLd />   // junto a <MetaPixel />
+ * Server component. Se monta una vez en app/layout.tsx.
+ * Precios y servicios salen de lib/pricing.ts.
  * ============================================================
  */
 
-const SITE_URL = "https://wvalencia-dev.vercel.app";
+import {
+  CONTACT_EMAIL,
+  MANTENIMIENTO,
+  PLANES,
+  SITE_URL,
+  WHATSAPP_PHONE,
+  formatearCOP,
+  formatearUSD,
+} from "@/lib/pricing";
 
-// Servicios con los precios reales del portafolio, en ambas monedas
-// (coherentes con la home, con el chatbot de Alma y con las propuestas)
-const SERVICIOS = [
-  {
-    nombre: "Landing Page / Sitio web profesional",
-    descripcion:
-      "Landing page o sitio institucional responsive con SEO básico, formulario de contacto y entrega en 5-7 días.",
-    cop: 1200000,
-    usd: 300,
-  },
-  {
-    nombre: "E-commerce / Tienda online",
-    descripcion:
-      "Tienda online con catálogo, carrito, pasarelas de pago colombianas (Wompi, PSE, Efecty) y panel de administración.",
-    cop: 3200000,
-    usd: 800,
-  },
-  {
-    nombre: "Aplicación web a medida",
-    descripcion:
-      "Sistema de gestión, SaaS o dashboard con panel administrativo, base de datos propia y despliegue incluido.",
-    cop: 6000000,
-    usd: 1500,
-  },
-];
+const DESCRIPCIONES = {
+  landing:
+    "Landing page o sitio institucional responsive con SEO básico, formulario de contacto y entrega en 5-7 días.",
+  ecommerce:
+    "Tienda online con catálogo, carrito, panel de administración e integración de pasarelas de pago según el país y la cuenta del cliente.",
+  saas: "Sistema de gestión, SaaS, dashboard o app a medida con panel administrativo, base de datos propia, roles y despliegue incluido.",
+};
+
+const TELEFONO = `+${WHATSAPP_PHONE}`;
 
 export default function JsonLd() {
   const graph = {
     "@context": "https://schema.org",
     "@graph": [
-      // ---------- El sitio web ----------
       {
         "@type": "WebSite",
         "@id": `${SITE_URL}/#website`,
@@ -58,7 +40,6 @@ export default function JsonLd() {
         inLanguage: "es-CO",
         publisher: { "@id": `${SITE_URL}/#persona` },
       },
-      // ---------- La persona ----------
       {
         "@type": "Person",
         "@id": `${SITE_URL}/#persona`,
@@ -67,23 +48,27 @@ export default function JsonLd() {
         image: `${SITE_URL}/profile.jpg`,
         jobTitle: "Desarrollador Full-Stack Freelance",
         description:
-          "Desarrollador full-stack freelance en Colombia. Sistemas de gestión, e-commerce y aplicaciones web con Next.js, TypeScript y Supabase.",
-        email: "mailto:wilson.arroyo12@gmail.com",
-        sameAs: ["https://github.com/FronDeveloper"],
+          "Desarrollador full-stack freelance en Colombia. Sistemas de gestión, SaaS, e-commerce y aplicaciones web con Next.js, TypeScript y Supabase.",
+        email: `mailto:${CONTACT_EMAIL}`,
+        sameAs: [
+          "https://github.com/FronDeveloper",
+          "https://www.linkedin.com/in/wilson-valencia-939069408/",
+        ],
         knowsAbout: [
           "Next.js",
-          "TypeScript",
           "React",
-          "Supabase",
+          "TypeScript",
           "Node.js",
-          "Tailwind CSS",
+          "Supabase",
+          "PostgreSQL",
           "Flutter",
           "E-commerce",
+          "Integración de pasarelas de pago",
+          "WordPress",
           "Desarrollo de software a medida",
         ],
         worksFor: { "@id": `${SITE_URL}/#servicio` },
       },
-      // ---------- El servicio / negocio ----------
       {
         "@type": "ProfessionalService",
         "@id": `${SITE_URL}/#servicio`,
@@ -91,66 +76,93 @@ export default function JsonLd() {
         url: `${SITE_URL}/`,
         image: `${SITE_URL}/preview.png`,
         description:
-          "Desarrollo de software a medida en Colombia: landing pages, tiendas online y sistemas de gestión empresarial. Cotización en menos de 24 horas.",
-        email: "wilson.arroyo12@gmail.com",
-        telephone: "+57 301 2821174",
-        priceRange: "COP $1.200.000 - $6.000.000 · USD $300 - $1.500",
-        areaServed: {
-          "@type": "Country",
-          name: "Colombia",
-        },
-        address: {
-          "@type": "PostalAddress",
-          addressCountry: "CO",
-        },
+          "Desarrollo de software a medida en Colombia: landing pages, tiendas online, SaaS y sistemas de gestión. Cotización en menos de 24 horas.",
+        email: CONTACT_EMAIL,
+        telephone: TELEFONO,
+        priceRange: `${formatearCOP(PLANES[0].desde.cop)} - ${formatearCOP(
+          PLANES[2].desde.cop
+        )} COP · ${formatearUSD(PLANES[0].desde.usd)} - ${formatearUSD(
+          PLANES[2].desde.usd
+        )} USD`,
+        areaServed: [
+          { "@type": "Country", name: "Colombia" },
+          { "@type": "Place", name: "Clientes internacionales (remoto)" },
+        ],
+        address: { "@type": "PostalAddress", addressCountry: "CO" },
         availableLanguage: ["es", "en"],
         founder: { "@id": `${SITE_URL}/#persona` },
         contactPoint: {
           "@type": "ContactPoint",
           contactType: "sales",
-          telephone: "+57 301 2821174",
-          email: "wilson.arroyo12@gmail.com",
-          availableLanguage: "Spanish",
+          telephone: TELEFONO,
+          email: CONTACT_EMAIL,
+          availableLanguage: ["Spanish", "English"],
         },
         hasOfferCatalog: {
           "@type": "OfferCatalog",
           name: "Servicios de desarrollo web y móvil",
-          // Dos ofertas por servicio: una en COP (Colombia) y una en USD
-          // (internacional), igual que muestra el portafolio al visitante.
-          itemListElement: SERVICIOS.flatMap((s) => [
+          itemListElement: [
+            ...PLANES.flatMap((plan) => [
+              {
+                "@type": "Offer",
+                itemOffered: {
+                  "@type": "Service",
+                  name: plan.nombre,
+                  description: DESCRIPCIONES[plan.id],
+                },
+                priceCurrency: "COP",
+                price: plan.desde.cop,
+                description: `Precio base desde ${formatearCOP(
+                  plan.desde.cop
+                )} COP. El valor final depende del alcance.`,
+                priceSpecification: {
+                  "@type": "PriceSpecification",
+                  priceCurrency: "COP",
+                  minPrice: plan.desde.cop,
+                  valueAddedTaxIncluded: false,
+                },
+              },
+              {
+                "@type": "Offer",
+                itemOffered: {
+                  "@type": "Service",
+                  name: plan.nombre,
+                  description: DESCRIPCIONES[plan.id],
+                },
+                priceCurrency: "USD",
+                price: plan.desde.usd,
+                description: `Precio base desde ${formatearUSD(
+                  plan.desde.usd
+                )} USD. El valor final depende del alcance.`,
+                priceSpecification: {
+                  "@type": "PriceSpecification",
+                  priceCurrency: "USD",
+                  minPrice: plan.desde.usd,
+                  valueAddedTaxIncluded: false,
+                },
+              },
+            ]),
             {
               "@type": "Offer",
               itemOffered: {
                 "@type": "Service",
-                name: s.nombre,
-                description: s.descripcion,
+                name: MANTENIMIENTO.nombre,
+                description:
+                  "Mantenimiento mensual: actualizaciones, copias de seguridad, monitoreo, corrección de errores y soporte prioritario.",
               },
               priceCurrency: "COP",
-              price: s.cop,
+              price: MANTENIMIENTO.desde.cop,
+              description: `Desde ${formatearCOP(
+                MANTENIMIENTO.desde.cop
+              )} COP por mes.`,
               priceSpecification: {
                 "@type": "PriceSpecification",
                 priceCurrency: "COP",
-                price: s.cop,
-                valueAddedTaxIncluded: false,
+                minPrice: MANTENIMIENTO.desde.cop,
+                unitText: "mes",
               },
             },
-            {
-              "@type": "Offer",
-              itemOffered: {
-                "@type": "Service",
-                name: s.nombre,
-                description: s.descripcion,
-              },
-              priceCurrency: "USD",
-              price: s.usd,
-              priceSpecification: {
-                "@type": "PriceSpecification",
-                priceCurrency: "USD",
-                price: s.usd,
-                valueAddedTaxIncluded: false,
-              },
-            },
-          ]),
+          ],
         },
       },
     ],

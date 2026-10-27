@@ -19,9 +19,10 @@ export default function Navbar() {
         >
           <Image
             src="/logo.png"
-            alt="Wilson logo"
+            alt="Wilson Valencia Dev — inicio"
             width={50}
             height={50}
+            priority
             className="object-contain"
           />
         </Link>

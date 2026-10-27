@@ -2,6 +2,12 @@
 
 import { useEffect, useRef } from "react";
 
+/**
+ * Fondo de partículas.
+ * - Se pausa cuando la pestaña está oculta.
+ * - Respeta `prefers-reduced-motion` (dibuja un solo cuadro estático).
+ * - Densidad y DPR limitados para no castigar móviles.
+ */
 export default function ParticleBackground() {
   const canvasRef = useRef(null);
 
@@ -10,28 +16,27 @@ export default function ParticleBackground() {
     if (!canvas) return;
 
     const ctx = canvas.getContext("2d");
-    let animationId;
-    let particles = [];
+    if (!ctx) return;
 
-    // Configuración
-    const PARTICLE_COUNT = 80;
-    const CONNECTION_DISTANCE = 150;
+    const reduceQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     const COLORS = ["#C2B280", "#D4C5A0", "#B8A870"];
+    const CONNECTION_DISTANCE = 140;
+    const MAX_DPR = 1.5;
 
-    // Redimensionar canvas al tamaño de la ventana
-    const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
+    let width = 0;
+    let height = 0;
+    let particles = [];
+    let animationId = null;
+    let running = false;
+    let resizeTimer;
 
-    // Clase Partícula
     class Particle {
       constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.vx = (Math.random() - 0.5) * 0.6;
-        this.vy = (Math.random() - 0.5) * 0.6;
-        this.size = Math.random() * 4 + 1.5;
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.vx = (Math.random() - 0.5) * 0.5;
+        this.vy = (Math.random() - 0.5) * 0.5;
+        this.size = Math.random() * 3.5 + 1.5;
         this.color = COLORS[Math.floor(Math.random() * COLORS.length)];
         this.opacity = Math.random() * 0.5 + 0.3;
       }
@@ -40,27 +45,24 @@ export default function ParticleBackground() {
         this.x += this.vx;
         this.y += this.vy;
 
-        // Rebote en bordes
-        if (this.x < 0 || this.x > canvas.width) {
+        if (this.x < 0 || this.x > width) {
           this.vx *= -1;
-          this.x = Math.max(0, Math.min(canvas.width, this.x));
+          this.x = Math.max(0, Math.min(width, this.x));
         }
-        if (this.y < 0 || this.y > canvas.height) {
+        if (this.y < 0 || this.y > height) {
           this.vy *= -1;
-          this.y = Math.max(0, Math.min(canvas.height, this.y));
+          this.y = Math.max(0, Math.min(height, this.y));
         }
       }
 
       draw() {
-        if (!ctx) return;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fillStyle = this.color;
         ctx.globalAlpha = this.opacity;
-        ctx.fill();
 
-        // Brillo sutil alrededor
-        ctx.shadowBlur = 8;
+        // Brillo sutil alrededor (se dibuja una sola vez)
+        ctx.shadowBlur = 6;
         ctx.shadowColor = this.color;
         ctx.fill();
         ctx.shadowBlur = 0;
@@ -68,7 +70,20 @@ export default function ParticleBackground() {
       }
     }
 
-    // Dibujar conexiones entre partículas cercanas
+    const particleCount = () => {
+      if (width < 640) return 18;
+      if (width < 1024) return 32;
+      return Math.min(60, Math.round((width * height) / 26000));
+    };
+
+    const initParticles = () => {
+      particles = [];
+      const total = particleCount();
+      for (let i = 0; i < total; i++) {
+        particles.push(new Particle());
+      }
+    };
+
     const drawConnections = () => {
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
@@ -89,52 +104,102 @@ export default function ParticleBackground() {
       }
     };
 
-    // Inicializar partículas
-    const initParticles = () => {
-      particles = [];
-      for (let i = 0; i < PARTICLE_COUNT; i++) {
-        particles.push(new Particle());
+    const drawFrame = (animate) => {
+      ctx.clearRect(0, 0, width, height);
+      for (const particle of particles) {
+        if (animate) particle.update();
+        particle.draw();
+      }
+      drawConnections();
+    };
+
+    const frame = () => {
+      if (!running) return;
+      drawFrame(true);
+      animationId = requestAnimationFrame(frame);
+    };
+
+    const start = () => {
+      if (running || reduceQuery.matches || document.hidden) return;
+      running = true;
+      animationId = requestAnimationFrame(frame);
+    };
+
+    const stop = () => {
+      running = false;
+      if (animationId !== null) {
+        cancelAnimationFrame(animationId);
+        animationId = null;
       }
     };
 
-    // Animación principal
-    const animate = () => {
-      if (!ctx) return;
-      // Limpiar canvas sin pintar fondo — el body ya tiene el color #0B0B0B
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const resizeCanvas = () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      const dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR);
 
-      particles.forEach(particle => {
-        particle.update();
-        particle.draw();
-      });
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      drawConnections();
-
-      animationId = requestAnimationFrame(animate);
-    };
-
-    // Configurar y comenzar
-    resizeCanvas();
-    initParticles();
-    animate();
-
-    // Manejar redimensionamiento
-    const handleResize = () => {
-      resizeCanvas();
       initParticles();
     };
-    window.addEventListener("resize", handleResize);
 
-    // Limpiar al desmontar
+    const handleResize = () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        resizeCanvas();
+        if (reduceQuery.matches) {
+          stop();
+          drawFrame(false);
+        }
+      }, 150);
+    };
+
+    const handleVisibility = () => {
+      if (document.hidden) {
+        stop();
+      } else {
+        start();
+      }
+    };
+
+    const handleReduceMotion = () => {
+      stop();
+      if (reduceQuery.matches) {
+        drawFrame(false);
+      } else {
+        start();
+      }
+    };
+
+    resizeCanvas();
+
+    if (reduceQuery.matches) {
+      drawFrame(false);
+    } else {
+      start();
+    }
+
+    window.addEventListener("resize", handleResize);
+    document.addEventListener("visibilitychange", handleVisibility);
+    reduceQuery.addEventListener("change", handleReduceMotion);
+
     return () => {
+      clearTimeout(resizeTimer);
+      stop();
       window.removeEventListener("resize", handleResize);
-      cancelAnimationFrame(animationId);
+      document.removeEventListener("visibilitychange", handleVisibility);
+      reduceQuery.removeEventListener("change", handleReduceMotion);
     };
   }, []);
 
   return (
     <canvas
       ref={canvasRef}
+      aria-hidden="true"
       className="fixed top-0 left-0 w-full h-full"
       style={{
         pointerEvents: "none",

@@ -59,16 +59,16 @@ export default function ProjectCard({
 
           {/* Métricas / Resultados */}
           {metrics.length > 0 && (
-            <div className="mt-4 grid grid-cols-3 gap-2">
+            <div className="mt-4 grid grid-cols-3 gap-1.5 sm:gap-2">
               {metrics.map((metric, idx) => (
                 <div
                   key={idx}
-                  className="bg-[#0B0B0B] border border-gray-800 rounded-lg p-2 text-center"
+                  className="min-w-0 bg-[#0B0B0B] border border-gray-800 rounded-lg p-2 text-center"
                 >
-                  <p className="text-[#C2B280] font-bold text-lg leading-tight">
+                  <p className="text-[#C2B280] font-bold text-base sm:text-lg leading-tight break-words">
                     {metric.value}
                   </p>
-                  <p className="text-gray-500 text-[10px] leading-tight mt-1">
+                  <p className="text-gray-400 text-[10px] leading-tight mt-1 break-words">
                     {metric.label}
                   </p>
                 </div>
@@ -76,7 +76,7 @@ export default function ProjectCard({
             </div>
           )}
 
-          <div className="mt-4 text-sm text-gray-500">
+          <div className="mt-4 text-sm text-gray-400">
             <p>
               <span className="text-white font-medium">Problema:</span> {problem}
             </p>
@@ -87,7 +87,7 @@ export default function ProjectCard({
 
           <div className="flex flex-wrap gap-1 mt-4">
             {tech.split(" / ").map((t, idx) => (
-              <span key={idx} className="text-xs text-gray-600 bg-gray-900 px-2 py-1 rounded">
+              <span key={idx} className="text-xs text-gray-300 bg-gray-900 px-2 py-1 rounded">
                 {t}
               </span>
             ))}

@@ -51,6 +51,7 @@ export default function AboutPage() {
                   src="/profile.jpg"
                   alt="Wilson Valencia"
                   fill
+                  sizes="(max-width: 768px) 256px, 320px"
                   className="object-cover"
                   priority
                 />

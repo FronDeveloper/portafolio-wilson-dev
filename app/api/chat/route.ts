@@ -1,15 +1,14 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { ASSISTANT_NAME, DEFAULT_NOTIFY_EMAIL, SYSTEM_PROMPT, WHATSAPP_PHONE } from "@/lib/assistant";
+import { completarChat, hayProveedorIA } from "@/lib/ai";
+import { etiquetaPresupuesto } from "@/lib/pricing";
 
 // Igual que las demás rutas del portafolio: nunca evaluar en build
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 // Respuestas largas de la IA sin que Vercel corte la request (Hobby: 10s por defecto)
 export const maxDuration = 60;
-
-const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
-const GROQ_MODEL_DEFAULT = "openai/gpt-oss-120b";
 
 // ── Rate limit simple en memoria (por instancia del serverless) ─────────────
 const RATE_LIMIT = 25; // mensajes por hora por IP
@@ -50,6 +49,50 @@ function sanitizeHistory(input: unknown): ChatMsg[] {
 
 // ── Extracción del lead (línea @@LEAD@@{...} que genera la IA) ──────────────
 type LeadData = { name: string; contact: string; need: string; budget: string };
+
+/** Origen del lead: UTMs, página y referrer (nunca se confía en el cliente). */
+type Origen = {
+  utm_source: string;
+  utm_medium: string;
+  utm_campaign: string;
+  utm_content: string;
+  utm_term: string;
+  page: string;
+  referrer: string;
+};
+
+const ORIGEN_VACIO: Origen = {
+  utm_source: "",
+  utm_medium: "",
+  utm_campaign: "",
+  utm_content: "",
+  utm_term: "",
+  page: "",
+  referrer: "",
+};
+
+function sanitizeOrigen(input: unknown): Origen {
+  if (!input || typeof input !== "object") return ORIGEN_VACIO;
+  const raw = input as Record<string, unknown>;
+  const utm =
+    raw.utm && typeof raw.utm === "object"
+      ? (raw.utm as Record<string, unknown>)
+      : raw;
+
+  const texto = (valor: unknown, max: number) =>
+    typeof valor === "string" ? valor.trim().slice(0, max) : "";
+
+  return {
+    utm_source: texto(utm.utm_source, 120),
+    utm_medium: texto(utm.utm_medium, 120),
+    utm_campaign: texto(utm.utm_campaign, 160),
+    utm_content: texto(utm.utm_content, 160),
+    utm_term: texto(utm.utm_term, 160),
+    page: texto(raw.page, 300),
+    referrer: texto(raw.referrer, 300),
+  };
+}
+
 
 const LEAD_MARKER = "@@LEAD@@";
 
@@ -124,7 +167,31 @@ function transcriptHtml(messages: ChatMsg[]): string {
     .join("");
 }
 
-async function notifyLeadByEmail(lead: LeadData, messages: ChatMsg[]): Promise<boolean> {
+function origenFilas(origen: Origen): string {
+  const filas: [string, string][] = [
+    ["Página", origen.page || "—"],
+    ["Fuente", origen.utm_source || "Directo (sin UTM)"],
+    ["Medio", origen.utm_medium || "—"],
+    ["Campaña", origen.utm_campaign || "—"],
+    ["Contenido", origen.utm_content || "—"],
+    ["Término", origen.utm_term || "—"],
+    ["Referrer", origen.referrer || "—"],
+  ];
+  return filas
+    .map(
+      ([k, v]) =>
+        `<tr><td style="padding: 6px 0; color: #888; width: 110px;">${k}:</td><td style="padding: 6px 0; color: #ddd; word-break: break-all;">${escapeHtml(
+          v
+        )}</td></tr>`
+    )
+    .join("");
+}
+
+async function notifyLeadByEmail(
+  lead: LeadData,
+  messages: ChatMsg[],
+  origen: Origen
+): Promise<boolean> {
   try {
     const resend = getResend();
     const to = process.env.NOTIFY_EMAIL || DEFAULT_NOTIFY_EMAIL;
@@ -139,7 +206,8 @@ async function notifyLeadByEmail(lead: LeadData, messages: ChatMsg[]): Promise<b
     const { error } = await resend.emails.send({
       from: "Chatbot Portafolio <onboarding@resend.dev>",
       to: [to],
-      subject: `✨ Nuevo lead de ${ASSISTANT_NAME} — ${lead.name}`,
+      ...(lead.contact.includes("@") ? { replyTo: lead.contact } : {}),
+      subject: `✨ Nuevo lead de ${ASSISTANT_NAME} — ${lead.name.replace(/[\r\n]+/g, " ")}`,
       html: `
         <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; background: #0B0B0B; padding: 40px; border-radius: 12px;">
           <div style="text-align: center; margin-bottom: 30px;">
@@ -152,8 +220,15 @@ async function notifyLeadByEmail(lead: LeadData, messages: ChatMsg[]): Promise<b
             <table style="width: 100%; font-size: 14px; border-collapse: collapse;">
               <tr><td style="padding: 8px 0; color: #888; width: 130px;">Nombre:</td><td style="padding: 8px 0; color: #fff; font-weight: 600;">${escapeHtml(lead.name)}</td></tr>
               <tr><td style="padding: 8px 0; color: #888;">Contacto:</td><td style="padding: 8px 0;">${contactLink}</td></tr>
-              <tr><td style="padding: 8px 0; color: #888;">Presupuesto:</td><td style="padding: 8px 0; color: #fff;">${lead.budget ? escapeHtml(lead.budget) : "No indicó"}</td></tr>
+              <tr><td style="padding: 8px 0; color: #888;">Presupuesto:</td><td style="padding: 8px 0; color: #fff;">${lead.budget ? escapeHtml(etiquetaPresupuesto(lead.budget)) : "No indicó"}</td></tr>
               <tr><td style="padding: 8px 0; color: #888;">Necesidad:</td><td style="padding: 8px 0; color: #fff;">${escapeHtml(lead.need)}</td></tr>
+            </table>
+          </div>
+
+          <div style="background: #111; border: 1px solid #333; border-radius: 8px; padding: 25px; margin-bottom: 20px;">
+            <h2 style="color: #fff; font-size: 18px; margin-bottom: 15px;">📊 Origen del lead</h2>
+            <table style="width: 100%; font-size: 13px; border-collapse: collapse;">
+              ${origenFilas(origen)}
             </table>
           </div>
 
@@ -201,20 +276,25 @@ async function notifyLeadByEmail(lead: LeadData, messages: ChatMsg[]): Promise<b
 // CallMeBot: WhatsApp real hacia el número de Wilson (requiere apikey propia;
 // el bot gratuito estuvo sin cupos — si se activa, solo agregar las env vars).
 
-function leadText(lead: LeadData): string {
+function leadText(lead: LeadData, origen: Origen): string {
   return [
     "🔔 NUEVO LEAD — Alma (portafolio)",
     "",
     `👤 Nombre: ${lead.name}`,
     `📞 Contacto: ${lead.contact}`,
-    `💰 Presupuesto: ${lead.budget || "No indicó"}`,
+    `💰 Presupuesto: ${lead.budget ? etiquetaPresupuesto(lead.budget) : "No indicó"}`,
     `💬 Necesidad: ${lead.need}`,
+    "",
+    `🌐 Página: ${origen.page || "—"}`,
+    `📊 Origen: ${origen.utm_source || "Directo"}${
+      origen.utm_medium ? ` / ${origen.utm_medium}` : ""
+    }${origen.utm_campaign ? ` / ${origen.utm_campaign}` : ""}`,
     "",
     `Hora: ${new Date().toLocaleString("es-CO", { timeZone: "America/Bogota" })}`,
   ].join("\n");
 }
 
-async function notifyByTelegram(lead: LeadData): Promise<boolean> {
+async function notifyByTelegram(lead: LeadData, origen: Origen): Promise<boolean> {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
   if (!token || !chatId) {
@@ -227,7 +307,7 @@ async function notifyByTelegram(lead: LeadData): Promise<boolean> {
     const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ chat_id: chatId, text: leadText(lead) }),
+      body: JSON.stringify({ chat_id: chatId, text: leadText(lead, origen) }),
       signal: controller.signal,
     });
     clearTimeout(timeout);
@@ -244,7 +324,7 @@ async function notifyByTelegram(lead: LeadData): Promise<boolean> {
   }
 }
 
-async function notifyByCallMeBot(lead: LeadData): Promise<boolean> {
+async function notifyByCallMeBot(lead: LeadData, origen: Origen): Promise<boolean> {
   const phone = process.env.CALLMEBOT_PHONE; // formato +573012821174
   const apikey = process.env.CALLMEBOT_APIKEY;
   if (!phone || !apikey) {
@@ -254,7 +334,7 @@ async function notifyByCallMeBot(lead: LeadData): Promise<boolean> {
   try {
     const url = `https://api.callmebot.com/whatsapp.php?phone=${encodeURIComponent(
       phone
-    )}&text=${encodeURIComponent(leadText(lead))}&apikey=${encodeURIComponent(apikey)}`;
+    )}&text=${encodeURIComponent(leadText(lead, origen))}&apikey=${encodeURIComponent(apikey)}`;
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 8000);
     const res = await fetch(url, { signal: controller.signal });
@@ -289,8 +369,8 @@ export async function POST(request: Request) {
     );
   }
 
-  if (!process.env.GROQ_API_KEY) {
-    console.error("GROQ_API_KEY no está configurada");
+  if (!hayProveedorIA()) {
+    console.error("No hay proveedor de IA configurado (GROQ_API_KEY / OPENROUTER_API_KEY)");
     return NextResponse.json(
       { reply: FALLBACK_REPLY, leadSaved: false },
       { status: 200 }
@@ -298,7 +378,7 @@ export async function POST(request: Request) {
   }
 
   // Validar entrada
-  let body: { messages?: unknown };
+  let body: { messages?: unknown; origin?: unknown };
   try {
     body = await request.json();
   } catch {
@@ -310,51 +390,28 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Historial inválido" }, { status: 400 });
   }
 
-  // Llamar a Groq (últimos 14 mensajes + system prompt)
-  const payload = [
-    { role: "system", content: SYSTEM_PROMPT },
-    ...history.slice(-14),
-  ];
+  const origen = sanitizeOrigen(body.origin);
 
   try {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 45000);
-
-    const res = await fetch(GROQ_URL, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: process.env.GROQ_MODEL || GROQ_MODEL_DEFAULT,
-        messages: payload,
-        temperature: 0.6,
-        max_tokens: 700,
-      }),
-      signal: controller.signal,
+    // La cadena de proveedores y los reintentos viven en lib/ai.ts
+    const completion = await completarChat({
+      messages: [
+        { role: "system", content: SYSTEM_PROMPT },
+        ...history.slice(-14),
+      ],
+      temperature: 0.6,
+      maxTokens: 700,
+      timeoutMs: 45_000,
     });
 
-    clearTimeout(timeout);
-
-    if (!res.ok) {
-      const errText = await res.text().catch(() => "");
-      console.error(`Groq error ${res.status}:`, errText.slice(0, 500));
+    if (!completion) {
       return NextResponse.json(
         { reply: FALLBACK_REPLY, leadSaved: false },
         { status: 200 }
       );
     }
 
-    const data = await res.json();
-    const rawReply: string = data?.choices?.[0]?.message?.content?.trim() || "";
-
-    if (!rawReply) {
-      return NextResponse.json(
-        { reply: FALLBACK_REPLY, leadSaved: false },
-        { status: 200 }
-      );
-    }
+    const rawReply = completion.text;
 
     // Extraer lead si viene
     const { visibleReply, lead } = extractLead(rawReply);
@@ -386,9 +443,9 @@ export async function POST(request: Request) {
 
       // Email (canal principal) + avisos push opcionales, en paralelo
       const [emailRes, tgRes, cbRes] = await Promise.allSettled([
-        notifyLeadByEmail(lead, fullHistory),
-        notifyByTelegram(lead),
-        notifyByCallMeBot(lead),
+        notifyLeadByEmail(lead, fullHistory, origen),
+        notifyByTelegram(lead, origen),
+        notifyByCallMeBot(lead, origen),
       ]);
 
       const emailOk = emailRes.status === "fulfilled" ? emailRes.value : false;
@@ -421,6 +478,10 @@ export async function POST(request: Request) {
       leadSaved,
       leadCaptured: !!lead,
       leadName: lead?.name || null,
+      leadContact: lead?.contact || null,
+      leadBudget: lead?.budget || null,
+      leadNeed: lead?.need || null,
+      model: completion.model,
       channels,
     });
   } catch (error) {

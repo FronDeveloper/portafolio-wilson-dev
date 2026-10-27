@@ -3,7 +3,9 @@
 import { motion } from "framer-motion";
 import ProjectCard from "./ProjectCard";
 
-export default function Projects() {
+export default function Projects({ headingLevel = "h2" }) {
+  const Heading = headingLevel;
+
   return (
     <section className="px-8 md:px-20 py-20 max-w-6xl mx-auto">
       
@@ -14,11 +16,12 @@ export default function Projects() {
         viewport={{ once: true }}
         className="text-center mb-12"
       >
-        <h2 className="text-3xl md:text-4xl font-bold mb-4">
+        <Heading className="text-3xl md:text-4xl font-bold mb-4">
           Casos de <span className="text-[#C2B280]">estudio</span>
-        </h2>
-        <p className="text-gray-400 max-w-2xl mx-auto">
-          No solo son proyectos bonitos. Cada solución generó resultados medibles para negocios reales.
+        </Heading>
+        <p className="text-gray-300 max-w-2xl mx-auto">
+          Cada caso documenta el problema, la solución y lo que quedó funcionando
+          en producción.
         </p>
       </motion.div>
 
@@ -27,7 +30,7 @@ export default function Projects() {
         whileInView="visible"
         viewport={{ once: true }}
         transition={{ staggerChildren: 0.2 }}
-        className="grid md:grid-cols-3 gap-8"
+        className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8"
       >
         <ProjectCard
           title="VentaChat AI"

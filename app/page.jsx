@@ -7,6 +7,10 @@ import Link from "next/link";
 import SeccionPrecios from "@/components/SeccionPrecios";
 import Faq from "@/components/Faq";
 
+export const metadata = {
+  alternates: { canonical: "/" },
+};
+
 export default function Home() {
   return (
     <main className="text-white min-h-screen pb-24">
@@ -107,7 +111,7 @@ export default function Home() {
             reales
           </span>
         </h2>
-        <p className="text-gray-500 text-center text-sm mb-10">
+        <p className="text-gray-400 text-center text-sm mb-10">
           Métricas y hechos verificables de los proyectos construidos.
         </p>
         <div className="grid md:grid-cols-3 gap-6 mb-8">
@@ -185,7 +189,7 @@ export default function Home() {
             <p className="text-sm font-semibold text-white mb-1">
               ¿Buscas referencias directas?
             </p>
-            <p className="text-xs text-gray-500 leading-relaxed">
+            <p className="text-xs text-gray-400 leading-relaxed">
               Estoy construyendo mi base de clientes activamente. Si quieres hablar con alguien
               que haya trabajado conmigo o ver el código fuente de cualquier proyecto,{" "}
               <a href="/cotizar" className="text-violet-400 hover:underline font-medium">

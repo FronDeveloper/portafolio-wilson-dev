@@ -78,7 +78,7 @@ export default function HowIWork() {
             <h3 className="font-bold text-white mb-2 text-sm leading-tight">
               {step.title}
             </h3>
-            <p className="text-gray-500 text-xs leading-relaxed mb-3">
+            <p className="text-gray-400 text-xs leading-relaxed mb-3">
               {step.desc}
             </p>
             <span className="text-[10px] text-cyan-400 font-semibold bg-cyan-500/10 border border-cyan-500/20 px-2.5 py-1 rounded-full">

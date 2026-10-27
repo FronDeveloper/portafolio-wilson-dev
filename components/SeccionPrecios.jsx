@@ -1,82 +1,23 @@
 "use client";
 
 /**
- * SeccionPrecios — "Inversión transparente" con moneda automática
+ * SeccionPrecios — "Inversión transparente"
  * ============================================================
- * Detecta si el visitante está en Colombia por su zona horaria
- * (America/Bogota) y muestra:
- *   - Colombia        → precios en COP ($1.200.000 / $3.2M / $6M)
- *   - Resto del mundo → precios en USD ($300 / $800 / $1.500)
- *
- * ¿Por qué zona horaria y no geo-IP? Es instantánea, funciona
- * offline, sin servicios externos ni límites, y acierta el caso
- * real (Colombia vs internacional) prácticamente siempre.
- *
- * Sin hydration mismatch: el primer render (servidor y cliente)
- * muestra USD, y para visitantes colombianos cambia a COP justo
- * después de hidratar — imperceptible.
- *
- * Montaje: en app/page.jsx, reemplaza TODO el <section> de
- * "Inversión transparente" (el bloque {/* PRECIOS *\/}) por:
- *   import SeccionPrecios from "@/components/SeccionPrecios";
- *   <SeccionPrecios />
+ * Los planes y precios vienen de lib/pricing.ts (fuente única).
+ * Detecta Colombia por zona horaria y muestra COP; el visitante
+ * puede cambiar a USD manualmente.
  * ============================================================
  */
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-
-const PLANES = [
-  {
-    title: "Landing Page",
-    sub: "Ideal para empezar tu presencia online",
-    usd: 300,
-    cop: 1200000,
-    features: [
-      "Diseño responsive",
-      "Hasta 5 secciones",
-      "Formulario de contacto",
-      "SEO básico",
-      "Entrega 5-7 días",
-      "1 mes de soporte",
-    ],
-    highlight: false,
-  },
-  {
-    title: "Ecommerce",
-    sub: "Vende tus productos sin complicaciones",
-    usd: 800,
-    cop: 3200000,
-    features: [
-      "Catálogo de productos",
-      "Carrito de compras",
-      "Pasarela de pagos",
-      "Panel de administración",
-      "Optimización conversiones",
-      "3 meses de soporte",
-    ],
-    highlight: true,
-  },
-  {
-    title: "App a Medida",
-    sub: "Soluciones personalizadas para tu negocio",
-    usd: 1500,
-    cop: 6000000,
-    features: [
-      "Desarrollo a medida",
-      "Panel de administración",
-      "Base de datos propia",
-      "Integraciones personalizadas",
-      "Despliegue incluido",
-      "6 meses de soporte",
-    ],
-    highlight: false,
-  },
-];
-
-// Formateo COP determinista (sin depender del ICU del navegador):
-// 1200000 → "$1.200.000"
-const formatCOP = (n) => "$" + n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+import {
+  MANTENIMIENTO,
+  PLANES,
+  formatearCOP,
+  formatearUSD,
+  precioMantenimiento,
+} from "@/lib/pricing";
 
 const esColombia = () => {
   try {
@@ -88,48 +29,82 @@ const esColombia = () => {
 };
 
 export default function SeccionPrecios() {
-  const [colombia, setColombia] = useState(false);
+  // El primer render (servidor y cliente) muestra USD para no romper la
+  // hidratación; después de hidratar cambia a COP si está en Colombia.
+  const [moneda, setMoneda] = useState("USD");
 
   useEffect(() => {
-    setColombia(esColombia());
+    if (esColombia()) setMoneda("COP");
   }, []);
 
   const precio = (plan) =>
-    colombia ? formatCOP(plan.cop) : `$${plan.usd} USD`;
+    moneda === "COP"
+      ? `${formatearCOP(plan.desde.cop)} COP`
+      : `${formatearUSD(plan.desde.usd)} USD`;
 
   return (
-    <section className="px-8 md:px-20 py-16 max-w-5xl mx-auto">
-      <h2 className="text-3xl font-semibold mb-3 text-center">
-        Inversión{" "}
-        <span className="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
-          transparente
-        </span>
-      </h2>
-      <p className="text-gray-500 text-center text-sm mb-10">
-        Precios base orientativos. Cada proyecto se cotiza según necesidades.
-        Sin letras pequeñas.
-      </p>
-      <div className="grid md:grid-cols-3 gap-6">
+    <section
+      id="precios"
+      className="px-8 md:px-20 py-16 max-w-6xl mx-auto"
+    >
+      <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
+        <div>
+          <h2 className="text-3xl font-semibold mb-3">
+            Inversión{" "}
+            <span className="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
+              transparente
+            </span>
+          </h2>
+          <p className="text-gray-400 text-sm max-w-xl">
+            Precios base orientativos. Cada proyecto se cotiza según
+            necesidades, sin letras pequeñas.
+          </p>
+        </div>
+
+        <div
+          className="inline-flex self-start sm:self-auto rounded-lg border border-gray-700 overflow-hidden text-xs"
+          role="group"
+          aria-label="Moneda de los precios"
+        >
+          {["COP", "USD"].map((m) => (
+            <button
+              key={m}
+              type="button"
+              onClick={() => setMoneda(m)}
+              aria-pressed={moneda === m}
+              className={`px-3 py-2 font-semibold transition ${
+                moneda === m
+                  ? "bg-[#C2B280] text-black"
+                  : "text-gray-300 hover:bg-gray-800"
+              }`}
+            >
+              {m}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {PLANES.map((plan) => (
           <div
-            key={plan.title}
-            className={`rounded-xl p-6 border transition-all duration-300 ${
-              plan.highlight
+            key={plan.id}
+            className={`rounded-xl p-6 border transition-all duration-300 flex flex-col ${
+              plan.destacado
                 ? "bg-gradient-to-b from-violet-600/10 to-cyan-600/5 border-violet-500/50 shadow-lg shadow-violet-500/10 relative"
                 : "bg-[#111] border-gray-800 hover:border-gray-600"
             }`}
           >
-            {plan.highlight && (
+            {plan.destacado && (
               <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-violet-600 to-cyan-600 text-white text-[10px] font-bold px-3 py-1 rounded-full">
                 RECOMENDADO
               </span>
             )}
-            <h3 className="font-bold text-white text-lg mb-1">{plan.title}</h3>
-            <p className="text-gray-500 text-xs mb-4">{plan.sub}</p>
+            <h3 className="font-bold text-white text-lg mb-1">{plan.nombre}</h3>
+            <p className="text-gray-400 text-xs mb-4">{plan.sub}</p>
             <p className="text-3xl font-extrabold mb-1">
               <span
                 className={
-                  plan.highlight
+                  plan.destacado
                     ? "bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent"
                     : "text-white"
                 }
@@ -137,17 +112,21 @@ export default function SeccionPrecios() {
                 desde {precio(plan)}
               </span>
             </p>
-            <p className="text-gray-600 text-xs mb-5">
-              {colombia ? "COP · + IVA" : "USD · + IVA"}
+            <p className="text-gray-400 text-xs mb-5">
+              {plan.plazo} · soporte {plan.soporteMeses}{" "}
+              {plan.soporteMeses === 1 ? "mes" : "meses"}
             </p>
-            <ul className="space-y-2 mb-6">
-              {plan.features.map((f) => (
+            <ul className="space-y-2 mb-6 flex-1">
+              {plan.incluye.map((f) => (
                 <li
                   key={f}
-                  className="flex items-center gap-2 text-gray-400 text-xs"
+                  className="flex items-center gap-2 text-gray-300 text-xs"
                 >
                   <span
-                    className={plan.highlight ? "text-violet-400" : "text-green-400"}
+                    className={
+                      plan.destacado ? "text-violet-400" : "text-green-400"
+                    }
+                    aria-hidden="true"
                   >
                     ✓
                   </span>
@@ -156,9 +135,9 @@ export default function SeccionPrecios() {
               ))}
             </ul>
             <Link
-              href="/cotizar"
+              href={`/cotizar?tipo=${plan.id}`}
               className={`block text-center py-2.5 rounded-xl font-semibold text-sm transition ${
-                plan.highlight
+                plan.destacado
                   ? "bg-gradient-to-r from-violet-600 to-cyan-600 text-white hover:opacity-90"
                   : "border border-gray-700 hover:border-violet-500 hover:text-violet-400"
               }`}
@@ -168,10 +147,41 @@ export default function SeccionPrecios() {
           </div>
         ))}
       </div>
-      <p className="text-gray-600 text-xs text-center mt-4">
-        * Precios en pesos colombianos para Colombia (COP) y en USD para otros
-        países. Plazos, complejidad e integraciones pueden modificar la
-        cotización.
+
+      {/* Mantenimiento: plan mensual opcional */}
+      <div className="mt-6 bg-[#111] border border-[#C2B280]/30 rounded-xl p-6 md:p-8 flex flex-col md:flex-row md:items-center gap-6">
+        <div className="flex-1">
+          <h3 className="font-bold text-white text-lg mb-1">
+            {MANTENIMIENTO.nombre}{" "}
+            <span className="text-[#C2B280] text-sm font-semibold">
+              · desde {precioMantenimiento(moneda)}
+            </span>
+          </h3>
+          <p className="text-gray-400 text-sm mb-3">{MANTENIMIENTO.sub}</p>
+          <ul className="flex flex-wrap gap-x-5 gap-y-1.5">
+            {MANTENIMIENTO.incluye.map((f) => (
+              <li key={f} className="text-gray-300 text-xs flex items-center gap-1.5">
+                <span className="text-[#C2B280]" aria-hidden="true">
+                  ✓
+                </span>
+                {f}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <Link
+          href="/cotizar?tipo=mantenimiento"
+          className="shrink-0 text-center px-6 py-3 border border-[#C2B280]/50 text-[#C2B280] rounded-xl font-semibold text-sm hover:bg-[#C2B280]/10 transition"
+        >
+          Consultar mantenimiento
+        </Link>
+      </div>
+
+      <p className="text-gray-400 text-xs text-center mt-4">
+        * Precios en pesos colombianos (COP) y en dólares (USD) para clientes
+        internacionales. Plazos, complejidad e integraciones pueden modificar la
+        cotización. Si necesitas factura electrónica, los impuestos se
+        discriminan según corresponda.
       </p>
     </section>
   );

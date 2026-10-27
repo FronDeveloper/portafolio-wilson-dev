@@ -1,46 +1,56 @@
 /**
  * Faq — Preguntas frecuentes + FAQPage schema.org
  * ============================================================
- * Dos misiones:
- *  1. CONVERSIÓN: responde las objeciones (precio, plazo,
- *     soporte, pagos) justo antes del CTA final de la home.
- *  2. SEO: su markup <details> deja el texto en el HTML para
- *     el crawler, y el schema FAQPage hace elegible la página
- *     para desplegables enriquecidos en resultados de Google
- *     (búsquedas tipo "cuánto cuesta una página web en Colombia").
- *
- * Server component (sin "use client") — el acordeón es el
- * <details> nativo del navegador: cero JS, cero costo.
- *
- * Montaje: en app/page.jsx, entre la sección de precios y el
- * CTA final:
- *   import Faq from "@/components/Faq";
- *   <Faq />
+ * Los precios salen de lib/pricing.ts para no contradecir la
+ * sección de precios, las propuestas ni a Alma.
+ * Server component: cero JS, <details> nativo.
  * ============================================================
  */
 
 import { FaChevronDown, FaWhatsapp } from "react-icons/fa";
+import {
+  CAPACIDADES_PAGO,
+  MANTENIMIENTO,
+  PLAN_POR_ID,
+  SOPORTE_NOTA,
+  formatearCOP,
+  formatearUSD,
+} from "@/lib/pricing";
+
+const LANDING = PLAN_POR_ID.landing;
+const ECOMMERCE = PLAN_POR_ID.ecommerce;
+const SAAS = PLAN_POR_ID.saas;
 
 const FAQS = [
   {
     q: "¿Cuánto cuesta una página web en Colombia?",
-    a: "Depende del alcance: una landing page profesional parte desde $1.200.000 COP (entrega en 5-7 días), una tienda online desde $3.200.000 COP (3-4 semanas) y una aplicación a medida desde $6.000.000 COP (6-8 semanas). Cada proyecto se cotiza según tus necesidades y recibes la propuesta en menos de 24 horas, sin compromiso.",
+    a: `Depende del alcance: una landing page profesional parte desde ${formatearCOP(
+      LANDING.desde.cop
+    )} COP (entrega en ${LANDING.plazo}), una tienda online desde ${formatearCOP(
+      ECOMMERCE.desde.cop
+    )} COP (${ECOMMERCE.plazo}) y un SaaS o aplicación a medida desde ${formatearCOP(
+      SAAS.desde.cop
+    )} COP (${SAAS.plazo}). Cada proyecto se cotiza según tus necesidades y recibes la propuesta en menos de 24 horas, sin compromiso.`,
   },
   {
     q: "¿Cuánto tarda el desarrollo de mi proyecto?",
-    a: "Una landing page está lista en 5-7 días, un e-commerce en 3-4 semanas y una aplicación a medida en 6-8 semanas. El plazo exacto va confirmado en tu propuesta escrita, y durante el desarrollo ves avances reales, no promesas.",
+    a: `Una landing page está lista en ${LANDING.plazo}, un e-commerce en ${ECOMMERCE.plazo} y un SaaS o app a medida en ${SAAS.plazo}. El plazo exacto se confirma en tu propuesta escrita, y durante el desarrollo ves avances reales.`,
   },
   {
     q: "¿Qué incluye el soporte post-lanzamiento?",
-    a: "Todos los planes incluyen soporte: 1 mes en landing pages, 3 meses en e-commerce y 6 meses en aplicaciones a medida. Cubre correcciones, ajustes menores y acompañamiento mientras tu proyecto arranca. Después puedes contratar mantenimiento si lo necesitas.",
+    a: `${SOPORTE_NOTA} Cubre correcciones, ajustes menores y acompañamiento mientras tu proyecto arranca. El mantenimiento mensual parte desde ${formatearCOP(
+      MANTENIMIENTO.desde.cop
+    )} COP/mes (${formatearUSD(MANTENIMIENTO.desde.usd)} USD/mes) según el tamaño del sistema.`,
   },
   {
-    q: "¿Puedo recibir pagos con Wompi, PSE o Efecty?",
-    a: "Sí. Integro las pasarelas colombianas que tu negocio necesite: Wompi, PSE, Efecty y también Stripe para ventas internacionales. Tu tienda queda lista para cobrar desde el primer día, con panel de administración incluido.",
+    q: "¿Puedo recibir pagos con Wompi, PSE, Efecty o Stripe?",
+    a: `${CAPACIDADES_PAGO.resumen} ${CAPACIDADES_PAGO.proceso} El proveedor final depende del país y de la cuenta que uses; por eso lo confirmamos antes de implementar. ${CAPACIDADES_PAGO.limite}`,
   },
   {
     q: "¿Trabajas solo con clientes de Colombia?",
-    a: "No. Trabajo 100% remoto con clientes de cualquier país. La comunicación es directa por WhatsApp o videollamada, y para clientes internacionales los precios se manejan en USD con el mismo estándar de calidad y entrega.",
+    a: `No. Trabajo 100% remoto con clientes de cualquier país. La comunicación es directa por WhatsApp o videollamada, y para clientes internacionales los precios se manejan en USD (desde ${formatearUSD(
+      LANDING.desde.usd
+    )} USD una landing), con el mismo estándar de calidad y entrega.`,
   },
   {
     q: "¿Qué necesito para empezar?",
@@ -49,24 +59,18 @@ const FAQS = [
 ];
 
 export default function Faq() {
-  // Schema FAQPage — espejo exacto de las preguntas de arriba,
-  // para que Google pueda mostrar los desplegables en resultados.
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     mainEntity: FAQS.map((f) => ({
       "@type": "Question",
       name: f.q,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: f.a,
-      },
+      acceptedAnswer: { "@type": "Answer", text: f.a },
     })),
   };
 
   return (
     <section id="faq" className="px-8 md:px-20 py-16 max-w-4xl mx-auto">
-      {/* Datos estructurados (no se renderiza visualmente) */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
@@ -79,7 +83,7 @@ export default function Faq() {
             frecuentes
           </span>
         </h2>
-        <p className="text-gray-500 text-sm">
+        <p className="text-gray-400 text-sm">
           Lo que todos preguntan antes de arrancar un proyecto. Si te queda
           alguna duda, la resolvemos hoy mismo.
         </p>
@@ -95,20 +99,19 @@ export default function Faq() {
               <span>{f.q}</span>
               <FaChevronDown className="text-violet-400 text-xs flex-shrink-0 transition-transform duration-300 group-open:rotate-180" />
             </summary>
-            <p className="px-5 pb-5 text-gray-400 text-sm leading-relaxed">
+            <p className="px-5 pb-5 text-gray-300 text-sm leading-relaxed">
               {f.a}
             </p>
           </details>
         ))}
       </div>
 
-      {/* CTA de cierre */}
       <div className="text-center mt-8">
         <a
           href="https://wa.me/573012821174?text=Hola%20Wilson%2C%20tengo%20una%20pregunta%20sobre%20tu%20servicio%20%F0%9F%98%8A"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-violet-400 transition-colors"
+          className="inline-flex items-center gap-2 text-sm text-gray-300 hover:text-violet-400 transition-colors"
         >
           <FaWhatsapp className="text-[#25D366]" />
           ¿Otra duda? Escríbeme por WhatsApp y la resuelvo hoy mismo

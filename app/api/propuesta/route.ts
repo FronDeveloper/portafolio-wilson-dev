@@ -26,6 +26,10 @@ import {
   type SolicitudPropuesta,
   type PropuestaPayload,
 } from "@/lib/propuestas";
+import {
+  LEGACY_PRESUPUESTO_LABELS,
+  etiquetaPresupuesto,
+} from "@/lib/pricing";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -93,6 +97,34 @@ export async function POST(request: Request) {
     if (email && !email.includes("@")) {
       return NextResponse.json({ error: "Email inválido" }, { status: 400 });
     }
+    if (body?.consent !== true) {
+      return NextResponse.json(
+        { error: "Debes autorizar el tratamiento de tus datos para enviar la solicitud." },
+        { status: 400 }
+      );
+    }
+    if (tipo && !PROYECTO_LABELS[tipo]) {
+      return NextResponse.json({ error: "Tipo de proyecto inválido" }, { status: 400 });
+    }
+    if (
+      presupuesto &&
+      !PRESUPUESTO_LABELS[presupuesto] &&
+      !LEGACY_PRESUPUESTO_LABELS[presupuesto]
+    ) {
+      return NextResponse.json({ error: "Rango de presupuesto inválido" }, { status: 400 });
+    }
+
+    const origenRaw =
+      body?.origen && typeof body.origen === "object" ? body.origen : {};
+    const campo = (v: unknown, max: number) =>
+      typeof v === "string" ? v.replace(/\s+/g, " ").trim().slice(0, max) : "";
+    const origen: Record<string, string> = {
+      utm_source: campo(origenRaw.utm_source, 120),
+      utm_medium: campo(origenRaw.utm_medium, 120),
+      utm_campaign: campo(origenRaw.utm_campaign, 160),
+      page: campo(origenRaw.page, 300),
+      referrer: campo(origenRaw.referrer, 300),
+    };
 
     const whatsapp = normalizarWhatsApp(whatsappRaw);
 
@@ -104,6 +136,7 @@ export async function POST(request: Request) {
       presupuesto,
       detalles,
       historial,
+      origen,
     };
 
     // ---- 1) Generar borrador ----
@@ -142,7 +175,7 @@ export async function POST(request: Request) {
       <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 620px; margin: 0 auto; background: #0B0B0B; padding: 36px; border-radius: 12px;">
         <div style="text-align: center; margin-bottom: 26px;">
           <h1 style="color: #C2B280; font-size: 24px; margin-bottom: 6px;">📝 Propuesta lista para revisar</h1>
-          <p style="color: #888; font-size: 13px;">Generada por Alma · ${fechaBogota()} · origen: ${modelo === "ia" ? "IA (Groq)" : "plantilla"}</p>
+          <p style="color: #888; font-size: 13px;">Generada por Alma · ${fechaBogota()} · origen: ${modelo === "ia" ? "IA" : "plantilla"}</p>
         </div>
 
         <div style="background: #111; border: 1px solid #333; border-radius: 8px; padding: 22px; margin-bottom: 18px;">
@@ -152,9 +185,15 @@ export async function POST(request: Request) {
             ${whatsapp ? `<tr><td style="padding: 6px 0; color: #888;">WhatsApp:</td><td style="padding: 6px 0;"><a href="https://wa.me/${whatsapp}" style="color: #25D366;">+${escapeHtml(whatsapp)}</a></td></tr>` : ""}
             ${email ? `<tr><td style="padding: 6px 0; color: #888;">Email:</td><td style="padding: 6px 0;"><a href="mailto:${escapeHtml(email)}" style="color: #C2B280;">${escapeHtml(email)}</a></td></tr>` : ""}
             <tr><td style="padding: 6px 0; color: #888;">Proyecto:</td><td style="padding: 6px 0; color: #fff;">${escapeHtml(PROYECTO_LABELS[tipo] || tipo || "No especificado")}</td></tr>
-            <tr><td style="padding: 6px 0; color: #888;">Presupuesto:</td><td style="padding: 6px 0; color: #fff;">${escapeHtml(PRESUPUESTO_LABELS[presupuesto] || presupuesto || "No definido")}</td></tr>
+            <tr><td style="padding: 6px 0; color: #888;">Presupuesto:</td><td style="padding: 6px 0; color: #fff;">${escapeHtml(etiquetaPresupuesto(presupuesto))}</td></tr>
           </table>
           ${detalles ? `<p style="color: #aaa; font-size: 13px; line-height: 1.6; margin: 14px 0 0; white-space: pre-wrap;"><b style="color:#C2B280;">Necesidad:</b> ${escapeHtml(detalles)}</p>` : ""}
+          <p style="color: #666; font-size: 11px; margin: 14px 0 0; line-height: 1.6;">
+            El cliente autorizó el tratamiento de sus datos para esta solicitud.<br>
+            Origen: ${escapeHtml(origen.utm_source || "Directo")}${
+              origen.utm_medium ? ` / ${escapeHtml(origen.utm_medium)}` : ""
+            } · Página: ${escapeHtml(origen.page || "—")}
+          </p>
         </div>
 
         <div style="background: #111; border: 1px solid #333; border-radius: 8px; padding: 22px; margin-bottom: 22px;">

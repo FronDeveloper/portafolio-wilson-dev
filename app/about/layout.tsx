@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Sobre mí — Wilson Valencia | Desarrollador Full-Stack",
+  title: "Sobre mí — Desarrollador Full-Stack",
   description:
     "Soy Wilson Valencia, desarrollador full-stack freelance en Medellín, Colombia. Especializado en Next.js, TypeScript y Supabase. Disponible para proyectos de software a medida.",
   keywords: [
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     "desarrollo software freelance",
   ],
   openGraph: {
-    title: "Sobre mí — Wilson Valencia | Desarrollador Full-Stack",
+    title: "Sobre mí — Desarrollador Full-Stack",
     description:
       "Desarrollador full-stack en Medellín. Construyo aplicaciones web a medida con Next.js, TypeScript y Supabase. Disponible para proyectos.",
     url: "https://wvalencia-dev.vercel.app/about",
