@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import Link from "next/link";
 
 /**
  * Panel privado de propuestas — Fase 2.
@@ -354,12 +355,20 @@ export default function PanelPage() {
               Genera borradores con IA, edítalos y apruébalos tú. Nada se envía solo.
             </p>
           </div>
-          <button
-            onClick={handleLogout}
-            className="text-gray-400 hover:text-white text-xs border border-gray-700 hover:border-gray-500 rounded-lg px-3 py-2 transition"
-          >
-            Salir
-          </button>
+          <div className="flex items-center gap-2">
+            <Link
+              href="/panel/leads"
+              className="text-gray-400 hover:text-white text-xs border border-gray-700 hover:border-gray-500 rounded-lg px-3 py-2 transition"
+            >
+              📊 Leads
+            </Link>
+            <button
+              onClick={handleLogout}
+              className="text-gray-400 hover:text-white text-xs border border-gray-700 hover:border-gray-500 rounded-lg px-3 py-2 transition"
+            >
+              Salir
+            </button>
+          </div>
         </div>
 
         {/* Aviso de entrega */}

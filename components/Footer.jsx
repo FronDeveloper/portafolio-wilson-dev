@@ -23,6 +23,9 @@ export default function Footer() {
             <Link href="/contact" className="hover:text-[#C2B280] transition">
               Contacto
             </Link>
+            <Link href="/testimonios" className="hover:text-[#C2B280] transition">
+              Deja tu testimonio
+            </Link>
             <a
               href="https://github.com/FronDeveloper"
               target="_blank"

@@ -23,7 +23,8 @@
 import crypto from "crypto";
 import {
   CATALOGO,
-  MANTENIMIENTO,
+  HORA_EXTRA,
+  PLANES_MANTENIMIENTO,
   PLAN_POR_ID,
   PRESUPUESTO_LABELS,
   PROYECTO_LABELS,
@@ -184,7 +185,12 @@ CATÁLOGO REAL DE WILSON (COP):
 1. ${c.landing.nombre} — ${c.landing.precio} — ${c.landing.incluye.join(", ")}. Plazo: ${c.landing.plazo}. Soporte: ${c.landing.soporte}.
 2. ${c.ecommerce.nombre} — ${c.ecommerce.precio} — ${c.ecommerce.incluye.join(", ")}. Plazo: ${c.ecommerce.plazo}. Soporte: ${c.ecommerce.soporte}.
 3. ${c.saas.nombre} — ${c.saas.precio} — ${c.saas.incluye.join(", ")}. Plazo: ${c.saas.plazo}. Soporte: ${c.saas.soporte}.
-4. ${MANTENIMIENTO.nombre} — desde ${formatearCOP(MANTENIMIENTO.desde.cop)} COP/mes (${formatearUSD(MANTENIMIENTO.desde.usd)} USD/mes) — ${MANTENIMIENTO.incluye.join(", ")}.
+4. Mantenimiento mensual: ${PLANES_MANTENIMIENTO.map(
+    (m) =>
+      `${m.nombre} — ${formatearCOP(m.desde.cop)} COP/mes (${formatearUSD(
+        m.desde.usd
+      )} USD/mes), incluye ${m.horas} h/mes, respuesta en ${m.respuesta}`
+  ).join("; ")}; hora extra fuera de plan ${formatearCOP(HORA_EXTRA.cop)} COP (${formatearUSD(HORA_EXTRA.usd)} USD).
 
 SOPORTE: ${SOPORTE_NOTA}
 
@@ -192,7 +198,7 @@ REGLAS:
 - Los precios son "desde" y referenciales. Si el presupuesto del cliente es menor al plan recomendado, propone una versión reducida por fases (ej: empezar con una landing y escalar después) en lugar de inventar descuentos.
 - NUNCA inventes precios, plazos ni servicios que no estén en el catálogo.
 - Elige el plan del catálogo que mejor encaje con la necesidad del cliente (si dijo "no estoy seguro", deduce por la descripción y dilo con naturalidad).
-- Si el cliente pide mantenimiento, usa el plan mensual y aclara que el alcance se acuerda por escrito.
+- Si el cliente pide mantenimiento, presenta los tres planes mensuales y recomienda uno según el tamaño y criticidad del sistema; el alcance y las horas incluidas se acuerdan por escrito.
 - Pagos: puedes mencionar que Wilson integra pasarelas colombianas (Wompi, PSE, Efecty) e internacionales (Stripe, PayPal, Mercado Pago) según el país y la cuenta del cliente. No prometas un proveedor específico sin validarlo.
 - WordPress: Wilson ha trabajado con WordPress, pero no lo presentes como su especialidad principal.
 
@@ -242,7 +248,9 @@ function construirUserPrompt(s: SolicitudPropuesta): string {
 /** Propuesta de respaldo determinista, por si la IA falla (el flujo nunca se cae) */
 export function propuestaDeRespaldo(s: SolicitudPropuesta): string {
   if (s.tipo === "mantenimiento") {
-    const bullets = MANTENIMIENTO.incluye
+    const estandar = PLANES_MANTENIMIENTO[1];
+    const basico = PLANES_MANTENIMIENTO[0];
+    const bullets = estandar.incluye
       .slice(0, 4)
       .map((f) => `✅ ${f}`)
       .join("\n");
@@ -255,11 +263,13 @@ Entiendo que necesitas mantener y cuidar un sistema que ya está en funcionamien
 ${bullets}
 
 *Inversión y plazo*
-${MANTENIMIENTO.nombre} desde ${formatearCOP(
-      MANTENIMIENTO.desde.cop
-    )} COP/mes (${formatearUSD(
-      MANTENIMIENTO.desde.usd
-    )} USD/mes). El alcance y las horas incluidas los acordamos por escrito según el tamaño del sistema.
+Manejo tres planes de mantenimiento: ${PLANES_MANTENIMIENTO.map(
+      (m) => `${m.nombre} ${formatearCOP(m.desde.cop)} COP/mes`
+    ).join(", ")}. El más elegido es el *${estandar.nombre}* (${formatearCOP(
+      estandar.desde.cop
+    )} COP/mes, ${estandar.horas} horas incluidas); si tu sistema es sencillo, el *${
+      basico.nombre
+    }* parte en ${formatearCOP(basico.desde.cop)} COP/mes. El alcance lo acordamos por escrito según el tamaño del sistema.
 
 *Siguiente paso*
 ¿Te parece si hablamos 15 minutos por WhatsApp? Reviso contigo qué necesita el sistema y te confirmo el plan, sin ningún compromiso.

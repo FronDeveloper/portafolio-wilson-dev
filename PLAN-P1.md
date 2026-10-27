@@ -10,8 +10,7 @@ Criterios de aceptación globales:
 - Los 3 puntos de captura (chat, `/cotizar`, `/contact`) alimentan un solo pipeline y Wilson
   recibe notificaciones con el mismo formato, con origen y UTM.
 - El cliente recibe autorrespuesta inmediata desde un correo del dominio propio
-  (ya no `onboarding@resend.dev`).
-- Toda llamada agendada termina con recap por email.
+  (ya no `onboarding@resend.dev`). → **Requiere dominio (aplazado por Wilson).**
 - Propuesta PDF y links de pago con política 50/50 listos para usarse en una venta real.
 - No se publican testimonios ni métricas sin validar.
 - Lighthouse mantiene 100/100/100 y el bundle no crece (se eliminan dependencias muertas).
@@ -22,44 +21,57 @@ guardrails y reintentos del chat.
 
 ## Bloque A — Marca y entregabilidad (dominio + correo)
 
-> Nota: el dominio gratuito `*.vercel.app` no permite verificar Resend ni tener correo propio
-> (no se le pueden agregar registros SPF/DKIM/DMARC). Mientras no haya dominio, los correos
-> siguen saliendo de `onboarding@resend.dev` y la autorrespuesta a clientes no es viable.
+> Nota: el dominio gratuito `*.vercel.app` no permite verificar Resend ni tener correo propio.
+> Mientras tanto los correos siguen saliendo de `onboarding@resend.dev` hacia el correo de
+> Wilson, como funciona hoy.
 
-- [ ] Preparar `EMAIL_FROM` en el código para que cambiar de remitente sea solo una variable de entorno.
-- [ ] (Requiere dominio) Comprar dominio propio, configurar `NEXT_PUBLIC_SITE_URL` y correo profesional.
-- [ ] (Requiere dominio) Verificar el dominio en Resend (SPF/DKIM/DMARC) y comprobar entrega en Gmail/Outlook.
+- [x] Remitente preparado en las 4 rutas de email: cambiar a dominio propio será solo
+      definir `EMAIL_FROM` en Vercel.
+- [ ] (Requiere dominio) Comprar dominio, definir `EMAIL_FROM` y `NEXT_PUBLIC_SITE_URL`.
+- [ ] (Requiere dominio) Verificar el dominio en Resend (SPF/DKIM/DMARC) y probar entrega.
 - [ ] OG image propia y metadatos finales (compartir en WhatsApp debe verse bien).
 
 ## Bloque B — Pipeline comercial único
 
-- [ ] Migrar `/contact` de `emailjs` al pipeline propio (API + Resend) y eliminar `@emailjs/browser`.
-- [ ] Unificar el formato de notificación interna: origen (chat/cotizar/contacto), contacto, presupuesto y UTM.
-- [ ] Autorrespuesta inmediata al cliente con el siguiente paso y enlace a la agenda.
-- [ ] Dashboard propio `/admin` en este mismo proyecto (con login), controlado por Wilson sin
-      herramientas externas: leads con estado (nuevo → calificado → llamada → propuesta → cerrado),
-      notas, origen y UTM.
-- [ ] Agenda online (Cal.com) + guion de llamada de 15 min + recap automático por email.
-- [ ] Plantilla de propuesta PDF: alcance, exclusiones, hitos, pagos, garantía, PI y firma.
-- [ ] Cobros en Colombia: Transferencia y Wompi, con la política 50/50 ya escrita en `/terminos`.
-      (Internacional por definir: Wise/PayPal).
-- [ ] Definir tarifa horaria y el plan de mantenimiento definitivo
-      (hoy queda como referencia $350.000 COP / $90 USD en `lib/pricing.ts`).
-- [ ] Chat: descalificación amable de proyectos fuera de alcance, resumen del lead a Wilson
-      y botón de handoff a WhatsApp/agenda.
+- [x] Migrar `/contact` de `emailjs` al pipeline propio (`/api/contacto` + Resend) y
+      eliminar `@emailjs/browser`. Con consentimiento y eventos.
+- [x] Notificación interna unificada: origen (chat/cotizar/contacto), contacto, presupuesto
+      y UTM en las tres rutas.
+- [x] Dashboard propio `/panel/leads` (misma contraseña que `/panel`): leads con estado
+      (nuevo → calificado → llamada → propuesta → cerrado/descartado), notas, origen y UTM,
+      botones directos a WhatsApp/email. Activación: definir `DATABASE_URL` en Vercel
+      (Neon/Supabase gratis); la tabla se crea sola en el primer uso. Sin BD no se pierde
+      nada: los leads siguen llegando por correo.
+- [x] Cobros en Colombia: transferencia bancaria y Wompi, escritos en `/terminos` §4,
+      junto a la política 50/50 ya existente. (Internacional por definir.)
+- [x] Planes de mantenimiento definitivos publicados en `lib/pricing.ts` (fuente única):
+      Básico $250.000 COP/$65 USD, Estándar $350.000 COP/$90 USD (más elegido),
+      Premium $750.000 COP/$190 USD; hora extra $100.000 COP/$25 USD.
+      Actualizados: SeccionPrecios, FAQ, JSON-LD, propuestas (IA y respaldo) y prompt de Alma.
+- [x] Chat: descalificación amable de proyectos fuera de alcance (nueva regla en el prompt).
+      El resumen del lead a Wilson ya incluye la conversación completa (P0).
+- [ ] Plantilla de propuesta formal: el panel ya genera borrador IA y descarga HTML
+      imprimible a PDF; falta la plantilla con exclusiones, garantía, PI y firma.
+- [ ] Autorrespuesta al cliente → **requiere dominio propio en Resend** (aplazado).
+- [ ] Agenda online (Cal.com) + guion de llamada de 15 min + recap por email (pendiente
+      cuenta de Cal.com de Wilson).
+- [ ] Botón de handoff dentro del chat (el botón verde global de WhatsApp ya existe).
 
 ## Bloque C — Confianza honesta
 
-- [ ] Eliminar `components/Testimonials.jsx` (sin usar, datos no validados).
-- [ ] Crear el flujo para testimonios reales: formulario con consentimiento → notificación a
-      Wilson → publicación manual solo tras su aprobación (nada se publica solo).
-- [ ] Validar o retirar métricas públicas sin fundamento (auditoría §9.3).
-- [ ] Alinear GitHub y LinkedIn con el posicionamiento del portafolio.
+- [x] Eliminar `components/Testimonials.jsx` (sin usar, datos no validados).
+- [x] Flujo para testimonios reales: página `/testimonios` (noindex) + `/api/testimonios` —
+      el testimonio llega por correo a Wilson con el permiso del cliente y NUNCA se
+      publica automático. Enlazado desde el footer ("Deja tu testimonio").
+- [ ] Validar o retirar métricas públicas sin fundamento (pendiente confirmar con Wilson).
+- [ ] Alinear GitHub y LinkedIn con el posicionamiento del portafolio (tarea de Wilson).
 
 ## Bloque D — Analítica y remarketing
 
-- [ ] Eventos GA4 estándar (p. ej. `generate_lead`) equivalentes al evento `Lead` de Meta.
-- [ ] Auditar el píxel compartido con AgendaPro → píxel propio y audiencias limpias.
+- [x] Evento GA4 `generate_lead` disparado junto al evento `Lead` de Meta en el chat y
+      en `/cotizar` (y nuevo formulario /contact), solo con consentimiento.
+- [ ] Auditar el píxel compartido con AgendaPro → píxel propio y audiencias limpias
+      (requiere acceso al administrador de eventos de Meta).
 - [ ] (Opcional) CAPI de Meta para eventos del servidor.
 
 ## Bloque E — Internacionalización ligera
@@ -71,18 +83,29 @@ guardrails y reintentos del chat.
 
 ## Bloque F — Limpieza y rendimiento
 
-- [ ] Eliminar `react-tsparticles` y `tsparticles-slim` (sin referencias en el código).
-- [ ] Auditoría de bundle tras la limpieza y regresión de Lighthouse (100/100/100).
+- [x] Eliminar `react-tsparticles` y `tsparticles-slim` (sin referencias; 36 paquetes menos).
+- [x] Auditoría de bundle tras la limpieza y regresión de Lighthouse: 100/100/100 en
+      inicio, /cotizar y /testimonios.
+
+## Variables de entorno (Vercel)
+
+| Variable | Estado | Para qué |
+|---|---|---|
+| `RESEND_API_KEY` | ✅ configurada | Envío de emails de leads |
+| `NOTIFY_EMAIL` | opcional | Correo donde llegan los leads (default: wilson.arroyo12@gmail.com) |
+| `PANEL_PASSWORD` | verificar | Contraseña de `/panel` y `/panel/leads` |
+| `DATABASE_URL` | ⬜ agregar | Activa el panel de leads (Neon/Supabase gratis) |
+| `EMAIL_FROM` | ⬜ futuro | Remitente propio cuando haya dominio |
+| `NEXT_PUBLIC_SITE_URL` | ⬜ futuro | Dominio propio |
+| `TELEGRAM_BOT_TOKEN` / `CALLMEBOT_*` | opcionales | Avisos push de leads |
 
 ## Pendiente de decisión de Wilson
 
-- ~~Hacer push de `main`~~ → aprobado: se despliega P0 en Vercel al hacer push.
-- Dominio propio: aplazado. Consecuencias aceptadas por ahora: correo desde
-  `onboarding@resend.dev` y sin autorrespuesta a clientes hasta comprar dominio.
-- Plan de mantenimiento: aprobar precios sugeridos (ver conversación) antes de publicarlos;
-  hoy quedan como referencia $350.000 COP / $90 USD en `lib/pricing.ts`.
-- Cobros internacionales (Wise/PayPal/Stripe): definir después de los de Colombia
-  (Transferencia + Wompi ✅).
-- Crear cuenta en Wompi y de dónde salen las credenciales para los links de pago.
-- Métricas públicas: validar o retirar.
-- Revisión legal del contrato y DPA por un abogado.
+- ~~Push de `main`~~ → hecho: P0 desplegado en Vercel.
+- ~~Precio de mantenimiento~~ → aprobado: 3 planes publicados.
+- ~~CRM~~ → aprobado: dashboard propio `/panel/leads` (solo falta `DATABASE_URL`).
+- ~~Pasarela Colombia~~ → aprobado: transferencia + Wompi.
+- Crear cuenta gratis en Neon (o Supabase), copiar `DATABASE_URL` y agregarla en Vercel.
+- Verificar que `PANEL_PASSWORD` esté configurada en Vercel.
+- Cobros internacionales (Wise/PayPal/Stripe): definir cuando haya primer cliente.
+- Métricas públicas, GitHub/LinkedIn, Cal.com y revisión legal del contrato/DPA.

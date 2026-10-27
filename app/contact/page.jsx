@@ -1,50 +1,87 @@
 "use client";
 
 import Navbar from "@/components/Navbar";
-import { useRef, useState, useEffect } from "react";
-import emailjs from "@emailjs/browser";
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import {
+  trackMetaEvent,
+  trackGAEvent,
+  getAttribution,
+} from "@/lib/analytics/meta-events";
+
+/**
+ * /contact — formulario de contacto en el MISMO pipeline que el chat y
+ * /cotizar: API propia (/api/contacto) + Resend + copia en /panel/leads.
+ */
 
 export default function Contact() {
-  const form = useRef();
+  const [formData, setFormData] = useState({
+    nombre: "",
+    email: "",
+    mensaje: "",
+  });
+  const [consent, setConsent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
 
-  // Auto-cerrar mensajes después de 5 segundos
+  // Auto-cerrar mensajes después de 6 segundos
   useEffect(() => {
     if (success || error) {
       const timer = setTimeout(() => {
         setSuccess(false);
-        setError(false);
-      }, 5000);
+        setError("");
+      }, 6000);
       return () => clearTimeout(timer);
     }
   }, [success, error]);
 
-  const sendEmail = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (loading) return;
     setLoading(true);
     setSuccess(false);
-    setError(false);
+    setError("");
 
-    emailjs
-      .sendForm(
-        "service_u8ctv7s",
-        "template_1cjn64d",
-        form.current,
-        "0wAS9_LUxKjlO7Yst"
-      )
-      .then(() => {
-        setLoading(false);
-        setSuccess(true);
-        form.current.reset();
-      })
-      .catch((error) => {
-        console.error("Error al enviar:", error);
-        setLoading(false);
-        setError(true);
+    try {
+      const response = await fetch("/api/contacto", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...formData,
+          consent,
+          utm: getAttribution(),
+        }),
       });
+
+      if (response.ok) {
+        // Un solo evento de lead por conversión (Meta + GA4)
+        trackMetaEvent("Lead", {
+          content_name: "Mensaje de contacto",
+          content_category: "Portafolio Lead",
+          status: "form_submitted",
+        });
+        trackGAEvent("generate_lead", { form: "contacto" });
+
+        setSuccess(true);
+        setFormData({ nombre: "", email: "", mensaje: "" });
+        setConsent(false);
+      } else {
+        const data = await response.json().catch(() => null);
+        setError(
+          data?.error ||
+            "Hubo un error. Por favor intenta de nuevo o escríbeme por WhatsApp."
+        );
+      }
+    } catch (err) {
+      setError("Error de conexión. Intenta de nuevo.");
+    } finally {
+      setLoading(false);
+    }
   };
+
+  const inputClass =
+    "bg-[#111] border border-gray-800 p-4 rounded-xl outline-none focus:border-[#C2B280] transition w-full";
 
   return (
     <main className="text-white min-h-screen">
@@ -68,33 +105,96 @@ export default function Contact() {
           </p>
         </div>
 
-        <form ref={form} onSubmit={sendEmail} className="flex flex-col gap-6">
-          <input
-            type="text"
-            name="user_name"
-            placeholder="Tu nombre"
-            required
-            disabled={loading}
-            className="bg-[#111] border border-gray-800 p-4 rounded-xl outline-none focus:border-[#C2B280] transition"
-          />
+        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+          <div>
+            <label
+              htmlFor="contacto-nombre"
+              className="block text-sm text-gray-300 mb-2"
+            >
+              Tu nombre
+            </label>
+            <input
+              id="contacto-nombre"
+              type="text"
+              name="nombre"
+              autoComplete="name"
+              required
+              maxLength={80}
+              value={formData.nombre}
+              onChange={(e) => setFormData({ ...formData, nombre: e.target.value })}
+              disabled={loading}
+              className={inputClass}
+              placeholder="Tu nombre"
+            />
+          </div>
 
-          <input
-            type="email"
-            name="user_email"
-            placeholder="Tu email"
-            required
-            disabled={loading}
-            className="bg-[#111] border border-gray-800 p-4 rounded-xl outline-none focus:border-[#C2B280] transition"
-          />
+          <div>
+            <label
+              htmlFor="contacto-email"
+              className="block text-sm text-gray-300 mb-2"
+            >
+              Tu email
+            </label>
+            <input
+              id="contacto-email"
+              type="email"
+              name="email"
+              autoComplete="email"
+              required
+              maxLength={120}
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              disabled={loading}
+              className={inputClass}
+              placeholder="tu@correo.com"
+            />
+          </div>
 
-          <textarea
-            name="message"
-            placeholder="Cuéntame sobre tu proyecto..."
-            rows="5"
-            required
-            disabled={loading}
-            className="bg-[#111] border border-gray-800 p-4 rounded-xl outline-none focus:border-[#C2B280] transition"
-          />
+          <div>
+            <label
+              htmlFor="contacto-mensaje"
+              className="block text-sm text-gray-300 mb-2"
+            >
+              Tu proyecto
+            </label>
+            <textarea
+              id="contacto-mensaje"
+              name="mensaje"
+              required
+              rows={5}
+              maxLength={2000}
+              value={formData.mensaje}
+              onChange={(e) => setFormData({ ...formData, mensaje: e.target.value })}
+              disabled={loading}
+              className={inputClass}
+              placeholder="Cuéntame sobre tu proyecto..."
+            />
+          </div>
+
+          <div className="flex items-start gap-3">
+            <input
+              id="contacto-consent"
+              type="checkbox"
+              required
+              checked={consent}
+              onChange={(e) => setConsent(e.target.checked)}
+              disabled={loading}
+              className="mt-1 h-4 w-4 shrink-0 accent-[#C2B280]"
+            />
+            <label
+              htmlFor="contacto-consent"
+              className="text-gray-400 text-xs leading-relaxed"
+            >
+              Acepto la{" "}
+              <Link
+                href="/privacidad"
+                className="text-[#C2B280] underline hover:opacity-80"
+              >
+                política de privacidad
+              </Link>{" "}
+              y el tratamiento de mis datos para responder a esta solicitud.
+            </label>
+          </div>
 
           <button
             type="submit"
@@ -116,7 +216,7 @@ export default function Contact() {
         {error && (
           <div className="bg-red-500/10 border border-red-500 p-4 rounded-lg mt-6">
             <p className="text-red-400">
-              ❌ Error al enviar el mensaje. Por favor, escríbeme directamente a wilson.arroyo12@gmail.com
+              ❌ {error} Si prefieres, escríbeme directamente a wilson.arroyo12@gmail.com
             </p>
           </div>
         )}

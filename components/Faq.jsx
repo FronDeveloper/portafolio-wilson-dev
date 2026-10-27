@@ -10,7 +10,8 @@
 import { FaChevronDown, FaWhatsapp } from "react-icons/fa";
 import {
   CAPACIDADES_PAGO,
-  MANTENIMIENTO,
+  HORA_EXTRA,
+  PLANES_MANTENIMIENTO,
   PLAN_POR_ID,
   SOPORTE_NOTA,
   formatearCOP,
@@ -38,9 +39,16 @@ const FAQS = [
   },
   {
     q: "¿Qué incluye el soporte post-lanzamiento?",
-    a: `${SOPORTE_NOTA} Cubre correcciones, ajustes menores y acompañamiento mientras tu proyecto arranca. El mantenimiento mensual parte desde ${formatearCOP(
-      MANTENIMIENTO.desde.cop
-    )} COP/mes (${formatearUSD(MANTENIMIENTO.desde.usd)} USD/mes) según el tamaño del sistema.`,
+    a: `${SOPORTE_NOTA} Después puedes contratar uno de los tres planes de mantenimiento: ${PLANES_MANTENIMIENTO.map(
+      (m) =>
+        `${m.nombre} (${formatearCOP(m.desde.cop)} COP/${formatearUSD(
+          m.desde.usd
+        )} USD al mes, con ${m.horas} hora${m.horas === 1 ? "" : "s"} incluidas)`
+    ).join(
+      ", "
+    )}. Hora adicional fuera de plan: ${formatearCOP(HORA_EXTRA.cop)} COP (${formatearUSD(
+      HORA_EXTRA.usd
+    )} USD).`,
   },
   {
     q: "¿Puedo recibir pagos con Wompi, PSE, Efecty o Stripe?",

@@ -11,6 +11,7 @@ import {
 } from "react-icons/fa";
 import {
   trackMetaEvent,
+  trackGAEvent,
   captureUTMParams,
   getAttribution,
 } from "@/lib/analytics/meta-events";
@@ -83,6 +84,7 @@ export default function CotizarPage() {
           content_category: "Portafolio Lead",
           status: "form_submitted",
         });
+        trackGAEvent("generate_lead", { form: "cotizar" });
 
         setTimeout(() => {
           router.push("/gracias");

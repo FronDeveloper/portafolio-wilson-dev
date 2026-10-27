@@ -7,6 +7,7 @@ import {
   LEGACY_PRESUPUESTO_LABELS,
 } from "@/lib/pricing";
 import { rateLimitOk } from "@/lib/propuestas";
+import { guardarLead } from "@/lib/leads-db";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -32,6 +33,8 @@ function escapeHtml(v: string): string {
 function texto(v: unknown, max: number): string {
   return typeof v === "string" ? v.replace(/\s+/g, " ").trim().slice(0, max) : "";
 }
+
+const from = `Portafolio Lead <${process.env.EMAIL_FROM || "onboarding@resend.dev"}>`;
 
 function origenFilas(utm: Record<string, string>): string {
   const filas: [string, string][] = [
@@ -148,7 +151,7 @@ export async function POST(request: Request) {
     });
 
     const { error } = await resend.emails.send({
-      from: "Portafolio Lead <onboarding@resend.dev>",
+      from,
       to: [to],
       replyTo: email,
       subject: `🎯 Nueva cotización — ${name.replace(/[\r\n]+/g, " ")} (${
@@ -226,6 +229,17 @@ export async function POST(request: Request) {
         { status: 500 }
       );
     }
+
+    // Copia del lead para el panel /panel/leads (silencioso si no hay BD)
+    guardarLead({
+      origen: "cotizar",
+      nombre: name,
+      contacto: email,
+      whatsapp: telDigits,
+      presupuesto: etiquetaPresupuesto(budget),
+      necesidad: description || PROYECTO_LABELS[projectType],
+      utm,
+    }).catch(() => {});
 
     return NextResponse.json({ success: true });
   } catch (error) {

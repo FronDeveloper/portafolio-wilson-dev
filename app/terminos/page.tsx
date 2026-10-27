@@ -66,6 +66,11 @@ export default function TerminosPage() {
             un anticipo para iniciar y el saldo contra entrega.
           </li>
           <li>
+            Medios de pago disponibles en Colombia: transferencia bancaria o link
+            de pago por Wompi. Para clientes internacionales se acuerda el medio
+            en la propuesta.
+          </li>
+          <li>
             Los precios pueden expresarse en pesos colombianos (COP) o dólares
             (USD). La moneda, el medio de pago y los impuestos aplicables se
             acuerdan en la propuesta.

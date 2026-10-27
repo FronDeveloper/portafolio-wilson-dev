@@ -116,25 +116,92 @@ export const PLAN_POR_ID: Record<PlanId, Plan> = {
 };
 
 /* ------------------------------------------------------------
- * Mantenimiento mensual
- * Valor de partida editable. No se publica como cotización cerrada.
+ * Mantenimiento mensual — 3 planes aprobados por Wilson (oct 2026)
+ * Básico $250k / Estándar $350k / Premium $750k COP.
+ * Hora extra fuera de plan: $100k COP.
  * ---------------------------------------------------------- */
 
+export interface PlanMantenimiento {
+  id: "basico" | "estandar" | "premium";
+  nombre: string;
+  sub: string;
+  desde: PrecioBase;
+  /** Horas de trabajo y soporte incluidas al mes */
+  horas: number;
+  /** Tiempo máximo de respuesta acordado */
+  respuesta: string;
+  incluye: string[];
+  destacado?: boolean;
+}
+
+export const PLANES_MANTENIMIENTO: PlanMantenimiento[] = [
+  {
+    id: "basico",
+    nombre: "Mantenimiento Básico",
+    sub: "Para sitios y landings que solo necesitan estar al día",
+    desde: { cop: 250_000, usd: 65 },
+    horas: 1,
+    respuesta: "3 días hábiles",
+    incluye: [
+      "Actualizaciones de seguridad",
+      "Copias de seguridad periódicas",
+      "Monitoreo de disponibilidad",
+      "1 hora de cambios de contenido al mes",
+      "Reporte mensual simple",
+    ],
+  },
+  {
+    id: "estandar",
+    nombre: "Mantenimiento Estándar",
+    sub: "El más elegido: soporte real para tu operación",
+    desde: { cop: 350_000, usd: 90 },
+    horas: 2,
+    respuesta: "2 días hábiles",
+    destacado: true,
+    incluye: [
+      "Todo lo del plan Básico",
+      "2 horas de soporte y cambios al mes",
+      "Corrección de errores reportados",
+      "Ajustes menores de contenido",
+      "Soporte prioritario por WhatsApp",
+    ],
+  },
+  {
+    id: "premium",
+    nombre: "Mantenimiento Premium",
+    sub: "Para tiendas y sistemas que no pueden detenerse",
+    desde: { cop: 750_000, usd: 190 },
+    horas: 4,
+    respuesta: "menos de 24 horas",
+    incluye: [
+      "Todo lo del plan Estándar",
+      "4 horas de cambios funcionales al mes",
+      "Monitoreo de pasarela de pagos y flujos críticos",
+      "Respuesta en menos de 24 horas",
+      "Recomendaciones de mejora mensuales",
+    ],
+  },
+];
+
+/** Trabajo fuera de plan (cambio puntual, urgencia, etc.). */
+export const HORA_EXTRA: PrecioBase = { cop: 100_000, usd: 25 };
+
+/** Formas de cobro de Wilson en Colombia (se mencionan en /terminos). */
+export const FORMAS_DE_PAGO = [
+  "Transferencia bancaria",
+  "Wompi (link de pago con tarjeta o PSE)",
+] as const;
+
+/** Alias de compatibilidad: el plan Estándar como referencia de mantenimiento. */
 export const MANTENIMIENTO = {
   id: "mantenimiento",
   nombre: "Mantenimiento mensual",
-  sub: "Tu producto sigue funcionando después del lanzamiento",
-  desde: { cop: 350_000, usd: 90 },
+  sub: PLANES_MANTENIMIENTO[1].sub,
+  desde: PLANES_MANTENIMIENTO[1].desde,
   periodo: "mes",
-  incluye: [
-    "Actualizaciones de seguridad",
-    "Copias de seguridad",
-    "Monitoreo y corrección de errores",
-    "Ajustes menores de contenido",
-    "Soporte prioritario por WhatsApp",
-  ],
+  incluye: PLANES_MANTENIMIENTO[1].incluye,
   nota:
-    "Plan mensual opcional. El alcance y las horas incluidas se acuerdan por escrito según el tamaño del sistema.",
+    "Hay tres planes mensuales (Básico, Estándar y Premium). El alcance y las horas incluidas se acuerdan por escrito según el tamaño del sistema.",
 } as const;
 
 /** Nota única sobre soporte, para no contradecirse entre secciones. */
@@ -331,9 +398,10 @@ export function precioDesde(plan: Plan, moneda: Moneda): string {
 }
 
 export function precioMantenimiento(moneda: Moneda): string {
+  const desde = PLANES_MANTENIMIENTO[0].desde; // "desde" = plan Básico
   return moneda === "COP"
-    ? `${formatearCOP(MANTENIMIENTO.desde.cop)} COP/mes`
-    : `${formatearUSD(MANTENIMIENTO.desde.usd)} USD/mes`;
+    ? `${formatearCOP(desde.cop)} COP/mes`
+    : `${formatearUSD(desde.usd)} USD/mes`;
 }
 
 /** Texto compacto para prompts de IA y emails. */
@@ -347,7 +415,17 @@ export function resumenPrecios(): string {
       } de soporte`
   ).join("\n");
 
-  return `${planes}\n- Mantenimiento mensual: desde ${formatearCOP(
-    MANTENIMIENTO.desde.cop
-  )} COP/mes (${formatearUSD(MANTENIMIENTO.desde.usd)} USD/mes)`;
+  const mantenimiento = PLANES_MANTENIMIENTO.map(
+    (m) =>
+      `- ${m.nombre}: ${formatearCOP(m.desde.cop)} COP/mes (${formatearUSD(
+        m.desde.usd
+      )} USD/mes), incluye ${m.horas} h/mes, respuesta ${m.respuesta}`
+  ).join("\n");
+
+  return `${planes}
+${mantenimiento}
+- Hora extra fuera de plan: ${formatearCOP(HORA_EXTRA.cop)} COP (${formatearUSD(
+    HORA_EXTRA.usd
+  )} USD)
+- Formas de cobro en Colombia: ${FORMAS_DE_PAGO.join(" o ")}`;
 }

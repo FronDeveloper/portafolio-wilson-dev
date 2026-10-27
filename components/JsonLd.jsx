@@ -8,8 +8,8 @@
 
 import {
   CONTACT_EMAIL,
-  MANTENIMIENTO,
   PLANES,
+  PLANES_MANTENIMIENTO,
   SITE_URL,
   WHATSAPP_PHONE,
   formatearCOP,
@@ -142,26 +142,26 @@ export default function JsonLd() {
                 },
               },
             ]),
-            {
+            ...PLANES_MANTENIMIENTO.map((plan) => ({
               "@type": "Offer",
               itemOffered: {
                 "@type": "Service",
-                name: MANTENIMIENTO.nombre,
+                name: plan.nombre,
                 description:
-                  "Mantenimiento mensual: actualizaciones, copias de seguridad, monitoreo, corrección de errores y soporte prioritario.",
+                  "Mantenimiento mensual: actualizaciones, copias de seguridad, monitoreo, corrección de errores y soporte.",
               },
               priceCurrency: "COP",
-              price: MANTENIMIENTO.desde.cop,
-              description: `Desde ${formatearCOP(
-                MANTENIMIENTO.desde.cop
-              )} COP por mes.`,
+              price: plan.desde.cop,
+              description: `${plan.nombre}: ${formatearCOP(
+                plan.desde.cop
+              )} COP por mes. Incluye ${plan.horas} h de trabajo mensual.`,
               priceSpecification: {
                 "@type": "PriceSpecification",
                 priceCurrency: "COP",
-                minPrice: MANTENIMIENTO.desde.cop,
+                minPrice: plan.desde.cop,
                 unitText: "mes",
               },
-            },
+            })),
           ],
         },
       },

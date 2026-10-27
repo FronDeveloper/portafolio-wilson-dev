@@ -12,11 +12,11 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
-  MANTENIMIENTO,
+  HORA_EXTRA,
   PLANES,
+  PLANES_MANTENIMIENTO,
   formatearCOP,
   formatearUSD,
-  precioMantenimiento,
 } from "@/lib/pricing";
 
 const esColombia = () => {
@@ -148,33 +148,69 @@ export default function SeccionPrecios() {
         ))}
       </div>
 
-      {/* Mantenimiento: plan mensual opcional */}
-      <div className="mt-6 bg-[#111] border border-[#C2B280]/30 rounded-xl p-6 md:p-8 flex flex-col md:flex-row md:items-center gap-6">
-        <div className="flex-1">
-          <h3 className="font-bold text-white text-lg mb-1">
-            {MANTENIMIENTO.nombre}{" "}
-            <span className="text-[#C2B280] text-sm font-semibold">
-              · desde {precioMantenimiento(moneda)}
-            </span>
+      {/* Mantenimiento: 3 planes mensuales aprobados */}
+      <div className="mt-12">
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-2 mb-6">
+          <h3 className="text-xl font-semibold text-white">
+            Mantenimiento{" "}
+            <span className="text-[#C2B280]">mensual</span>
           </h3>
-          <p className="text-gray-400 text-sm mb-3">{MANTENIMIENTO.sub}</p>
-          <ul className="flex flex-wrap gap-x-5 gap-y-1.5">
-            {MANTENIMIENTO.incluye.map((f) => (
-              <li key={f} className="text-gray-300 text-xs flex items-center gap-1.5">
-                <span className="text-[#C2B280]" aria-hidden="true">
-                  ✓
-                </span>
-                {f}
-              </li>
-            ))}
-          </ul>
+          <p className="text-gray-400 text-xs">
+            Hora adicional fuera de plan: {formatearCOP(HORA_EXTRA.cop)} COP /{" "}
+            {formatearUSD(HORA_EXTRA.usd)} USD
+          </p>
         </div>
-        <Link
-          href="/cotizar?tipo=mantenimiento"
-          className="shrink-0 text-center px-6 py-3 border border-[#C2B280]/50 text-[#C2B280] rounded-xl font-semibold text-sm hover:bg-[#C2B280]/10 transition"
-        >
-          Consultar mantenimiento
-        </Link>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {PLANES_MANTENIMIENTO.map((plan) => (
+            <div
+              key={plan.id}
+              className={`relative rounded-xl p-6 border flex flex-col ${
+                plan.destacado
+                  ? "border-[#C2B280]/50 bg-gradient-to-b from-[#C2B280]/10 to-transparent shadow-lg shadow-[#C2B280]/5"
+                  : "bg-[#111] border-gray-800 hover:border-gray-600"
+              }`}
+            >
+              {plan.destacado && (
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#C2B280] text-black text-[10px] font-bold px-3 py-1 rounded-full">
+                  MÁS ELEGIDO
+                </span>
+              )}
+              <h4 className="font-bold text-white text-base mb-1">
+                {plan.nombre}
+              </h4>
+              <p className="text-gray-400 text-xs mb-4">{plan.sub}</p>
+              <p className="text-2xl font-extrabold text-white mb-1">
+                {precio(plan)}
+                <span className="text-sm text-gray-400 font-normal">/mes</span>
+              </p>
+              <p className="text-gray-400 text-[11px] mb-4">
+                Incluye {plan.horas} h/mes · respuesta en {plan.respuesta}
+              </p>
+              <ul className="space-y-2 mb-6 flex-1">
+                {plan.incluye.map((f) => (
+                  <li
+                    key={f}
+                    className="flex items-start gap-2 text-gray-300 text-xs"
+                  >
+                    <span
+                      className="text-[#C2B280] mt-0.5"
+                      aria-hidden="true"
+                    >
+                      ✓
+                    </span>
+                    {f}
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href="/cotizar?tipo=mantenimiento"
+                className="block text-center py-2.5 rounded-xl font-semibold text-sm border border-[#C2B280]/50 text-[#C2B280] hover:bg-[#C2B280]/10 transition"
+              >
+                Consultar mantenimiento
+              </Link>
+            </div>
+          ))}
+        </div>
       </div>
 
       <p className="text-gray-400 text-xs text-center mt-4">

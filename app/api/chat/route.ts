@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { ASSISTANT_NAME, DEFAULT_NOTIFY_EMAIL, SYSTEM_PROMPT, WHATSAPP_PHONE } from "@/lib/assistant";
 import { completarChat, hayProveedorIA } from "@/lib/ai";
+import { guardarLead } from "@/lib/leads-db";
 import { etiquetaPresupuesto } from "@/lib/pricing";
 
 // Igual que las demás rutas del portafolio: nunca evaluar en build
@@ -142,6 +143,8 @@ function getResend(): Resend {
   return _resend;
 }
 
+const from = `Chatbot Portafolio <${process.env.EMAIL_FROM || "onboarding@resend.dev"}>`;
+
 function escapeHtml(text: string): string {
   return text
     .replace(/&/g, "&amp;")
@@ -204,7 +207,7 @@ async function notifyLeadByEmail(
       : `<a href="mailto:${escapeHtml(lead.contact)}" style="color: #C2B280;">${escapeHtml(lead.contact)}</a>`;
 
     const { error } = await resend.emails.send({
-      from: "Chatbot Portafolio <onboarding@resend.dev>",
+      from,
       to: [to],
       ...(lead.contact.includes("@") ? { replyTo: lead.contact } : {}),
       subject: `✨ Nuevo lead de ${ASSISTANT_NAME} — ${lead.name.replace(/[\r\n]+/g, " ")}`,
@@ -436,27 +439,40 @@ export async function POST(request: Request) {
       email: null,
       telegram: null,
       whatsapp_callmebot: null,
+      base_de_datos: null,
     };
 
     if (lead) {
       console.log("[Alma] Lead detectado:", JSON.stringify(lead));
 
-      // Email (canal principal) + avisos push opcionales, en paralelo
-      const [emailRes, tgRes, cbRes] = await Promise.allSettled([
+      // Email (canal principal) + avisos push opcionales + BD del panel, en paralelo
+      const [emailRes, tgRes, cbRes, dbRes] = await Promise.allSettled([
         notifyLeadByEmail(lead, fullHistory, origen),
         notifyByTelegram(lead, origen),
         notifyByCallMeBot(lead, origen),
+        guardarLead({
+          origen: "chat",
+          nombre: lead.name,
+          contacto: lead.contact,
+          whatsapp:
+            !lead.contact.includes("@") ? lead.contact.replace(/\D/g, "") : "",
+          presupuesto: etiquetaPresupuesto(lead.budget),
+          necesidad: lead.need,
+          utm: origen,
+        }),
       ]);
 
       const emailOk = emailRes.status === "fulfilled" ? emailRes.value : false;
       const telegramOk = tgRes.status === "fulfilled" ? tgRes.value : false;
       const callmebotOk = cbRes.status === "fulfilled" ? cbRes.value : false;
+      const dbOk = dbRes.status === "fulfilled" ? dbRes.value : false;
 
       channels.email = emailOk;
       channels.telegram = telegramOk;
       channels.whatsapp_callmebot = callmebotOk;
+      channels.base_de_datos = dbOk;
 
-      leadSaved = emailOk || telegramOk || callmebotOk;
+      leadSaved = emailOk || telegramOk || callmebotOk || dbOk;
 
       if (!emailOk) {
         console.error(

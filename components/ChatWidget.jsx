@@ -26,6 +26,7 @@ import {
 import PropuestaForm from "./PropuestaForm";
 import {
   trackMetaEvent,
+  trackGAEvent,
   getAttribution,
 } from "@/lib/analytics/meta-events";
 
@@ -194,6 +195,7 @@ export default function ChatWidget() {
             content_category: "Chatbot",
             status: data.leadSaved ? "lead_captured" : "lead_pending_delivery",
           });
+          trackGAEvent("generate_lead", { form: "chat_alma" });
         }
       }
     } catch {
