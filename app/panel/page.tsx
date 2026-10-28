@@ -112,7 +112,30 @@ function buildProposalHtml(md: string, clientName: string): string {
     <p style="margin:3px 0 0; font-size:13px; color:#ccc;">Preparada para ${escapeHtml(clientName)}</p>
   </div>
 ${mdToHtmlBody(md)}
-  <div style="margin-top:40px; border-top:1px solid #e5e0d5; padding-top:18px;">
+  <div style="margin-top:34px; border:1px solid #e0dbcd; border-radius:10px; padding:20px 24px; background:#faf8f1;">
+    <p style="margin:0 0 6px; font-size:13px; font-weight:700; color:#0B0B0B;">Aceptación de la propuesta</p>
+    <p style="margin:0 0 16px; font-size:12px; line-height:1.7; color:#555;">
+      Para iniciar el proyecto, responde este documento escribiendo “Aprobado” y realiza el
+      anticipo del 50%. La propuesta tiene una validez de 15 días calendario desde la fecha de emisión.
+    </p>
+    <table style="width:100%; border-collapse:collapse; font-size:12px; color:#555;">
+      <tr>
+        <td style="width:50%; padding:0 12px 0 0; vertical-align:bottom;">
+          <div style="border-bottom:1px solid #999; height:34px;"></div>
+          <p style="margin:4px 0 0;">Firma del cliente</p>
+        </td>
+        <td style="width:50%; padding:0 0 0 12px; vertical-align:bottom;">
+          <div style="border-bottom:1px solid #999; height:34px;"></div>
+          <p style="margin:4px 0 0;">Fecha de aprobación</p>
+        </td>
+      </tr>
+    </table>
+    <p style="margin:14px 0 0; font-size:12px; color:#555;">
+      <strong style="color:#0B0B0B;">Wilson Valencia</strong> — Desarrollador Full-Stack<br>
+      WhatsApp +57 301 2821174 · wilson.arroyo12@gmail.com
+    </p>
+  </div>
+  <div style="margin-top:28px; border-top:1px solid #e5e0d5; padding-top:18px;">
     <p style="margin:0; font-size:12px; color:#777;">
       Wilson Valencia · WhatsApp +57 301 2821174 ·
       <a href="https://wvalencia-dev.vercel.app" style="color:#8a7a55;">wvalencia-dev.vercel.app</a>
@@ -361,6 +384,12 @@ export default function PanelPage() {
               className="text-gray-400 hover:text-white text-xs border border-gray-700 hover:border-gray-500 rounded-lg px-3 py-2 transition"
             >
               📊 Leads
+            </Link>
+            <Link
+              href="/panel/proyectos"
+              className="text-gray-400 hover:text-white text-xs border border-gray-700 hover:border-gray-500 rounded-lg px-3 py-2 transition"
+            >
+              🗂 Proyectos
             </Link>
             <button
               onClick={handleLogout}

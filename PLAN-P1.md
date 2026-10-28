@@ -29,7 +29,8 @@ guardrails y reintentos del chat.
       definir `EMAIL_FROM` en Vercel.
 - [ ] (Requiere dominio) Comprar dominio, definir `EMAIL_FROM` y `NEXT_PUBLIC_SITE_URL`.
 - [ ] (Requiere dominio) Verificar el dominio en Resend (SPF/DKIM/DMARC) y probar entrega.
-- [ ] OG image propia y metadatos finales (compartir en WhatsApp debe verse bien).
+- [x] OG image propia (`app/opengraph-image.tsx`, 1200×630) con metadatos finales:
+      WhatsApp/LinkedIn ya muestran la tarjeta con marca. Verificada en producción.
 
 ## Bloque B — Pipeline comercial único
 
@@ -50,12 +51,15 @@ guardrails y reintentos del chat.
       Actualizados: SeccionPrecios, FAQ, JSON-LD, propuestas (IA y respaldo) y prompt de Alma.
 - [x] Chat: descalificación amable de proyectos fuera de alcance (nueva regla en el prompt).
       El resumen del lead a Wilson ya incluye la conversación completa (P0).
-- [ ] Plantilla de propuesta formal: el panel ya genera borrador IA y descarga HTML
-      imprimible a PDF; falta la plantilla con exclusiones, garantía, PI y firma.
+- [x] Plantilla de propuesta formal: el panel genera borrador IA y descarga HTML imprimible
+      a PDF con inclusiones, exclusiones, pagos 50/50 (transferencia/Wompi), garantía y
+      soporte 30 días + planes de mantenimiento, propiedad intelectual, validez 15 días y
+      bloque de aceptación con firma.
 - [ ] Autorrespuesta al cliente → **requiere dominio propio en Resend** (aplazado).
 - [ ] Agenda online (Cal.com) + guion de llamada de 15 min + recap por email (pendiente
       cuenta de Cal.com de Wilson).
-- [ ] Botón de handoff dentro del chat (el botón verde global de WhatsApp ya existe).
+- [x] Handoff dentro del chat: botón "¿Prefieres hablar con Wilson? Escríbele por WhatsApp"
+      sobre el input y "Hablar con Wilson ahora" cuando ya dejó sus datos.
 
 ## Bloque C — Confianza honesta
 
@@ -87,14 +91,35 @@ guardrails y reintentos del chat.
 - [x] Auditoría de bundle tras la limpieza y regresión de Lighthouse: 100/100/100 en
       inicio, /cotizar y /testimonios.
 
+## Bloque G — Portal del cliente y pagos (27 oct 2026)
+
+Objetivo: que cada cliente vea el avance de su proyecto y sepa cuánto y cómo pagar sin
+depender de correos sueltos ni de un CRM externo.
+
+- [x] Base de datos del portal en la misma `DATABASE_URL` de Neon: `proyectos`, `hitos`,
+      `pagos` y `config_pagos` (se crean solas en el primer uso).
+- [x] `/panel/proyectos` (privado, misma contraseña): crear proyecto, token único, hitos con
+      estado, pagos con monto/método/link de Wompi, y "Datos de cobro" (banco, cuenta,
+      titular, NIT, nota).
+- [x] `/proyecto/<token>`: portal del cliente con avance %, etapas, resumen de pagos,
+      botón "Pagar con Wompi" y datos para transferencia + comprobante por WhatsApp.
+- [x] `noindex`, `robots.txt` con `/proyecto/`, sin widgets públicos (chat, WhatsApp,
+      cookies y analítica) en `/proyecto` y `/panel` vía `components/SoloSitioPublico.tsx`.
+- [x] Los cobros NO son automáticos: Wilson genera el link en su panel de Wompi y marca
+      cada pago como pagado. Webhook de Wompi queda como mejora futura.
+- [x] Probado de punta a punta con Postgres local (Docker): crear proyecto, hitos, pagos,
+      config, actualizar estados, token inválido 404, validaciones 400, sin sesión 401.
+- [x] Lighthouse: `/panel/proyectos` y `/proyecto/<token>` en 100/100/100 (accesibilidad
+      corregida: `<main>`, enlaces subrayados, nombre accesible de la marca).
+
 ## Variables de entorno (Vercel)
 
 | Variable | Estado | Para qué |
 |---|---|---|
 | `RESEND_API_KEY` | ✅ configurada | Envío de emails de leads |
 | `NOTIFY_EMAIL` | opcional | Correo donde llegan los leads (default: wilson.arroyo12@gmail.com) |
-| `PANEL_PASSWORD` | ✅ configurada | Contraseña de `/panel` y `/panel/leads` |
-| `DATABASE_URL` | ✅ configurada (Neon) | Panel de leads activo y probado con lead real |
+| `PANEL_PASSWORD` | ✅ configurada | Contraseña de `/panel`, `/panel/leads` y `/panel/proyectos` |
+| `DATABASE_URL` | ✅ configurada (Neon) | Leads, portal de clientes y datos de cobro |
 | `EMAIL_FROM` | ⬜ futuro | Remitente propio cuando haya dominio |
 | `NEXT_PUBLIC_SITE_URL` | ⬜ futuro | Dominio propio |
 | `TELEGRAM_BOT_TOKEN` / `CALLMEBOT_*` | opcionales | Avisos push de leads |
@@ -107,5 +132,8 @@ guardrails y reintentos del chat.
 - ~~Pasarela Colombia~~ → aprobado: transferencia + Wompi.
 - ~~`DATABASE_URL` y `PANEL_PASSWORD`~~ → configuradas en Vercel.
 - Cobros internacionales (Wise/PayPal/Stripe): definir cuando haya primer cliente.
+- Datos bancarios reales y link base de Wompi: cargarlos una vez en
+  `/panel/proyectos` → "Datos de cobro" (hoy la app funciona sin ellos, solo oculta la
+  sección de transferencia).
 - Métricas públicas, GitHub/LinkedIn, Cal.com y revisión legal del contrato/DPA.
 - Dominio propio + `EMAIL_FROM`: cuando se compre, activa autorrespuesta y correo profesional.

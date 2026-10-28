@@ -228,6 +228,12 @@ export default function PanelLeadsPage() {
             >
               ✍️ Propuestas
             </Link>
+            <Link
+              href="/panel/proyectos"
+              className="text-gray-400 hover:text-white text-xs border border-gray-700 hover:border-gray-500 rounded-lg px-3 py-2 transition"
+            >
+              🗂 Proyectos
+            </Link>
             <button
               onClick={handleLogout}
               className="text-gray-400 hover:text-white text-xs border border-gray-700 hover:border-gray-500 rounded-lg px-3 py-2 transition"

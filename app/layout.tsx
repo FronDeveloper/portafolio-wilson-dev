@@ -8,6 +8,7 @@ import JsonLd from "@/components/JsonLd";
 import { MetaPixel } from "@/components/MetaPixel";
 import { Analytics } from "@/components/Analytics";
 import { ConsentBanner } from "@/components/ConsentBanner";
+import SoloSitioPublico from "@/components/SoloSitioPublico";
 import { inter, playfair } from "@/lib/fonts";
 import { SITE_URL } from "@/lib/pricing";
 
@@ -43,21 +44,12 @@ export const metadata: Metadata = {
     title: "Wilson Valencia — Desarrollador Full-Stack Freelance en Colombia",
     description:
       "Construyo sistemas de gestión, SaaS, e-commerce y dashboards con Next.js y Supabase. Soluciones a medida para empresas colombianas. Disponible para proyectos.",
-    images: [
-      {
-        url: "/preview.png",
-        width: 1200,
-        height: 630,
-        alt: "Wilson Valencia — Desarrollador Full-Stack Freelance en Colombia",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Wilson Valencia — Desarrollador Full-Stack Freelance en Colombia",
     description:
       "Construyo sistemas de gestión, SaaS, e-commerce y dashboards con Next.js y Supabase. Disponible para proyectos.",
-    images: ["/preview.png"],
   },
   robots: {
     index: true,
@@ -100,14 +92,16 @@ export default function RootLayout({
           {children}
         </div>
 
-        <WhatsAppButton />
-        <ChatWidget />
-        <ScrollToTop />
-        <MetaPixel />
+        {/* Widgets solo para el sitio público: se ocultan en /panel y /proyecto */}
+        <SoloSitioPublico>
+          <WhatsAppButton />
+          <ChatWidget />
+          <MetaPixel />
+          <Analytics />
+          <ConsentBanner />
+        </SoloSitioPublico>
 
-        {/* Analítica: solo se carga después del consentimiento */}
-        <Analytics />
-        <ConsentBanner />
+        <ScrollToTop />
 
         <JsonLd />
       </body>

@@ -384,9 +384,15 @@ export default function ChatWidget() {
                   </p>
                   <button
                     onClick={() => setShowPropuesta(true)}
-                    className="w-full bg-[#C2B280] hover:bg-[#d4c69a] text-black font-bold text-xs py-2.5 rounded-lg transition"
+                    className="w-full bg-[#C2B280] hover:bg-[#d4c69a] text-black font-bold text-xs py-2.5 rounded-lg transition mb-2"
                   >
                     📝 Solicitar mi propuesta
+                  </button>
+                  <button
+                    onClick={whatsappDirecto}
+                    className="w-full border border-[#25D366]/50 text-[#25D366] hover:bg-[#25D366]/10 font-semibold text-xs py-2.5 rounded-lg transition flex items-center justify-center gap-1.5"
+                  >
+                    <FaWhatsapp aria-hidden="true" /> Hablar con Wilson ahora
                   </button>
                 </div>
               )}
@@ -436,6 +442,14 @@ export default function ChatWidget() {
 
             {/* Input */}
             <div className="p-3 border-t border-[#222] bg-[#111]/60">
+              {/* Handoff: en cualquier momento el visitante puede saltar a WhatsApp */}
+              <button
+                onClick={whatsappDirecto}
+                className="w-full mb-2 flex items-center justify-center gap-2 text-[11px] text-gray-300 hover:text-white border border-[#2a2a2a] hover:border-[#25D366]/50 rounded-lg py-2 transition"
+              >
+                <FaWhatsapp className="text-[#25D366]" aria-hidden="true" />
+                ¿Prefieres hablar con Wilson? Escríbele por WhatsApp
+              </button>
               <div className="flex items-center gap-2">
                 <input
                   ref={inputRef}
