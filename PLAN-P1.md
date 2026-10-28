@@ -93,19 +93,19 @@ guardrails y reintentos del chat.
 |---|---|---|
 | `RESEND_API_KEY` | ✅ configurada | Envío de emails de leads |
 | `NOTIFY_EMAIL` | opcional | Correo donde llegan los leads (default: wilson.arroyo12@gmail.com) |
-| `PANEL_PASSWORD` | verificar | Contraseña de `/panel` y `/panel/leads` |
-| `DATABASE_URL` | ⬜ agregar | Activa el panel de leads (Neon/Supabase gratis) |
+| `PANEL_PASSWORD` | ✅ configurada | Contraseña de `/panel` y `/panel/leads` |
+| `DATABASE_URL` | ✅ configurada (Neon) | Panel de leads activo y probado con lead real |
 | `EMAIL_FROM` | ⬜ futuro | Remitente propio cuando haya dominio |
 | `NEXT_PUBLIC_SITE_URL` | ⬜ futuro | Dominio propio |
 | `TELEGRAM_BOT_TOKEN` / `CALLMEBOT_*` | opcionales | Avisos push de leads |
 
 ## Pendiente de decisión de Wilson
 
-- ~~Push de `main`~~ → hecho: P0 desplegado en Vercel.
+- ~~Push de `main`~~ → hecho: P0 y P1 desplegados en Vercel.
 - ~~Precio de mantenimiento~~ → aprobado: 3 planes publicados.
-- ~~CRM~~ → aprobado: dashboard propio `/panel/leads` (solo falta `DATABASE_URL`).
+- ~~CRM~~ → hecho: dashboard propio `/panel/leads` activo con Neon (probado 27 oct).
 - ~~Pasarela Colombia~~ → aprobado: transferencia + Wompi.
-- Crear cuenta gratis en Neon (o Supabase), copiar `DATABASE_URL` y agregarla en Vercel.
-- Verificar que `PANEL_PASSWORD` esté configurada en Vercel.
+- ~~`DATABASE_URL` y `PANEL_PASSWORD`~~ → configuradas en Vercel.
 - Cobros internacionales (Wise/PayPal/Stripe): definir cuando haya primer cliente.
 - Métricas públicas, GitHub/LinkedIn, Cal.com y revisión legal del contrato/DPA.
+- Dominio propio + `EMAIL_FROM`: cuando se compre, activa autorrespuesta y correo profesional.
