@@ -15,6 +15,7 @@ import {
   captureUTMParams,
   getAttribution,
 } from "@/lib/analytics/meta-events";
+import AgendarLlamada from "@/components/AgendarLlamada";
 import { PRESUPUESTOS, TIPOS_PROYECTO } from "@/lib/pricing";
 
 export default function CotizarPage() {
@@ -141,6 +142,23 @@ export default function CotizarPage() {
             Cuéntame qué necesitas. En menos de 24 horas te envío una propuesta
             inicial con alcance, precio y tiempo de entrega.
           </p>
+        </div>
+
+        <div className="mb-6 flex flex-col gap-4 rounded-2xl border border-violet-500/30 bg-violet-500/5 p-5 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="text-sm font-semibold text-white">
+              ¿Prefieres hablarlo en vivo?
+            </p>
+            <p className="text-xs text-gray-300">
+              15 minutos por videollamada, sin compromiso.
+            </p>
+          </div>
+          <AgendarLlamada
+            ubicacion="cotizar"
+            variante="violeta"
+            etiqueta="Agendar llamada"
+            className="shrink-0"
+          />
         </div>
 
         <div className="bg-gradient-to-br from-[#111] to-[#0F0F0F] border border-gray-800 rounded-2xl p-6 md:p-10">

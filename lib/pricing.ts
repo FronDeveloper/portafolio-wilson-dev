@@ -18,6 +18,13 @@ export const SITE_URL =
 export const WHATSAPP_PHONE = "573012821174";
 export const CONTACT_EMAIL = "wilson.arroyo12@gmail.com";
 
+/**
+ * Agenda pública (Cal.com) — llamada inicial de 15 min.
+ * Se enlaza como página externa, NO se embebe: el widget de Cal.com
+ * carga scripts y cookies de terceros y rompe el 100 de Lighthouse.
+ */
+export const CAL_URL = "https://cal.com/wvalencia/llamada-inicial";
+
 /** Equivalencia usada solo para mostrar rangos orientativos en USD. */
 export const COP_POR_USD = 4000;
 

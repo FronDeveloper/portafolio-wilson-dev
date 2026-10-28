@@ -118,6 +118,10 @@ ${mdToHtmlBody(md)}
       Para iniciar el proyecto, responde este documento escribiendo “Aprobado” y realiza el
       anticipo del 50%. La propuesta tiene una validez de 15 días calendario desde la fecha de emisión.
     </p>
+    <p style="margin:0 0 16px; font-size:12px; line-height:1.7; color:#555;">
+      ¿Quieres resolver dudas antes de aprobar? Agenda una llamada de 15 minutos aquí:
+      <a href="https://cal.com/wvalencia/llamada-inicial" style="color:#6E5A20;">cal.com/wvalencia/llamada-inicial</a>
+    </p>
     <table style="width:100%; border-collapse:collapse; font-size:12px; color:#555;">
       <tr>
         <td style="width:50%; padding:0 12px 0 0; vertical-align:bottom;">
@@ -138,7 +142,8 @@ ${mdToHtmlBody(md)}
   <div style="margin-top:28px; border-top:1px solid #e5e0d5; padding-top:18px;">
     <p style="margin:0; font-size:12px; color:#777;">
       Wilson Valencia · WhatsApp +57 301 2821174 ·
-      <a href="https://wvalencia-dev.vercel.app" style="color:#8a7a55;">wvalencia-dev.vercel.app</a>
+      <a href="https://wvalencia-dev.vercel.app" style="color:#8a7a55;">wvalencia-dev.vercel.app</a> ·
+      <a href="https://cal.com/wvalencia/llamada-inicial" style="color:#8a7a55;">Agendar 15 min</a>
     </p>
   </div>
 </div>

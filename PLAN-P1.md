@@ -112,6 +112,29 @@ depender de correos sueltos ni de un CRM externo.
 - [x] Lighthouse: `/panel/proyectos` y `/proyecto/<token>` en 100/100/100 (accesibilidad
       corregida: `<main>`, enlaces subrayados, nombre accesible de la marca).
 
+## Bloque H — Agenda de llamadas con Cal.com (27 oct 2026)
+
+Objetivo: que el cliente elija horario solo, sin ida y vuelta por WhatsApp, y que cada clic
+quede medido.
+
+- [x] Evento público `Llamada inicial` (15 min, Cal Video) en
+      `https://cal.com/wvalencia/llamada-inicial`; disponibilidad y Google Calendar ya
+      conectados por Wilson.
+- [x] `CAL_URL` como fuente única en `lib/pricing.ts`.
+- [x] `components/AgendarLlamada.jsx`: enlace externo (`target="_blank"` +
+      `rel="noopener noreferrer"`) con 4 variantes visuales y evento GA4
+      `schedule_call` con parámetro `ubicacion`.
+- [x] CTAs en `/contact`, `/cotizar` (como alternativa al formulario) y `/gracias`
+      (se corrigió "llamada de 30 min" a 15 min).
+- [x] Botón en el bloque de lead guardado del chat (`ChatWidget`), tras capturar el lead.
+- [x] Enlace de agenda en el prompt de propuestas (sección "Siguiente paso"), en el HTML
+      descargable/enviable y en el bloque de aceptación.
+- [x] Sin embed ni widget de Cal.com: se abre en pestaña nueva para no cargar scripts de
+      terceros ni romper Lighthouse ni el consentimiento.
+- [x] Verificado con red real: el clic dispara `schedule_call` con `ubicacion` =
+      `contacto`, `cotizar` y `gracias` (GA4 `g/collect`). El botón del chat usa el mismo
+      componente (`ubicacion: chat_lead`).
+
 ## Variables de entorno (Vercel)
 
 | Variable | Estado | Para qué |

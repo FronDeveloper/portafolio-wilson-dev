@@ -24,6 +24,7 @@ import {
   FaLock,
 } from "react-icons/fa";
 import PropuestaForm from "./PropuestaForm";
+import AgendarLlamada from "./AgendarLlamada";
 import {
   trackMetaEvent,
   trackGAEvent,
@@ -388,6 +389,12 @@ export default function ChatWidget() {
                   >
                     📝 Solicitar mi propuesta
                   </button>
+                  <AgendarLlamada
+                    ubicacion="chat_lead"
+                    variante="chat"
+                    etiqueta="Agendar llamada de 15 min"
+                    className="mb-2"
+                  />
                   <button
                     onClick={whatsappDirecto}
                     className="w-full border border-[#25D366]/50 text-[#25D366] hover:bg-[#25D366]/10 font-semibold text-xs py-2.5 rounded-lg transition flex items-center justify-center gap-1.5"

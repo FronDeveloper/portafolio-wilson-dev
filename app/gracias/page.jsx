@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { FaCheckCircle, FaWhatsapp, FaArrowRight } from "react-icons/fa";
+import AgendarLlamada from "@/components/AgendarLlamada";
 
 // Página de confirmación: no debe indexarse ni disparar otro evento Lead.
 export const metadata = {
@@ -49,7 +50,7 @@ export default function GraciasPage() {
                 2
               </span>
               <span>
-                Si te interesa, agendamos una llamada de 30 min para detallar el
+                Si te interesa, agendamos una llamada de 15 min para detallar el
                 proyecto.
               </span>
             </li>
@@ -63,6 +64,13 @@ export default function GraciasPage() {
               </span>
             </li>
           </ol>
+        </div>
+
+        <div className="bg-[#111] border border-[#C2B280]/30 rounded-2xl p-6 mb-6">
+          <p className="text-sm text-gray-300 mb-4">
+            ¿Prefieres no esperar el correo? Elige tú mismo el horario.
+          </p>
+          <AgendarLlamada ubicacion="gracias" className="w-full sm:w-auto" />
         </div>
 
         <div className="bg-green-500/5 border border-green-500/20 rounded-2xl p-6 mb-6">

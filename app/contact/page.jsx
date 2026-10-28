@@ -1,6 +1,7 @@
 "use client";
 
 import Navbar from "@/components/Navbar";
+import AgendarLlamada from "@/components/AgendarLlamada";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import {
@@ -220,6 +221,17 @@ export default function Contact() {
             </p>
           </div>
         )}
+
+        <div className="mt-10 bg-[#111] p-6 rounded-xl border border-[#C2B280]/30">
+          <h2 className="text-lg font-semibold mb-2">
+            ¿Prefieres hablarlo en vivo?
+          </h2>
+          <p className="text-gray-300 text-sm mb-4">
+            Agenda una llamada de 15 minutos: revisamos qué necesitas, si te
+            puedo ayudar y qué sigue. Sin compromiso.
+          </p>
+          <AgendarLlamada ubicacion="contacto" />
+        </div>
 
         <div className="mt-10 pt-6 border-t border-gray-800">
           <h3 className="text-lg font-semibold mb-3">También puedes contactarme directamente:</h3>

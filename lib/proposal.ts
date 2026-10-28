@@ -10,6 +10,7 @@
  */
 
 import crypto from "node:crypto";
+import { CAL_URL } from "./pricing";
 
 // ── Sesión del panel ─────────────────────────────────────────────────────────
 
@@ -153,7 +154,7 @@ Con los datos del cliente, escribe una propuesta comercial profesional, cálida 
 8. ## Garantía y soporte (incluye 30 días de soporte post-lanzamiento para corregir errores del alcance entregado, sin costo. No cubre cambios nuevos ni funcionalidades adicionales. Después de ese periodo está disponible el mantenimiento mensual: Básico $250.000 COP (1 h/mes), Estándar $350.000 COP (2 h/mes, el más elegido) y Premium $750.000 COP (4 h/mes); hora adicional $100.000 COP. Menciona solo los planes, sin presionar)
 9. ## Propiedad intelectual (al completar el pago total, el cliente es dueño del código y de los entregables del proyecto. Wilson conserva el derecho de mostrar el trabajo en su portafolio, salvo que se acuerde confidencialidad por escrito. Las librerías y servicios de terceros mantienen sus propias licencias)
 10. ## Por qué trabajar conmigo (2-3 líneas. PUEDES mencionar proyectos reales SOLO de esta lista y únicamente los que apliquen: FlowBill (SaaS para agencias creativas), AgendaPro (reservas en línea), VentaChat AI (atención comercial por WhatsApp con IA), InsightAI Dashboard (dashboard de inventario y ventas), PisArte (e-commerce de calzado), Mínimo Studio (e-commerce de moda), Saberly (gestión escolar multiinstitución), ARISE Shadow System (app móvil de entrenamiento gamificada), Fundación FAEBO (sitio institucional). Menciona tecnologías solo si suman: React, Next.js, TypeScript, Node.js, Flutter, Firebase, Supabase, PostgreSQL, MySQL, Stripe, Wompi, PSE, Efecty, integraciones de IA)
-11. ## Siguiente paso (invita a una conversación de 15-20 minutos para afinar el alcance; WhatsApp de Wilson: https://wa.me/573012821174 ; también puede usar https://wvalencia-dev.vercel.app/cotizar). Cierra con la firma exacta en una línea aparte:
+11. ## Siguiente paso (invita a una conversación de 15 minutos para afinar el alcance; para agendar puede elegir el horario directo aquí: ${CAL_URL} ; WhatsApp de Wilson: https://wa.me/573012821174 ; también puede escribir por https://wvalencia-dev.vercel.app/cotizar). Cierra con la firma exacta en una línea aparte:
 **Wilson Valencia** — Desarrollador Full-Stack — WhatsApp +57 301 2821174 — wvalencia-dev.vercel.app
 
 # REGLAS ESTRICTAS
