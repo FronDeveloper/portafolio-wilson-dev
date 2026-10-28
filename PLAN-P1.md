@@ -135,6 +135,29 @@ quede medido.
       `contacto`, `cotizar` y `gracias` (GA4 `g/collect`). El botón del chat usa el mismo
       componente (`ubicacion: chat_lead`).
 
+## Bloque I — Accesibilidad AA y dependencias (28 oct 2026)
+
+Objetivo: que todo el sitio cumpla WCAG 2.1 AA de verdad (no solo la home) y que no quede
+deuda de seguridad en dependencias.
+
+- [x] Contraste: `text-gray-500`/`text-gray-600` sobre fondos oscuros pasaron a
+      `text-gray-400` (7,4:1 sobre `#111`) en home, testimonios, panel, panel/leads,
+      flowbill, minimo-studio, rpg, plataforma-educativa, PropuestaForm y PropuestaReview.
+- [x] Botones verdes con texto blanco: `bg-green-600` → `bg-green-700` (5,0:1) en rpg y
+      plataforma-educativa. El CTA deshabilitado de faebo (`bg-gray-700 text-gray-400`)
+      pasó a `text-gray-200`.
+- [x] `/about`: los iconos de tecnologías son decorativos (`aria-hidden="true"`); el nombre
+      ya se lee en el texto de al lado.
+- [x] `/projects`: las tarjetas bajan de `h3` a `h2` cuando la sección ya es `h1`
+      (`headingLevel` en `ProjectCard`), sin saltar niveles.
+- [x] Verificado con Lighthouse en las 21 rutas públicas + panel: **100/100 en
+      accesibilidad**, local y en producción.
+- [x] Dependencias: `next` y `eslint-config-next` 16.2.4 → **16.4.3**; `npm audit fix`
+      bajó de 10 vulnerabilidades (1 crítica, 4 altas) a **4 bajas** (cadena de `resend`;
+      se resuelven con `resend@6`, upgrade mayor que se hará cuando se toque el correo).
+- [x] Revisión funcional post-actualización: 25 rutas en 200 sin errores, 30 enlaces internos
+      sin roturas, APIs del panel en 401 y enlaces de Cal.com intactos.
+
 ## Variables de entorno (Vercel)
 
 | Variable | Estado | Para qué |
@@ -154,9 +177,10 @@ quede medido.
 - ~~CRM~~ → hecho: dashboard propio `/panel/leads` activo con Neon (probado 27 oct).
 - ~~Pasarela Colombia~~ → aprobado: transferencia + Wompi.
 - ~~`DATABASE_URL` y `PANEL_PASSWORD`~~ → configuradas en Vercel.
-- Cobros internacionales (Wise/PayPal/Stripe): definir cuando haya primer cliente.
-- Datos bancarios reales y link base de Wompi: cargarlos una vez en
-  `/panel/proyectos` → "Datos de cobro" (hoy la app funciona sin ellos, solo oculta la
-  sección de transferencia).
+- ~~Datos bancarios~~ → cargados en `/panel/proyectos` → "Datos de cobro" (28 oct).
+- Cobros internacionales: comparación lista en `docs/pagos-internacionales.md`
+  (recomendado Wise Business + link de Wompi como respaldo). Falta decidir.
+- GA4: cuenta `400061503` creada. Falta marcar `generate_lead` y `schedule_call` como
+  eventos clave (Admin → Eventos) y, si se quiere automatizar por API, el **ID de propiedad**.
 - Métricas públicas, GitHub/LinkedIn, Cal.com y revisión legal del contrato/DPA.
 - Dominio propio + `EMAIL_FROM`: cuando se compre, activa autorrespuesta y correo profesional.
