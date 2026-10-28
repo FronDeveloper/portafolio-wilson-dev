@@ -5,6 +5,8 @@ import { guardarLead } from "@/lib/leads-db";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+// Margen para esperar el correo + la escritura en la base de datos
+export const maxDuration = 30;
 
 /**
  * POST /api/contacto — formulario de /contact
@@ -196,8 +198,9 @@ export async function POST(request: Request) {
       );
     }
 
-    // Copia del lead para el panel /panel/leads (silencioso si no hay BD)
-    guardarLead({
+    // Copia del lead para el panel /panel/leads. Se ESPERA (no fire-and-forget):
+    // en Vercel la función se congela al responder y la escritura se perdería.
+    await guardarLead({
       origen: "contacto",
       nombre,
       contacto: email,
