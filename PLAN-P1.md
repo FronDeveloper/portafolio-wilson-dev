@@ -153,8 +153,9 @@ deuda de seguridad en dependencias.
 - [x] Verificado con Lighthouse en las 21 rutas públicas + panel: **100/100 en
       accesibilidad**, local y en producción.
 - [x] Dependencias: `next` y `eslint-config-next` 16.2.4 → **16.4.3**; `npm audit fix`
-      bajó de 10 vulnerabilidades (1 crítica, 4 altas) a **4 bajas** (cadena de `resend`;
-      se resuelven con `resend@6`, upgrade mayor que se hará cuando se toque el correo).
+      bajó de 10 vulnerabilidades (1 crítica, 4 altas) a 4 bajas, y `resend` 4 → **6.35**
+      dejó el audit en **0 vulnerabilities**. Envío de correo verificado con la clave real
+      (dominio `pisarteoficial.com` listado y correo de prueba entregado).
 - [x] Revisión funcional post-actualización: 25 rutas en 200 sin errores, 30 enlaces internos
       sin roturas, APIs del panel en 401 y enlaces de Cal.com intactos.
 
