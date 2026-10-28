@@ -171,13 +171,13 @@ export default function Home() {
             >
               <div className="flex items-start justify-between mb-3">
                 <span className="text-2xl">{r.icon}</span>
-                <span className="text-[10px] font-bold text-gray-500 bg-gray-800/50 px-2 py-0.5 rounded-full">
+                <span className="text-[10px] font-bold text-gray-400 bg-gray-800/50 px-2 py-0.5 rounded-full">
                   {r.tag}
                 </span>
               </div>
               <div className="text-3xl font-black text-white mb-1">{r.metric}</div>
               <div className="text-sm font-bold text-gray-200 mb-2">{r.label}</div>
-              <p className="text-gray-500 text-xs leading-relaxed">{r.desc}</p>
+              <p className="text-gray-400 text-xs leading-relaxed">{r.desc}</p>
             </div>
           ))}
         </div>
@@ -234,7 +234,7 @@ export default function Home() {
               💬 WhatsApp
             </a>
           </div>
-          <p className="text-gray-600 text-xs mt-5">
+          <p className="text-gray-400 text-xs mt-5">
             O escríbeme a{" "}
             <a href="mailto:wilson.arroyo12@gmail.com" className="text-violet-400 hover:underline">
               wilson.arroyo12@gmail.com

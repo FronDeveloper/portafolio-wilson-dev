@@ -156,24 +156,24 @@ export default function PropuestaReview({ payload, token }) {
         </h2>
         <div className="grid sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
           <div>
-            <span className="text-gray-500">Nombre:</span>{" "}
+            <span className="text-gray-400">Nombre:</span>{" "}
             <span className="text-white font-medium">{payload.n}</span>
           </div>
           <div>
-            <span className="text-gray-500">Proyecto:</span>{" "}
+            <span className="text-gray-400">Proyecto:</span>{" "}
             <span className="text-white">{PROYECTO_LABELS[payload.t] || payload.t || "—"}</span>
           </div>
           <div>
-            <span className="text-gray-500">Presupuesto:</span>{" "}
+            <span className="text-gray-400">Presupuesto:</span>{" "}
             <span className="text-white">{etiquetaPresupuesto(payload.b)}</span>
           </div>
           <div>
-            <span className="text-gray-500">Origen del borrador:</span>{" "}
+            <span className="text-gray-400">Origen del borrador:</span>{" "}
             <span className="text-[#C2B280]">{payload.m === "ia" ? "IA" : "Plantilla"}</span>
           </div>
           {clienteWa ? (
             <div>
-              <span className="text-gray-500">WhatsApp:</span>{" "}
+              <span className="text-gray-400">WhatsApp:</span>{" "}
               <a
                 href={`https://wa.me/${clienteWa}`}
                 target="_blank"
@@ -186,7 +186,7 @@ export default function PropuestaReview({ payload, token }) {
           ) : null}
           {contactoCliente ? (
             <div>
-              <span className="text-gray-500">Email:</span>{" "}
+              <span className="text-gray-400">Email:</span>{" "}
               <a href={`mailto:${contactoCliente}`} className="text-[#C2B280] hover:underline">
                 {contactoCliente}
               </a>
@@ -207,7 +207,7 @@ export default function PropuestaReview({ payload, token }) {
           <h2 className="text-white font-semibold text-sm uppercase tracking-wider">
             📄 Borrador (editable)
           </h2>
-          <span className="text-gray-500 text-xs">{texto.length} caracteres</span>
+          <span className="text-gray-400 text-xs">{texto.length} caracteres</span>
         </div>
         <textarea
           value={texto}
@@ -217,7 +217,7 @@ export default function PropuestaReview({ payload, token }) {
           className="w-full bg-[#0B0B0B] border border-[#222] focus:border-[#C2B280] rounded-lg p-4 text-gray-200 text-sm leading-relaxed resize-y outline-none transition-colors"
           placeholder="Escribe o ajusta la propuesta…"
         />
-        <p className="text-gray-500 text-xs mt-2">
+        <p className="text-gray-400 text-xs mt-2">
           💡 Ajusta precios, plazos o cualquier frase antes de enviar. Este texto exacto es el que
           verá tu cliente.
         </p>
@@ -242,7 +242,7 @@ export default function PropuestaReview({ payload, token }) {
         <button
           onClick={descartar}
           disabled={descartando}
-          className="flex items-center justify-center gap-2 border border-[#444] hover:border-red-500 text-gray-500 hover:text-red-400 font-semibold py-4 px-6 rounded-xl transition text-sm disabled:opacity-50"
+          className="flex items-center justify-center gap-2 border border-[#444] hover:border-red-500 text-gray-400 hover:text-red-400 font-semibold py-4 px-6 rounded-xl transition text-sm disabled:opacity-50"
         >
           <FaTrash />
           Descartar

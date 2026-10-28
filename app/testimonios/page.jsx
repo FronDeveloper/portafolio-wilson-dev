@@ -76,7 +76,7 @@ export default function TestimoniosPage() {
           ¿Trabajaste con Wilson y quieres compartir cómo fue? Tu experiencia
           ayuda a otros empresarios a decidir con confianza.
         </p>
-        <p className="text-gray-500 text-sm mb-8">
+        <p className="text-gray-400 text-sm mb-8">
           Nada se publica automático: Wilson revisa cada testimonio
           personalmente y solo lo publica con tu permiso y tu nombre.
         </p>
@@ -87,7 +87,7 @@ export default function TestimoniosPage() {
               htmlFor="testimonio-nombre"
               className="block text-sm text-gray-300 mb-2"
             >
-              Tu nombre <span className="text-gray-500">(obligatorio)</span>
+              Tu nombre <span className="text-gray-400">(obligatorio)</span>
             </label>
             <input
               id="testimonio-nombre"
@@ -110,7 +110,7 @@ export default function TestimoniosPage() {
               className="block text-sm text-gray-300 mb-2"
             >
               Cargo y empresa{" "}
-              <span className="text-gray-500">(opcional, ej: Gerente — Tienda XYZ)</span>
+              <span className="text-gray-400">(opcional, ej: Gerente — Tienda XYZ)</span>
             </label>
             <input
               id="testimonio-cargo"
@@ -129,7 +129,7 @@ export default function TestimoniosPage() {
               htmlFor="testimonio-texto"
               className="block text-sm text-gray-300 mb-2"
             >
-              Tu experiencia <span className="text-gray-500">(obligatorio)</span>
+              Tu experiencia <span className="text-gray-400">(obligatorio)</span>
             </label>
             <textarea
               id="testimonio-texto"

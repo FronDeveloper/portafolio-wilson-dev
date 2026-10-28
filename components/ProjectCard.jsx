@@ -16,7 +16,9 @@ export default function ProjectCard({
   status = "completado",
   liveUrl = null,
   metrics = [],
+  headingLevel = "h3",
 }) {
+  const CardTitle = headingLevel;
   return (
     <motion.div
       variants={{
@@ -49,9 +51,9 @@ export default function ProjectCard({
 
       <div className="p-6 flex flex-col justify-between flex-1">
         <div>
-          <h3 className="text-xl font-semibold text-[#C2B280]">
+          <CardTitle className="text-xl font-semibold text-[#C2B280]">
             {title}
-          </h3>
+          </CardTitle>
 
           <p className="text-gray-400 mt-3 text-sm">
             {description}

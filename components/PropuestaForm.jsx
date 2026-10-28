@@ -170,7 +170,7 @@ export default function PropuestaForm({ lead, historial, onClose }) {
               <div>
                 <label htmlFor="prop-whatsapp" className="block text-gray-300 text-xs mb-1.5">
                   Tu WhatsApp{" "}
-                  <span className="text-gray-500">(aquí recibirás la propuesta)</span>
+                  <span className="text-gray-400">(aquí recibirás la propuesta)</span>
                 </label>
                 <input
                   id="prop-whatsapp"
@@ -187,7 +187,7 @@ export default function PropuestaForm({ lead, historial, onClose }) {
               <div>
                 <label htmlFor="prop-email" className="block text-gray-300 text-xs mb-1.5">
                   Tu correo{" "}
-                  <span className="text-gray-500">(opcional, si prefieres email)</span>
+                  <span className="text-gray-400">(opcional, si prefieres email)</span>
                 </label>
                 <input
                   id="prop-email"

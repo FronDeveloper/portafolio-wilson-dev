@@ -155,6 +155,7 @@ export default function AboutPage() {
                   <div
                     className="text-3xl mb-2 group-hover:scale-110 transition flex justify-center"
                     style={{ color: skill.color }}
+                    aria-hidden="true"
                   >
                     {skill.icon}
                   </div>

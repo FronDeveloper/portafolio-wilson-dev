@@ -334,10 +334,10 @@ export default function PanelPage() {
               🦋
             </div>
             <h1 className="text-white text-xl font-semibold">Panel de propuestas</h1>
-            <p className="text-gray-500 text-sm mt-1">Acceso privado de Wilson</p>
+            <p className="text-gray-400 text-sm mt-1">Acceso privado de Wilson</p>
           </div>
           {session === "checking" ? (
-            <p className="text-center text-gray-500 text-sm">Verificando sesión…</p>
+            <p className="text-center text-gray-400 text-sm">Verificando sesión…</p>
           ) : (
             <form onSubmit={handleLogin} className="space-y-4">
               <input
@@ -359,7 +359,7 @@ export default function PanelPage() {
               >
                 {loggingIn ? "Entrando…" : "Entrar"}
               </button>
-              <p className="text-gray-600 text-[11px] text-center">
+              <p className="text-gray-400 text-[11px] text-center">
                 La contraseña se define en la variable de entorno PANEL_PASSWORD.
               </p>
             </form>
@@ -379,7 +379,7 @@ export default function PanelPage() {
             <h1 className="text-white text-lg sm:text-xl font-semibold">
               Panel de propuestas <span className="text-[#C2B280]">· privado</span>
             </h1>
-            <p className="text-gray-500 text-xs mt-0.5">
+            <p className="text-gray-400 text-xs mt-0.5">
               Genera borradores con IA, edítalos y apruébalos tú. Nada se envía solo.
             </p>
           </div>
@@ -421,7 +421,7 @@ export default function PanelPage() {
         {/* Formulario del lead */}
         <div className="bg-[#111] border border-gray-800 rounded-2xl p-5 mb-6">
           <h2 className="text-white text-sm font-semibold mb-4">
-            1 · Datos del lead <span className="text-gray-500 font-normal">(pégalos desde el email del lead)</span>
+            1 · Datos del lead <span className="text-gray-400 font-normal">(pégalos desde el email del lead)</span>
           </h2>
           <div className="grid sm:grid-cols-2 gap-3">
             <input
@@ -489,9 +489,9 @@ export default function PanelPage() {
         {proposal && (
           <div className="bg-[#111] border border-gray-800 rounded-2xl p-5 mb-6">
             <h2 className="text-white text-sm font-semibold mb-1">
-              2 · Borrador — revísalo y edítalo <span className="text-gray-500 font-normal">(Markdown simple)</span>
+              2 · Borrador — revísalo y edítalo <span className="text-gray-400 font-normal">(Markdown simple)</span>
             </h2>
-            <p className="text-gray-500 text-xs mb-3">
+            <p className="text-gray-400 text-xs mb-3">
               Tu requisito: nada sale sin tu aprobación. Todo lo que escribas aquí es
               lo que se copia o descarga.
             </p>
@@ -536,11 +536,11 @@ export default function PanelPage() {
           <div className="bg-[#111] border border-gray-800 rounded-2xl p-5 mb-10">
             <div className="flex items-center justify-between mb-3">
               <h2 className="text-white text-sm font-semibold">
-                Historial <span className="text-gray-500 font-normal">({history.length}/20 · solo este navegador)</span>
+                Historial <span className="text-gray-400 font-normal">({history.length}/20 · solo este navegador)</span>
               </h2>
               <button
                 onClick={() => persistHistory([])}
-                className="text-gray-500 hover:text-red-400 text-[11px] transition"
+                className="text-gray-400 hover:text-red-400 text-[11px] transition"
               >
                 Vaciar
               </button>
@@ -554,11 +554,11 @@ export default function PanelPage() {
                   <div className="min-w-0">
                     <p className="text-gray-100 text-sm truncate">
                       {h.clientName}{" "}
-                      <span className="text-gray-500 text-xs">
+                      <span className="text-gray-400 text-xs">
                         · {TIPOS.find((t) => t.id === h.projectType)?.label || h.projectType}
                       </span>
                     </p>
-                    <p className="text-gray-600 text-[11px]">
+                    <p className="text-gray-400 text-[11px]">
                       {new Date(h.date).toLocaleString("es-CO", { dateStyle: "medium", timeStyle: "short" })}
                     </p>
                   </div>
@@ -571,7 +571,7 @@ export default function PanelPage() {
                     </button>
                     <button
                       onClick={() => removeFromHistory(h.id)}
-                      className="text-gray-500 hover:text-red-400 text-xs transition"
+                      className="text-gray-400 hover:text-red-400 text-xs transition"
                     >
                       Borrar
                     </button>
@@ -582,7 +582,7 @@ export default function PanelPage() {
           </div>
         )}
 
-        <p className="text-gray-600 text-[11px] text-center pb-6">
+        <p className="text-gray-400 text-[11px] text-center pb-6">
           Panel privado · no indexado · WhatsApp {WHATSAPP.replace("57", "+57 ")}
         </p>
       </div>

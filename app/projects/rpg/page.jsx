@@ -96,7 +96,7 @@ export default function RPGProject() {
             href="https://play.google.com/store/apps/details?id=com.arisesystem.arise_app"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-shrink-0 flex items-center gap-3 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl font-bold transition-colors shadow-lg shadow-green-900/30"
+            className="flex-shrink-0 flex items-center gap-3 bg-green-700 hover:bg-green-800 text-white px-6 py-3 rounded-xl font-bold transition-colors shadow-lg shadow-green-900/30"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
               <path d="M3.18 23.76c.3.17.64.22.98.14l12.07-6.97-2.79-2.79-10.26 9.62zm-1.9-20.7A1.99 1.99 0 001 4.5v15c0 .45.14.87.38 1.21l.09.1 8.4-8.4v-.2L1.28 3.06zm18.54 8.24l-2.72-1.57-3.06 3.06 3.06 3.06 2.74-1.58c.78-.45.78-1.52-.02-1.97zM4.16.28L16.23 7.1 13.44 9.9 3.18.28a1.24 1.24 0 00-.98.13L4.16.28z"/>
@@ -138,7 +138,7 @@ export default function RPGProject() {
                   <span className="text-xl">{f.icon}</span>
                   <h3 className="font-semibold text-sm text-white">{f.title}</h3>
                 </div>
-                <p className="text-gray-500 text-xs leading-relaxed">{f.desc}</p>
+                <p className="text-gray-400 text-xs leading-relaxed">{f.desc}</p>
               </div>
             ))}
           </div>

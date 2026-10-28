@@ -97,7 +97,7 @@ export default function FaeboProject() {
           {/* 🔁 CUANDO EL SITIO ESTÉ PUBLICADO, REEMPLAZAR href="#"" por la URL real */}
           <a
             href="#"
-            className="inline-block px-6 py-3 bg-gray-700 text-gray-400 rounded-xl font-semibold cursor-not-allowed"
+            className="inline-block px-6 py-3 bg-gray-700 text-gray-200 rounded-xl font-semibold cursor-not-allowed"
           >
             🚧 Próximamente disponible
           </a>

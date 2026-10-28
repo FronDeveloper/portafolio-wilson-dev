@@ -146,7 +146,7 @@ export default function FlowBillProject() {
                   <span className="text-xl">{m.icon}</span>
                   <h3 className="font-semibold text-white">{m.title}</h3>
                 </div>
-                <p className="text-gray-500 text-sm leading-relaxed">{m.desc}</p>
+                <p className="text-gray-400 text-sm leading-relaxed">{m.desc}</p>
               </div>
             ))}
           </div>
@@ -289,15 +289,15 @@ export default function FlowBillProject() {
 
         {/* Demo credentials */}
         <div className="mt-6 bg-[#0f1117] border border-gray-800 rounded-xl p-5 text-sm">
-          <p className="text-gray-500 font-medium mb-3">Credenciales demo</p>
+          <p className="text-gray-400 font-medium mb-3">Credenciales demo</p>
           <div className="grid md:grid-cols-2 gap-4">
             <div>
-              <p className="text-gray-600 text-xs mb-1">Panel de administración</p>
+              <p className="text-gray-400 text-xs mb-1">Panel de administración</p>
               <p className="text-gray-300 font-mono text-xs">admin@flowbill.co</p>
               <p className="text-gray-300 font-mono text-xs">demo2026</p>
             </div>
             <div>
-              <p className="text-gray-600 text-xs mb-1">Portal del cliente</p>
+              <p className="text-gray-400 text-xs mb-1">Portal del cliente</p>
               <p className="text-gray-300 font-mono text-xs">scastro@invandinas.com</p>
               <p className="text-gray-300 font-mono text-xs">cliente123</p>
             </div>

@@ -139,19 +139,19 @@ export default function PlataformaEducativaProject() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
           <div className="bg-[#111] border border-gray-800 rounded-xl p-4 text-center">
             <p className="text-2xl font-bold text-[#C2B280]">6</p>
-            <p className="text-gray-500 text-xs mt-1">Roles de usuario</p>
+            <p className="text-gray-400 text-xs mt-1">Roles de usuario</p>
           </div>
           <div className="bg-[#111] border border-gray-800 rounded-xl p-4 text-center">
             <p className="text-2xl font-bold text-[#C2B280]">27</p>
-            <p className="text-gray-500 text-xs mt-1">Tablas en BD</p>
+            <p className="text-gray-400 text-xs mt-1">Tablas en BD</p>
           </div>
           <div className="bg-[#111] border border-gray-800 rounded-xl p-4 text-center">
             <p className="text-2xl font-bold text-[#C2B280]">64+</p>
-            <p className="text-gray-500 text-xs mt-1">Archivos PHP</p>
+            <p className="text-gray-400 text-xs mt-1">Archivos PHP</p>
           </div>
           <div className="bg-[#111] border border-gray-800 rounded-xl p-4 text-center">
             <p className="text-2xl font-bold text-[#C2B280]">Multi</p>
-            <p className="text-gray-500 text-xs mt-1">Institución</p>
+            <p className="text-gray-400 text-xs mt-1">Institución</p>
           </div>
         </div>
 
@@ -200,7 +200,7 @@ export default function PlataformaEducativaProject() {
                   <span className="text-xl">{m.icon}</span>
                   <h3 className="font-semibold text-white">{m.title}</h3>
                 </div>
-                <p className="text-gray-500 text-sm leading-relaxed">{m.desc}</p>
+                <p className="text-gray-400 text-sm leading-relaxed">{m.desc}</p>
               </div>
             ))}
           </div>
@@ -224,7 +224,7 @@ export default function PlataformaEducativaProject() {
               >
                 <div className="text-2xl mb-1">{r.icon}</div>
                 <p className="text-[#C2B280] font-semibold text-sm">{r.name}</p>
-                <p className="text-gray-500 text-xs mt-1">{r.desc}</p>
+                <p className="text-gray-400 text-xs mt-1">{r.desc}</p>
               </div>
             ))}
           </div>
@@ -312,7 +312,7 @@ export default function PlataformaEducativaProject() {
             href="https://wa.me/573012821174?text=Hola%20Wilson,%20me%20interesa%20la%20plataforma%20educativa%20para%20mi%20colegio"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block px-6 py-3 bg-green-600 text-white rounded-xl font-semibold hover:bg-green-700 transition"
+            className="inline-block px-6 py-3 bg-green-700 text-white rounded-xl font-semibold hover:bg-green-800 transition"
           >
             💬 Solicitar para mi colegio
           </a>

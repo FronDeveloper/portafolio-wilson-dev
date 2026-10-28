@@ -170,13 +170,13 @@ export default function MinimoStudioProject() {
               <p className="font-semibold text-white mb-2">👤 Admin</p>
               <p className="text-gray-400 font-mono">admin@minimostudio.co</p>
               <p className="text-gray-400 font-mono">admin123</p>
-              <p className="text-gray-500 text-xs mt-1">→ Accede al panel de administración</p>
+              <p className="text-gray-400 text-xs mt-1">→ Accede al panel de administración</p>
             </div>
             <div className="bg-black/40 rounded-xl p-4">
               <p className="font-semibold text-white mb-2">🛍️ Cliente</p>
               <p className="text-gray-400 font-mono">cliente@minimostudio.co</p>
               <p className="text-gray-400 font-mono">cliente123</p>
-              <p className="text-gray-500 text-xs mt-1">→ Accede al área de cliente</p>
+              <p className="text-gray-400 text-xs mt-1">→ Accede al área de cliente</p>
             </div>
           </div>
         </div>

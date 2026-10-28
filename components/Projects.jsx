@@ -5,6 +5,8 @@ import ProjectCard from "./ProjectCard";
 
 export default function Projects({ headingLevel = "h2" }) {
   const Heading = headingLevel;
+  // Si la sección ya es h1 (página /projects), las tarjetas bajan a h2 para no saltar niveles.
+  const cardHeading = headingLevel === "h1" ? "h2" : "h3";
 
   return (
     <section className="px-8 md:px-20 py-20 max-w-6xl mx-auto">
@@ -33,6 +35,7 @@ export default function Projects({ headingLevel = "h2" }) {
         className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8"
       >
         <ProjectCard
+          headingLevel={cardHeading}
           title="VentaChat AI"
           description="Bot de WhatsApp con IA que atiende clientes 24/7: responde preguntas, cotiza y deriva a humano cuando hace falta. Incluye demo web funcional donde la IA responde en vivo."
           problem="Los negocios pierden ventas por responder el WhatsApp horas después: el cliente pregunta, nadie contesta y termina comprando en otra parte."
@@ -50,6 +53,7 @@ export default function Projects({ headingLevel = "h2" }) {
         />
 
         <ProjectCard
+          headingLevel={cardHeading}
           title="FlowBill"
           description="Sistema completo de gestión de proyectos y facturación para agencias creativas, con portal del cliente integrado, interfaz responsive mobile-first y base PWA."
           problem="Las agencias pequeñas gestionan proyectos en Excel, facturas en Word y se comunican con clientes por WhatsApp. Todo disperso."
@@ -67,6 +71,7 @@ export default function Projects({ headingLevel = "h2" }) {
         />
 
         <ProjectCard
+          headingLevel={cardHeading}
           title="AgendaPro"
           description="Sistema de agendamiento de citas para negocios locales con notificaciones automáticas."
           problem="Negocios locales necesitan gestionar citas sin sistemas complejos ni costosos."
@@ -84,6 +89,7 @@ export default function Projects({ headingLevel = "h2" }) {
         />
 
         <ProjectCard
+          headingLevel={cardHeading}
           title="InsightAI Dashboard"
           description="Dashboard de gestión con IA para tiendas de productos naturales."
           problem="Los dueños de tiendas necesitan visualizar métricas clave sin conocimientos técnicos."
@@ -101,6 +107,7 @@ export default function Projects({ headingLevel = "h2" }) {
         />
 
         <ProjectCard
+          headingLevel={cardHeading}
           title="Ecommerce de Calzado"
           description="Tienda online 100% funcional con productos reales y pasarela de pago."
           problem="El cliente necesitaba vender productos online de forma sencilla y rápida."
@@ -118,6 +125,7 @@ export default function Projects({ headingLevel = "h2" }) {
         />
 
         <ProjectCard
+          headingLevel={cardHeading}
           title="Mínimo Studio"
           description="E-commerce de ropa minimalista con panel admin, pagos con Stripe + Wompi + PSE y gestión de inventario."
           problem="Necesidad de una plataforma de comercio electrónico moderna para vender ropa con diseño minimalista."
@@ -135,6 +143,7 @@ export default function Projects({ headingLevel = "h2" }) {
         />
 
         <ProjectCard
+          headingLevel={cardHeading}
           title="Fundación FAEBO"
           description="Plataforma web institucional para visibilizar impacto social."
           problem="La fundación no tenía presencia digital ni canal de contacto eficiente."
@@ -152,6 +161,7 @@ export default function Projects({ headingLevel = "h2" }) {
         />
 
         <ProjectCard
+          headingLevel={cardHeading}
           title="ARISE — App RPG Fitness"
           description="App móvil que convierte tu entrenamiento en un RPG al estilo Solo Leveling. Niveles, XP y misiones diarias."
           problem="Las apps de fitness no retienen usuarios porque no hay progresión visual ni motivación emocional para volver."
@@ -169,6 +179,7 @@ export default function Projects({ headingLevel = "h2" }) {
         />
 
         <ProjectCard
+          headingLevel={cardHeading}
           title="Plataforma Educativa"
           description="Plataforma web multi-institución para colegios: sitio público + panel admin + portales para rector, docentes, estudiantes y padres de familia."
           problem="Los colegios pequeños no tienen presencia digital ni un sistema para comunicarse con padres, gestionar admisiones o publicar calificaciones. Todo se hace por WhatsApp y papel."

@@ -169,10 +169,10 @@ export default function PanelLeadsPage() {
               📊
             </div>
             <h1 className="text-white text-xl font-semibold">Panel de leads</h1>
-            <p className="text-gray-500 text-sm mt-1">Acceso privado de Wilson</p>
+            <p className="text-gray-400 text-sm mt-1">Acceso privado de Wilson</p>
           </div>
           {session === "checking" ? (
-            <p className="text-center text-gray-500 text-sm">Verificando sesión…</p>
+            <p className="text-center text-gray-400 text-sm">Verificando sesión…</p>
           ) : (
             <form onSubmit={handleLogin} className="space-y-4">
               <input
@@ -192,7 +192,7 @@ export default function PanelLeadsPage() {
               >
                 {loggingIn ? "Entrando…" : "Entrar"}
               </button>
-              <p className="text-gray-600 text-[11px] text-center">
+              <p className="text-gray-400 text-[11px] text-center">
                 Misma contraseña del panel de propuestas (PANEL_PASSWORD).
               </p>
             </form>
@@ -215,7 +215,7 @@ export default function PanelLeadsPage() {
             <h1 className="text-white text-lg sm:text-xl font-semibold">
               Panel de leads <span className="text-[#C2B280]">· privado</span>
             </h1>
-            <p className="text-gray-500 text-xs mt-0.5">
+            <p className="text-gray-400 text-xs mt-0.5">
               {configured
                 ? `${leads.length} leads guardados · ${nuevos} nuevo${nuevos === 1 ? "" : "s"}`
                 : "Base de datos sin configurar"}
@@ -261,7 +261,7 @@ export default function PanelLeadsPage() {
                 <code className="bg-black/40 px-1 rounded">DATABASE_URL</code> con ese valor y redespliega.
               </li>
             </ol>
-            <p className="text-gray-500 text-[11px] mt-2">
+            <p className="text-gray-400 text-[11px] mt-2">
               Mientras tanto no pierdes nada: cada lead ya te llega por correo como siempre.
               La tabla se crea sola en el primer uso.
             </p>
@@ -295,7 +295,7 @@ export default function PanelLeadsPage() {
 
         {/* Estados de carga / error */}
         {configured && cargando && (
-          <p className="text-gray-500 text-sm">Cargando leads…</p>
+          <p className="text-gray-400 text-sm">Cargando leads…</p>
         )}
         {configured && !cargando && errorCarga && (
           <div className="bg-red-500/10 border border-red-500/40 rounded-xl px-4 py-3 mb-6">
@@ -312,7 +312,7 @@ export default function PanelLeadsPage() {
         {/* Lista de leads */}
         {configured && !cargando && !errorCarga && visibles.length === 0 && (
           <div className="text-center py-16">
-            <p className="text-gray-500 text-sm">
+            <p className="text-gray-400 text-sm">
               {leads.length === 0
                 ? "Aún no hay leads guardados. Cuando alguien deje su contacto en el chat, /cotizar o /contact, aparecerá aquí."
                 : "No hay leads con ese filtro."}
@@ -326,7 +326,7 @@ export default function PanelLeadsPage() {
           ))}
         </div>
 
-        <p className="text-gray-600 text-[11px] text-center mt-10 pb-6">
+        <p className="text-gray-400 text-[11px] text-center mt-10 pb-6">
           Panel privado · no indexado · los leads también llegan a tu correo
         </p>
       </div>
@@ -387,7 +387,7 @@ function LeadCard({
               {ESTADOS.find((e) => e.id === lead.estado)?.label || lead.estado}
             </span>
           </div>
-          <p className="text-gray-600 text-[11px]">
+          <p className="text-gray-400 text-[11px]">
             {new Date(lead.creadoEn).toLocaleString("es-CO", {
               dateStyle: "medium",
               timeStyle: "short",
@@ -421,19 +421,19 @@ function LeadCard({
       {/* Datos */}
       <div className="grid sm:grid-cols-2 gap-x-6 gap-y-1 text-xs mb-3">
         <p className="text-gray-400">
-          <span className="text-gray-600">Contacto:</span>{" "}
+          <span className="text-gray-400">Contacto:</span>{" "}
           <span className="text-gray-300 break-all">{lead.contacto || "—"}</span>
         </p>
         <p className="text-gray-400">
-          <span className="text-gray-600">Presupuesto:</span>{" "}
+          <span className="text-gray-400">Presupuesto:</span>{" "}
           <span className="text-gray-300">{lead.presupuesto || "No indicó"}</span>
         </p>
         <p className="text-gray-400 sm:col-span-2">
-          <span className="text-gray-600">Necesidad:</span>{" "}
+          <span className="text-gray-400">Necesidad:</span>{" "}
           <span className="text-gray-300">{lead.necesidad || "—"}</span>
         </p>
-        <p className="text-gray-500 sm:col-span-2 text-[11px] break-all">
-          <span className="text-gray-600">Origen:</span>{" "}
+        <p className="text-gray-400 sm:col-span-2 text-[11px] break-all">
+          <span className="text-gray-400">Origen:</span>{" "}
           {lead.utm?.utm_source || "Directo"}
           {lead.utm?.utm_medium ? ` / ${lead.utm.utm_medium}` : ""}
           {lead.utm?.utm_campaign ? ` / ${lead.utm.utm_campaign}` : ""}
