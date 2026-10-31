@@ -184,4 +184,20 @@ deuda de seguridad en dependencias.
 - GA4: cuenta `400061503` creada. Falta marcar `generate_lead` y `schedule_call` como
   eventos clave (Admin → Eventos) y, si se quiere automatizar por API, el **ID de propiedad**.
 - Métricas públicas, GitHub/LinkedIn, Cal.com y revisión legal del contrato/DPA.
-- Dominio propio + `EMAIL_FROM`: cuando se compre, activa autorrespuesta y correo profesional.
+- Dominio: recomendación **`pixescript.com`** (más barato de renovar y más universal que
+  `.dev`; `.tech` descartado por renovación). Comprar uno solo ahora; `.dev` después con 301.
+  Cuando se compre: `NEXT_PUBLIC_SITE_URL` + `EMAIL_FROM` + firma de propuestas + correo
+  profesional.
+
+## Bloque J — Marca Pixescript (30 oct 2026)
+
+- [x] Nombre y descriptor centralizados en `lib/brand.ts`; hero con marca + profesión.
+- [x] Logo SVG (`components/Logo.tsx`) en navbar y pie; favicon y apple-icon generados.
+- [x] `SITE_URL` / `SITE_HOST` como única fuente del dominio: 48 referencias al dominio
+  viejo reemplazadas en canonical, OG, JSON-LD, correos, propuestas y panel.
+- [x] Títulos de las 9 páginas de proyecto y OG por página con imagen (antes salían sin
+  imagen al compartir).
+- [x] Prompts de logo en `docs/logo-prompt.md`.
+- [x] A11y 100 y SEO 100 en `/`, `/about` y `/projects/faebo` tras los cambios.
+- [ ] Comprar dominio, apuntarlo en Vercel y actualizar `NEXT_PUBLIC_SITE_URL`.
+- [ ] Subir logo definitivo (si se genera uno nuevo) y reemplazar `public/logo.png`.
