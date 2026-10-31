@@ -34,9 +34,9 @@ export default function JsonLd() {
         "@type": "WebSite",
         "@id": `${SITE_URL}/#website`,
         url: `${SITE_URL}/`,
-        name: "Wilson Valencia Dev",
+        name: "Pixescript",
         description:
-          "Portafolio de Wilson Valencia, desarrollador full-stack freelance en Colombia.",
+          "Pixescript — desarrollo de software a la medida en Colombia. Portafolio de Wilson Valencia, desarrollador full-stack freelance.",
         inLanguage: "es-CO",
         publisher: { "@id": `${SITE_URL}/#persona` },
       },
@@ -72,11 +72,11 @@ export default function JsonLd() {
       {
         "@type": "ProfessionalService",
         "@id": `${SITE_URL}/#servicio`,
-        name: "Wilson Valencia Dev",
+        name: "Pixescript",
         url: `${SITE_URL}/`,
-        image: `${SITE_URL}/preview.png`,
+        image: `${SITE_URL}/opengraph-image`,
         description:
-          "Desarrollo de software a medida en Colombia: landing pages, tiendas online, SaaS y sistemas de gestión. Cotización en menos de 24 horas.",
+          "Pixescript: desarrollo de software a la medida en Colombia — landing pages, tiendas online, SaaS y sistemas de gestión. Cotización en menos de 24 horas.",
         email: CONTACT_EMAIL,
         telephone: TELEFONO,
         priceRange: `${formatearCOP(PLANES[0].desde.cop)} - ${formatearCOP(

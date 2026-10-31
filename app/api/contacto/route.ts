@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { rateLimitOk } from "@/lib/propuestas";
 import { guardarLead } from "@/lib/leads-db";
+import { SITE_HOST } from "@/lib/pricing";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -181,7 +182,7 @@ export async function POST(request: Request) {
 
           <div style="text-align: center; margin-top: 30px;">
             <p style="color: #555; font-size: 11px;">
-              Lead capturado en wvalencia-dev.vercel.app/contact<br>
+              Lead capturado en ${SITE_HOST}/contact<br>
               ${fecha}<br>
               El visitante aceptó la política de privacidad al enviar el formulario.
             </p>

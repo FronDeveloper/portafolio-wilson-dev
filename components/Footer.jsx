@@ -1,14 +1,22 @@
 import Link from "next/link";
+import Logo from "./Logo";
+import { BRAND } from "@/lib/brand";
 
 export default function Footer() {
   return (
     <footer className="border-t border-gray-800 mt-20 px-8 md:px-20 py-10 text-gray-300">
       <div className="max-w-6xl mx-auto flex flex-col gap-6">
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-sm">
-            © {new Date().getFullYear()} Wilson Valencia. Todos los derechos
-            reservados.
-          </p>
+          <div className="flex flex-col items-center md:items-start gap-1">
+            <p className="flex items-center gap-2 text-sm font-semibold text-white">
+              <Logo size={22} />
+              {BRAND.name}
+            </p>
+            <p className="text-xs text-gray-400">
+              © {new Date().getFullYear()} {BRAND.founder}. Todos los derechos
+              reservados.
+            </p>
+          </div>
 
           <nav
             aria-label="Enlaces del pie de página"

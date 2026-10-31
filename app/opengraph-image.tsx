@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { SITE_HOST } from "@/lib/pricing";
 
 /**
  * Imagen para compartir el sitio en WhatsApp, LinkedIn y redes.
@@ -63,8 +64,8 @@ export default function OpengraphImage() {
               width: 56,
               height: 56,
               borderRadius: 14,
-              background: "#C2B280",
-              color: "#0B0B0B",
+              background: "linear-gradient(135deg, #8B5CF6 0%, #4C1D95 100%)",
+              color: "#FFFFFF",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -175,7 +176,7 @@ export default function OpengraphImage() {
             ))}
           </div>
           <span style={{ color: "#C2B280", fontSize: 23, fontWeight: 600 }}>
-            wvalencia-dev.vercel.app
+            {SITE_HOST}
           </span>
         </div>
       </div>

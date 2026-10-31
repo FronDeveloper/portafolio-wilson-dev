@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const metadata = {
-  title: "InsightAI Dashboard — Dashboard con IA para tiendas | Wilson Valencia Dev",
+  title: "InsightAI Dashboard — Dashboard con IA para tiendas",
   description:
     "¿Necesitas visualizar métricas de tu tienda con inteligencia artificial? InsightAI es un dashboard con análisis de ventas, inventario y asistente IA integrado. Construido con Next.js y Supabase.",
   keywords: [
@@ -14,13 +14,14 @@ export const metadata = {
     "dashboard negocios colombia",
   ],
   openGraph: {
-    title: "InsightAI Dashboard — IA para análisis de negocio | Wilson Valencia",
+    images: ["/opengraph-image"],
+    title: "InsightAI Dashboard — IA para análisis de negocio",
     description:
       "Dashboard con inteligencia artificial para tiendas: métricas en tiempo real, análisis de ventas y asistente IA. Stack: Next.js y Supabase.",
-    url: "https://wvalencia-dev.vercel.app/projects/insightai-dashboard",
+    url: "/projects/insightai-dashboard",
   },
   alternates: {
-    canonical: "https://wvalencia-dev.vercel.app/projects/insightai-dashboard",
+    canonical: "/projects/insightai-dashboard",
   },
 };
 

@@ -3,7 +3,7 @@ import { Resend } from "resend";
 import { ASSISTANT_NAME, DEFAULT_NOTIFY_EMAIL, SYSTEM_PROMPT, WHATSAPP_PHONE } from "@/lib/assistant";
 import { completarChat, hayProveedorIA } from "@/lib/ai";
 import { guardarLead } from "@/lib/leads-db";
-import { etiquetaPresupuesto } from "@/lib/pricing";
+import { etiquetaPresupuesto, SITE_HOST } from "@/lib/pricing";
 
 // Igual que las demás rutas del portafolio: nunca evaluar en build
 export const runtime = "nodejs";
@@ -215,7 +215,7 @@ async function notifyLeadByEmail(
         <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; background: #0B0B0B; padding: 40px; border-radius: 12px;">
           <div style="text-align: center; margin-bottom: 30px;">
             <h1 style="color: #C2B280; font-size: 24px; margin-bottom: 5px;">¡Nuevo lead de ${ASSISTANT_NAME}!</h1>
-            <p style="color: #888; font-size: 13px;">Tu asistente virtual capturó un interés en wvalencia-dev.vercel.app</p>
+            <p style="color: #888; font-size: 13px;">Tu asistente virtual capturó un interés en ${SITE_HOST}</p>
           </div>
 
           <div style="background: #111; border: 1px solid #333; border-radius: 8px; padding: 25px; margin-bottom: 20px;">

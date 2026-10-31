@@ -13,6 +13,7 @@ import {
   CAPACIDADES_PAGO,
   PRESUPUESTOS,
   SOPORTE_NOTA,
+  SITE_URL,
   WHATSAPP_PHONE as WA,
   resumenPrecios,
 } from "./pricing";
@@ -94,11 +95,11 @@ Cómo responder sobre los proyectos:
 - Antes de afirmar que una funcionalidad está disponible, consulta la información específica del proyecto. No asumas que todas las funcionalidades existen en todos los sistemas.
 
 Enlaces reales (los ÚNICOS que puedes compartir):
-- Portafolio: https://wvalencia-dev.vercel.app
-- Caso de estudio VentaChat AI: https://wvalencia-dev.vercel.app/projects/ventachat-ai
+- Portafolio: ${SITE_URL}
+- Caso de estudio VentaChat AI: ${SITE_URL}/projects/ventachat-ai
 - Demo en vivo de VentaChat AI: https://ventachat-ai-demo.vercel.app
-- Página de cotización: https://wvalencia-dev.vercel.app/cotizar
-- Política de privacidad: https://wvalencia-dev.vercel.app/privacidad
+- Página de cotización: ${SITE_URL}/cotizar
+- Política de privacidad: ${SITE_URL}/privacidad
 Si no hay enlace específico para otro proyecto, invita al visitante a explorar la sección de proyectos del portafolio.
 
 # TECNOLOGÍAS
@@ -136,7 +137,7 @@ Cuando tengas nombre + contacto + necesidad del visitante, agrega como ÚLTIMA l
 # PRIVACIDAD Y ALMACENAMIENTO (honestidad sobre el mecanismo real)
 - La conversación se guarda en el navegador del visitante para que pueda continuar después. No hay una base de datos de chats en el servidor.
 - Cuando el visitante deja su contacto, la conversación se envía por correo a Wilson para que pueda responder, y puede quedar registrada en su correo y en registros técnicos del proveedor. Esto sí puedes decirlo.
-- No afirmes que la conversación "no se guarda en ningún servidor" ni prometas eliminación automática. Puedes remitir a la política de privacidad: https://wvalencia-dev.vercel.app/privacidad
+- No afirmes que la conversación "no se guarda en ningún servidor" ni prometas eliminación automática. Puedes remitir a la política de privacidad: ${SITE_URL}/privacidad
 - No afirmes que Wilson lee todas las conversaciones en tiempo real ni que está viendo el chat en este momento.
 - Si el visitante quiere hablar ya con Wilson: sugiere el botón verde de WhatsApp de la página (esquina inferior izquierda) o la página de cotización.
 

@@ -37,6 +37,7 @@ import {
   type PropuestaPayload,
 } from "./catalogo";
 import { completarChat } from "./ai";
+import { SITE_HOST, SITE_URL } from "./pricing";
 
 // Re-export para que las rutas de servidor importen todo de un solo lugar
 export {
@@ -179,7 +180,7 @@ export function rateLimitOk(
 
 function construirSystemPrompt(): string {
   const c = CATALOGO;
-  return `Eres el asesor comercial de Wilson Valencia, desarrollador full-stack freelance colombiano (portafolio: https://wvalencia-dev.vercel.app, WhatsApp +57 301 2821174). Redactas propuestas de proyecto hablando EN NOMBRE de Wilson, en español de Colombia, tono cálido, humano y profesional (de tuteo), en primera persona.
+  return `Eres el asesor comercial de Wilson Valencia, desarrollador full-stack freelance colombiano (portafolio: ${SITE_URL}, WhatsApp +57 301 2821174). Redactas propuestas de proyecto hablando EN NOMBRE de Wilson, en español de Colombia, tono cálido, humano y profesional (de tuteo), en primera persona.
 
 CATÁLOGO REAL DE WILSON (COP):
 1. ${c.landing.nombre} — ${c.landing.precio} — ${c.landing.incluye.join(", ")}. Plazo: ${c.landing.plazo}. Soporte: ${c.landing.soporte}.
@@ -211,7 +212,7 @@ FORMATO (el texto se enviará por WhatsApp):
   3) *Lo que te propongo* + 3 o 4 bullets con ✅ (servicios del plan elegido, ajustados a lo que pidió).
   4) *Inversión y plazo* — precio del catálogo + plazo. Menciona el soporte incluido.
   5) *Siguiente paso* — propon una llamada o conversación corta por WhatsApp, sin compromiso.
-  6) Firma: Wilson Valencia — wvalencia-dev.vercel.app
+  6) Firma: Wilson Valencia — ${SITE_HOST}
 - Cero frases genéricas de marketing, máximo 3-4 emojis en todo el texto.
 Devuelve ÚNICAMENTE el texto de la propuesta, sin introducciones tipo "aquí tienes".`;
 }
@@ -274,7 +275,7 @@ Manejo tres planes de mantenimiento: ${PLANES_MANTENIMIENTO.map(
 *Siguiente paso*
 ¿Te parece si hablamos 15 minutos por WhatsApp? Reviso contigo qué necesita el sistema y te confirmo el plan, sin ningún compromiso.
 
-Wilson Valencia — wvalencia-dev.vercel.app`;
+Wilson Valencia — ${SITE_HOST}`;
   }
 
   const plan = planParaTipo(s.tipo, s.presupuesto);
@@ -305,7 +306,7 @@ Desde ${formatearCOP(info.desde.cop)} COP (${formatearUSD(
 *Siguiente paso*
 ¿Te parece si hablamos 15 minutos por WhatsApp? Con una llamada corta ajusto el alcance a tu idea y te confirmo el precio final, sin ningún compromiso.
 
-Wilson Valencia — wvalencia-dev.vercel.app`;
+Wilson Valencia — ${SITE_HOST}`;
 }
 
 /** Limpia la salida del modelo para WhatsApp */

@@ -5,6 +5,7 @@ import {
   etiquetaPresupuesto,
   PRESUPUESTO_LABELS,
   LEGACY_PRESUPUESTO_LABELS,
+  SITE_HOST,
 } from "@/lib/pricing";
 import { rateLimitOk } from "@/lib/propuestas";
 import { guardarLead } from "@/lib/leads-db";
@@ -215,7 +216,7 @@ export async function POST(request: Request) {
 
           <div style="text-align: center; margin-top: 30px;">
             <p style="color: #555; font-size: 11px;">
-              Lead capturado en wvalencia-dev.vercel.app/cotizar<br>
+              Lead capturado en ${SITE_HOST}/cotizar<br>
               ${fecha}<br>
               El visitante aceptó la política de privacidad al enviar el formulario.
             </p>

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
+import { SITE_HOST, SITE_URL } from "@/lib/pricing";
 
 /**
  * Panel privado de propuestas — Fase 2.
@@ -103,7 +104,7 @@ function buildProposalHtml(md: string, clientName: string): string {
   <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:34px;">
     <div>
       <p style="margin:0; font-size:20px; font-weight:700; color:#0B0B0B;">Wilson Valencia</p>
-      <p style="margin:2px 0 0; font-size:12px; color:#8a7a55;">Desarrollador Full-Stack — wvalencia-dev.vercel.app</p>
+      <p style="margin:2px 0 0; font-size:12px; color:#8a7a55;">Desarrollador Full-Stack — ${SITE_HOST}</p>
     </div>
     <p style="margin:0; font-size:12px; color:#999;">${hoy}</p>
   </div>
@@ -142,7 +143,7 @@ ${mdToHtmlBody(md)}
   <div style="margin-top:28px; border-top:1px solid #e5e0d5; padding-top:18px;">
     <p style="margin:0; font-size:12px; color:#777;">
       Wilson Valencia · WhatsApp +57 301 2821174 ·
-      <a href="https://wvalencia-dev.vercel.app" style="color:#8a7a55;">wvalencia-dev.vercel.app</a> ·
+      <a href="${SITE_URL}" style="color:#8a7a55;">${SITE_HOST}</a> ·
       <a href="https://cal.com/wvalencia/llamada-inicial" style="color:#8a7a55;">Agendar 15 min</a>
     </p>
   </div>

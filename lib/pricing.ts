@@ -13,7 +13,10 @@
  */
 
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://wvalencia-dev.vercel.app";
+  process.env.NEXT_PUBLIC_SITE_URL || "https://pixescript.vercel.app";
+
+/** Dominio sin protocolo, para textos y firmas. */
+export const SITE_HOST = SITE_URL.replace(/^https?:\/\//, "").replace(/\/$/, "");
 
 export const WHATSAPP_PHONE = "573012821174";
 export const CONTACT_EMAIL = "wilson.arroyo12@gmail.com";

@@ -12,6 +12,7 @@
 
 import type { Metadata } from "next";
 import { verificarToken } from "@/lib/propuestas";
+import { SITE_URL } from "@/lib/pricing";
 import PropuestaReview from "@/components/PropuestaReview";
 
 export const dynamic = "force-dynamic";
@@ -66,7 +67,7 @@ export default async function RevisarPropuestaPage({
           <h1 className="text-[#C2B280] text-2xl font-bold mb-3">{aviso.titulo}</h1>
           <p className="text-gray-400 text-sm leading-relaxed mb-8">{aviso.detalle}</p>
           <a
-            href="https://wvalencia-dev.vercel.app"
+            href={SITE_URL}
             className="inline-block bg-[#C2B280] text-black font-semibold text-sm px-7 py-3 rounded-xl hover:opacity-80 transition"
           >
             Volver al portafolio

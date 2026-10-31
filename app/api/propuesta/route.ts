@@ -29,6 +29,7 @@ import {
 import {
   LEGACY_PRESUPUESTO_LABELS,
   etiquetaPresupuesto,
+  SITE_HOST,
 } from "@/lib/pricing";
 
 export const runtime = "nodejs";
@@ -214,7 +215,7 @@ export async function POST(request: Request) {
           <p style="color: #555; font-size: 11px; line-height: 1.7;">
             🔐 Este enlace es personal: quien lo abra puede aprobar la propuesta. No lo reenvíes.<br>
             ⏳ Expira el ${fechaBogota(payload.exp)}.<br>
-            Wilson Valencia — wvalencia-dev.vercel.app
+            Wilson Valencia — ${SITE_HOST}
           </p>
         </div>
       </div>

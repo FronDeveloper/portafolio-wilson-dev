@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const metadata = {
-  title: "ARISE — App RPG de entrenamiento publicada en Google Play | Wilson Valencia Dev",
+  title: "ARISE — App RPG de entrenamiento publicada en Google Play",
   description:
     "App móvil que convierte el entrenamiento físico en un RPG. Sistema de niveles, misiones diarias y recompensas por cada entreno. Desarrollada con Flutter y Firebase. Disponible en Google Play.",
   keywords: [
@@ -16,13 +16,14 @@ export const metadata = {
     "solo leveling fitness app",
   ],
   openGraph: {
-    title: "ARISE — App RPG de entrenamiento en Google Play | Wilson Valencia",
+    images: ["/opengraph-image"],
+    title: "ARISE — App RPG de entrenamiento en Google Play",
     description:
       "App que convierte tu entrenamiento en un RPG al estilo Solo Leveling. Construida con Flutter y Firebase. Disponible en Google Play.",
-    url: "https://wvalencia-dev.vercel.app/projects/rpg",
+    url: "/projects/rpg",
   },
   alternates: {
-    canonical: "https://wvalencia-dev.vercel.app/projects/rpg",
+    canonical: "/projects/rpg",
   },
 };
 

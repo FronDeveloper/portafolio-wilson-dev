@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const metadata = {
-  title: "VentaChat AI — Bot de WhatsApp con IA que vende 24/7 | Wilson Valencia Dev",
+  title: "VentaChat AI — Bot de WhatsApp con IA que vende 24/7",
   description:
     "Bot de WhatsApp con inteligencia artificial que atiende clientes 24/7: responde preguntas, cotiza y deriva a humano cuando hace falta. Construido con Baileys, Groq y Supabase. Pruébalo en la demo en vivo.",
   keywords: [
@@ -15,13 +15,14 @@ export const metadata = {
     "chatbot atención al cliente 24/7",
   ],
   openGraph: {
-    title: "VentaChat AI — Bot de WhatsApp con IA 24/7 | Wilson Valencia",
+    images: ["/opengraph-image"],
+    title: "VentaChat AI — Bot de WhatsApp con IA 24/7",
     description:
       "Atiende tu WhatsApp con IA: respuestas en ~2 segundos, derivación a humano y conversaciones guardadas en base de datos. Demo en vivo disponible.",
-    url: "https://wvalencia-dev.vercel.app/projects/ventachat-ai",
+    url: "/projects/ventachat-ai",
   },
   alternates: {
-    canonical: "https://wvalencia-dev.vercel.app/projects/ventachat-ai",
+    canonical: "/projects/ventachat-ai",
   },
 };
 

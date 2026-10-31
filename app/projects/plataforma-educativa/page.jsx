@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const metadata = {
-  title: "Plataforma Educativa Multi-Institución — Sitios web para colegios | Wilson Valencia Dev",
+  title: "Plataforma Educativa Multi-Institución — Sitios web para colegios",
   description:
     "Plataforma web multi-tenant para colegios: sitio institucional, panel administrativo, portal de docentes, padres y estudiantes. Multi-institución con personalización de colores y logo. Demo en vivo disponible.",
   keywords: [
@@ -17,13 +17,14 @@ export const metadata = {
     "plataforma escolar php",
   ],
   openGraph: {
-    title: "Plataforma Educativa Multi-Institución — Sitios web para colegios | Wilson Valencia",
+    images: ["/opengraph-image"],
+    title: "Plataforma Educativa Multi-Institución — Sitios web para colegios",
     description:
       "Plataforma completa para colegios: sitio público, panel admin, portales para docentes, padres y estudiantes. Multi-institución, 6 roles, personalizable. Demo en vivo.",
-    url: "https://wvalencia-dev.vercel.app/projects/plataforma-educativa",
+    url: "/projects/plataforma-educativa",
   },
   alternates: {
-    canonical: "https://wvalencia-dev.vercel.app/projects/plataforma-educativa",
+    canonical: "/projects/plataforma-educativa",
   },
 };
 

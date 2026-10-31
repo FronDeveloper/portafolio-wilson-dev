@@ -1,4 +1,5 @@
 import LegalLayout from "@/components/LegalLayout";
+import { SITE_HOST } from "@/lib/pricing";
 
 export const metadata = {
   title: "Términos y condiciones del servicio",
@@ -22,7 +23,7 @@ export default function TerminosPage() {
           Estos términos aplican a las cotizaciones, propuestas y servicios de
           diseño y desarrollo web, SaaS, e-commerce, aplicaciones móviles,
           integraciones y mantenimiento ofrecidos a través del sitio
-          https://wvalencia-dev.vercel.app.
+          {SITE_HOST}.
         </p>
       </section>
 

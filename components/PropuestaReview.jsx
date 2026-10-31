@@ -18,6 +18,7 @@ import {
   etiquetaPresupuesto,
   fechaBogota,
 } from "@/lib/catalogo";
+import { SITE_HOST, SITE_URL } from "@/lib/pricing";
 
 const WILSON_WA = "573012821174";
 
@@ -125,7 +126,7 @@ export default function PropuestaReview({ payload, token }) {
           que expire. Simplemente no lo compartas.
         </p>
         <a
-          href="https://wvalencia-dev.vercel.app"
+          href={SITE_URL}
           className="inline-block bg-[#C2B280] hover:bg-[#d4c69a] text-black font-semibold px-6 py-3 rounded-xl transition text-sm"
         >
           Volver al portafolio
@@ -279,12 +280,12 @@ export default function PropuestaReview({ payload, token }) {
       )}
 
       <p className="text-center text-gray-400 text-xs mt-8">
-        Wilson Valencia Dev · Fase 2 — Propuestas con aprobación ·{" "}
+        Pixescript · Fase 2 — Propuestas con aprobación ·{" "}
         <a
-          href="https://wvalencia-dev.vercel.app"
+          href={SITE_URL}
           className="text-[#C2B280]/60 hover:text-[#C2B280]"
         >
-          wvalencia-dev.vercel.app
+          {SITE_HOST}
         </a>
       </p>
     </div>

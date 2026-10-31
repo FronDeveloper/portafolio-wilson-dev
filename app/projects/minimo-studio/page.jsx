@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const metadata = {
-  title: "Mínimo Studio — E-commerce con Stripe, Wompi y PSE | Wilson Valencia Dev",
+  title: "Mínimo Studio — E-commerce con Stripe, Wompi y PSE",
   description:
     "E-commerce completo con carrito, panel admin y pasarelas de pago colombianas (Stripe, Wompi, PSE, Efecty). Construido con Next.js 15, Prisma y PostgreSQL. Ideal para tiendas en Colombia.",
   keywords: [
@@ -14,13 +14,14 @@ export const metadata = {
     "next.js 15 ecommerce stripe wompi",
   ],
   openGraph: {
-    title: "Mínimo Studio — E-commerce con pasarelas colombianas | Wilson Valencia",
+    images: ["/opengraph-image"],
+    title: "Mínimo Studio — E-commerce con pasarelas colombianas",
     description:
       "Tienda online con Stripe, Wompi, PSE y Efecty. Panel admin, autenticación, carrito y gestión de inventario. Next.js 15 + Prisma + PostgreSQL.",
-    url: "https://wvalencia-dev.vercel.app/projects/minimo-studio",
+    url: "/projects/minimo-studio",
   },
   alternates: {
-    canonical: "https://wvalencia-dev.vercel.app/projects/minimo-studio",
+    canonical: "/projects/minimo-studio",
   },
 };
 

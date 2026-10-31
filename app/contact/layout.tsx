@@ -11,13 +11,14 @@ export const metadata: Metadata = {
     "desarrollo web a medida cotización",
   ],
   openGraph: {
+    images: ["/opengraph-image"],
     title: "Contacto — Cotiza tu proyecto web",
     description:
       "Cuéntame tu idea y recibe una propuesta en menos de 24 horas. Desarrollo web a medida en Colombia.",
-    url: "https://wvalencia-dev.vercel.app/contact",
+    url: "/contact",
   },
   alternates: {
-    canonical: "https://wvalencia-dev.vercel.app/contact",
+    canonical: "/contact",
   },
 };
 

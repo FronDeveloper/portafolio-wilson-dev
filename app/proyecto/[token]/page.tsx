@@ -9,7 +9,7 @@ import {
   type EstadoHito,
   type EstadoProyecto,
 } from "@/lib/proyectos-db";
-import { CONTACT_EMAIL, WHATSAPP_PHONE } from "@/lib/pricing";
+import { CONTACT_EMAIL, SITE_HOST, WHATSAPP_PHONE } from "@/lib/pricing";
 
 /**
  * /proyecto/[token] — Portal privado del cliente.
@@ -24,7 +24,7 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Seguimiento de tu proyecto — Wilson Valencia",
+  title: "Seguimiento de tu proyecto",
   robots: { index: false, follow: false, nocache: true },
   referrer: "no-referrer",
 };
@@ -440,7 +440,7 @@ export default async function ProyectoPage({
             Este enlace es privado: no lo compartas públicamente. Wilson Valencia
             · Desarrollador Full-Stack ·{" "}
             <Link href="/" className="text-[#C2B280] underline hover:opacity-80">
-              wvalencia-dev.vercel.app
+              {SITE_HOST}
             </Link>
           </p>
         </footer>

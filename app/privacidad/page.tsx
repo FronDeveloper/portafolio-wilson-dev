@@ -1,5 +1,6 @@
 import LegalLayout from "@/components/LegalLayout";
 import { ConsentReset } from "@/components/ConsentReset";
+import { SITE_HOST } from "@/lib/pricing";
 
 export const metadata = {
   title: "Política de privacidad y tratamiento de datos",
@@ -20,7 +21,7 @@ export default function PrivacidadPage() {
           WhatsApp: +57 301 282 1174.
         </p>
         <p>
-          Esta política aplica al sitio https://wvalencia-dev.vercel.app, al
+          Esta política aplica al sitio {SITE_HOST}, al
           asistente virtual Alma y a los formularios de cotización y propuestas.
         </p>
       </section>

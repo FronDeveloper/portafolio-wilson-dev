@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const metadata = {
-  title: "Pisarte — Ecommerce de calzado en producción | Wilson Valencia Dev",
+  title: "Pisarte — Ecommerce de calzado en producción",
   description:
     "Tienda online de calzado real con más de 50 pedidos procesados. Flujo de compra optimizado, pasarela de pago integrada y diseño moderno. Construida con Next.js.",
   keywords: [
@@ -13,13 +13,14 @@ export const metadata = {
     "desarrollo ecommerce colombia producción",
   ],
   openGraph: {
-    title: "Pisarte — Ecommerce de calzado en producción | Wilson Valencia",
+    images: ["/opengraph-image"],
+    title: "Pisarte — Ecommerce de calzado en producción",
     description:
       "Tienda online real de calzado con 50+ pedidos procesados. Pasarela de pago, catálogo y diseño optimizado para conversiones. Construida con Next.js.",
-    url: "https://wvalencia-dev.vercel.app/projects/ecommerce",
+    url: "/projects/ecommerce",
   },
   alternates: {
-    canonical: "https://wvalencia-dev.vercel.app/projects/ecommerce",
+    canonical: "/projects/ecommerce",
   },
 };
 

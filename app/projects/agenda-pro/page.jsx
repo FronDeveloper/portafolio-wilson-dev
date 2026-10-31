@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const metadata = {
-  title: "AgendaPro — Sistema de citas online para negocios | Wilson Valencia Dev",
+  title: "AgendaPro — Sistema de citas online para negocios",
   description:
     "¿Recibes reservas por WhatsApp y se te cruzan las citas? Así construí AgendaPro: sistema de agendamiento con calendario, notificaciones automáticas por email y WhatsApp. Next.js y Supabase.",
   keywords: [
@@ -14,13 +14,14 @@ export const metadata = {
     "notificaciones whatsapp citas",
   ],
   openGraph: {
-    title: "AgendaPro — Sistema de citas para negocios | Wilson Valencia",
+    images: ["/opengraph-image"],
+    title: "AgendaPro — Sistema de citas para negocios",
     description:
       "Sistema de agendamiento con calendario interactivo, notificaciones automáticas y portal de reservas. Construido con Next.js y Supabase.",
-    url: "https://wvalencia-dev.vercel.app/projects/agenda-pro",
+    url: "/projects/agenda-pro",
   },
   alternates: {
-    canonical: "https://wvalencia-dev.vercel.app/projects/agenda-pro",
+    canonical: "/projects/agenda-pro",
   },
 };
 

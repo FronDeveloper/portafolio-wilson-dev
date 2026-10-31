@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const metadata = {
-  title: "Fundación FAEBO — Sitio institucional para fundación social | Wilson Valencia Dev",
+  title: "Fundación FAEBO — Sitio institucional para fundación social",
   description:
     "Sitio web institucional para fundación social colombiana. Diseño accesible, sección de misión y visión, y canal de contacto para donantes. Proyecto real entregado al cliente.",
   keywords: [
@@ -13,13 +13,14 @@ export const metadata = {
     "diseño web fundación html css",
   ],
   openGraph: {
-    title: "Fundación FAEBO — Sitio institucional social | Wilson Valencia",
+    images: ["/opengraph-image"],
+    title: "Fundación FAEBO — Sitio institucional social",
     description:
       "Página institucional para fundación social colombiana. Diseño claro, accesible y enfocado en generar confianza para donantes.",
-    url: "https://wvalencia-dev.vercel.app/projects/faebo",
+    url: "/projects/faebo",
   },
   alternates: {
-    canonical: "https://wvalencia-dev.vercel.app/projects/faebo",
+    canonical: "/projects/faebo",
   },
 };
 

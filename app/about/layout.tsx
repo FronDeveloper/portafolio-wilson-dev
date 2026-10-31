@@ -12,13 +12,14 @@ export const metadata: Metadata = {
     "desarrollo software freelance",
   ],
   openGraph: {
+    images: ["/opengraph-image"],
     title: "Sobre mí — Desarrollador Full-Stack",
     description:
       "Desarrollador full-stack en Medellín. Construyo aplicaciones web a medida con Next.js, TypeScript y Supabase. Disponible para proyectos.",
-    url: "https://wvalencia-dev.vercel.app/about",
+    url: "/about",
   },
   alternates: {
-    canonical: "https://wvalencia-dev.vercel.app/about",
+    canonical: "/about",
   },
 };
 
