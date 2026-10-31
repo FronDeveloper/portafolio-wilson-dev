@@ -5,6 +5,7 @@ import { FaLinkedin, FaGithub } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import Link from "next/link";
 import { playfair } from "@/lib/fonts";
+import { BRAND } from "@/lib/brand";
 
 export default function Hero() {
   return (
@@ -30,11 +31,14 @@ export default function Hero() {
             <span className="text-green-400 text-xs font-semibold">Disponible para nuevos proyectos</span>
           </div>
 
-          <p className="text-xl md:text-2xl font-bold text-white block">
-            Wilson Valencia
+          <p className="text-2xl md:text-3xl font-bold text-white block tracking-tight">
+            {BRAND.name}
           </p>
-          <p className="text-sm md:text-base text-gray-400 mt-1 tracking-wide">
-            Desarrollador Full-Stack · Next.js · TypeScript · Supabase
+          <p className="text-sm md:text-base text-[#C2B280] mt-1 font-medium">
+            {BRAND.descriptor}
+          </p>
+          <p className="text-xs md:text-sm text-gray-400 mt-2">
+            {BRAND.founder} · {BRAND.founderRole} · {BRAND.stack}
           </p>
         </motion.div>
 

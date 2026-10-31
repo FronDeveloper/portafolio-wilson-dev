@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import Logo from "./Logo";
+import { BRAND } from "@/lib/brand";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -15,16 +16,13 @@ export default function Navbar() {
         {/* LOGO */}
         <Link
           href="/"
-          className="absolute left-1/2 transform -translate-x-1/2 md:static md:transform-none"
+          aria-label={`${BRAND.name} — inicio`}
+          className="absolute left-1/2 transform -translate-x-1/2 md:static md:transform-none flex items-center gap-2.5"
         >
-          <Image
-            src="/logo.png"
-            alt="Wilson Valencia Dev — inicio"
-            width={50}
-            height={50}
-            priority
-            className="object-contain"
-          />
+          <Logo size={38} />
+          <span className="hidden sm:inline text-lg font-bold tracking-tight text-white">
+            {BRAND.name}
+          </span>
         </Link>
 
         {/* MENÚ DESKTOP */}

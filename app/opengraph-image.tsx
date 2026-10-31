@@ -7,7 +7,7 @@ import { ImageResponse } from "next/og";
  */
 
 export const alt =
-  "Wilson Valencia — Desarrollador Full-Stack Freelance en Colombia";
+  "Pixescript — Desarrollo de software a la medida en Colombia";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -72,7 +72,7 @@ export default function OpengraphImage() {
               fontWeight: 800,
             }}
           >
-            WV
+            P
           </div>
           <div style={{ display: "flex", flexDirection: "column" }}>
             <span
@@ -83,7 +83,7 @@ export default function OpengraphImage() {
                 letterSpacing: -0.4,
               }}
             >
-              Wilson Valencia
+              Pixescript
             </span>
             <span
               style={{
@@ -93,7 +93,7 @@ export default function OpengraphImage() {
                 textTransform: "uppercase",
               }}
             >
-              Desarrollador Full-Stack
+              Software a la medida
             </span>
           </div>
         </div>
