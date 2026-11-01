@@ -1,7 +1,7 @@
 # Logo de Pixescript — prompts para generador de imágenes
 
 > Paleta: violeta `#8B5CF6` → `#4C1D95`, blanco `#FFFFFF`, acento turquesa `#5EEAD4`.
-> Concepto: **P** + pixel. Geométrico, plano, legible a 16 px.
+> Concepto: **P en rejilla de píxeles**. Plano, sin sombras, legible a 32 px.
 
 Los modelos de imagen entregan **mapas de bits**, no vectores. Genera la idea aquí, elige
 una, y el logo final se reconstruye en SVG (ya hay una versión vectorial en
@@ -12,21 +12,20 @@ una, y el logo final se reconstruye en SVG (ya hay una versión vectorial en
 ## 1. Icono (el más importante)
 
 ```
-Flat vector app icon, 1:1, centered. A geometric monogram of the letter P built
-from a vertical rounded stem and a perfect circular bowl, pure white (#FFFFFF),
-on a rounded square tile with a diagonal gradient from #8B5CF6 to #4C1D95.
-One small solid teal square (#5EEAD4) as a pixel accent at the lower right,
-slightly inset. Minimal, high contrast, crisp edges, generous negative space,
-designed to stay readable at 16x16 pixels. Modern software studio identity,
-Swiss design, no text, no letters other than the P, no 3D, no bevel, no shadow,
-no texture, no gradient mesh, flat colors only.
+Flat vector app icon, 1:1, centered. The letter P built from a 5x5 grid of small
+rounded white squares (#FFFFFF) with thin gaps, on a rounded square tile with a
+diagonal gradient from #8B5CF6 to #4C1D95. One solid teal square (#5EEAD4) as a
+pixel accent at the lower right corner of the tile. Minimal, high contrast, crisp
+edges, no 3D, no bevel, no shadow, no texture, flat colors only. Modern software
+studio identity, Swiss design, no text, no letters other than the P, readable at
+32x32 pixels.
 ```
 
 **Variante monocroma** (para fondos claros, sellos, camisetas):
 
 ```
-Same geometric P monogram, single color #0B0B0B on transparent background,
-flat vector, no tile, no accent, sharp corners, 1:1, centered, minimal.
+Same pixel-grid P, single color #0B0B0B on transparent background, flat vector,
+no tile, no accent, sharp corners, 1:1, centered, minimal.
 ```
 
 ## 2. Lockup horizontal (icono + nombre)
@@ -34,7 +33,7 @@ flat vector, no tile, no accent, sharp corners, 1:1, centered, minimal.
 ```
 Horizontal logo lockup on a deep near-black background (#0B0B0B): at the left a
 rounded-square icon with a violet gradient (#8B5CF6 to #4C1D95) containing a
-white geometric letter P with a small teal (#5EEAD4) square accent; at the right
+white pixel-grid letter P with a small teal (#5EEAD4) square accent; at the right
 the word «Pixescript» in a clean geometric sans-serif, white, bold, tight
 letter-spacing. Vertically centered, 3:1 aspect ratio, wide margins, flat vector
 style, no shadows, no outlines, no extra text, no tagline.
@@ -44,7 +43,7 @@ style, no shadows, no outlines, no extra text, no tagline.
 
 ```
 Square 1:1 social avatar. Rounded-square violet gradient tile (#8B5CF6 to
-#4C1D95) filling 82% of the canvas, centered white geometric letter P, one teal
+#4C1D95) filling 82% of the canvas, centered white pixel-grid letter P, one teal
 (#5EEAD4) pixel square accent. Everything important inside the central 60% so a
 circular crop never cuts it. Flat vector, no text, no border, no shadow.
 ```
