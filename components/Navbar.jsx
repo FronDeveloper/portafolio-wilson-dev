@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Logo from "./Logo";
+import Wordmark from "./Wordmark";
 import { BRAND } from "@/lib/brand";
 
 export default function Navbar() {
@@ -17,12 +17,9 @@ export default function Navbar() {
         <Link
           href="/"
           aria-label={`${BRAND.name} — inicio`}
-          className="absolute left-1/2 transform -translate-x-1/2 md:static md:transform-none flex items-center gap-2.5"
+          className="absolute left-1/2 transform -translate-x-1/2 md:static md:transform-none flex items-center"
         >
-          <Logo size={38} />
-          <span className="hidden sm:inline text-lg font-bold tracking-tight text-white">
-            {BRAND.name}
-          </span>
+          <Wordmark className="text-xl md:text-[22px] font-bold tracking-tight text-white" />
         </Link>
 
         {/* MENÚ DESKTOP */}

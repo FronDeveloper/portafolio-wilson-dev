@@ -5,7 +5,7 @@
 
 Los modelos de imagen entregan **mapas de bits**, no vectores. Genera la idea aquí, elige
 una, y el logo final se reconstruye en SVG (ya hay una versión vectorial en
-`components/Logo.tsx` que puedes usar tal cual o comparar).
+`components/Wordmark.tsx` que puedes usar tal cual o comparar).
 
 ---
 

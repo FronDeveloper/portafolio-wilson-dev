@@ -192,7 +192,8 @@ deuda de seguridad en dependencias.
 ## Bloque J — Marca Pixescript (30 oct 2026)
 
 - [x] Nombre y descriptor centralizados en `lib/brand.ts`; hero con marca + profesión.
-- [x] Logo SVG (`components/Logo.tsx`) en navbar y pie; favicon y apple-icon generados.
+- [x] Logotipo SVG (`components/Wordmark.tsx`): la P de píxeles es la primera letra
+  de la palabra, en navbar y pie; favicon y apple-icon generados aparte.
 - [x] `SITE_URL` / `SITE_HOST` como única fuente del dominio: 48 referencias al dominio
   viejo reemplazadas en canonical, OG, JSON-LD, correos, propuestas y panel.
 - [x] Títulos de las 9 páginas de proyecto y OG por página con imagen (antes salían sin

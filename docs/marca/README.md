@@ -4,7 +4,8 @@
 |---|---|
 | `avatar-1080.png` | Foto de perfil de Instagram, X, LinkedIn, GitHub y WhatsApp Business (1080×1080). |
 
-El logo del sitio no vive aquí: es SVG en `components/Logo.tsx` y su geometría
+El logo del sitio no vive aquí: es SVG en `components/Wordmark.tsx` (la P de píxeles
+como primera letra de la palabra) y su geometría
 compartida en `lib/brand-mark.ts`. El favicon y el apple-icon se generan solos
 desde `app/icon.tsx` y `app/apple-icon.tsx`.
 
