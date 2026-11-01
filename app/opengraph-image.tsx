@@ -1,5 +1,6 @@
 import { ImageResponse } from "next/og";
 import { SITE_HOST } from "@/lib/pricing";
+import { ACENTO, CELDAS, LIENZO, celda } from "@/lib/brand-mark";
 
 /**
  * Imagen para compartir el sitio en WhatsApp, LinkedIn y redes.
@@ -65,15 +66,43 @@ export default function OpengraphImage() {
               height: 56,
               borderRadius: 14,
               background: "linear-gradient(135deg, #8B5CF6 0%, #4C1D95 100%)",
-              color: "#FFFFFF",
               display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 28,
-              fontWeight: 800,
+              position: "relative",
             }}
           >
-            P
+            {CELDAS.map(([col, fila]) => {
+              const c = celda(col, fila, 56 / LIENZO);
+              return (
+                <div
+                  key={`og-${col}-${fila}`}
+                  style={{
+                    position: "absolute",
+                    left: c.left,
+                    top: c.top,
+                    width: c.size,
+                    height: c.size,
+                    borderRadius: c.radius,
+                    background: "#FFFFFF",
+                  }}
+                />
+              );
+            })}
+            {(() => {
+              const a = celda(ACENTO[0], ACENTO[1], 56 / LIENZO);
+              return (
+                <div
+                  style={{
+                    position: "absolute",
+                    left: a.left,
+                    top: a.top,
+                    width: a.size,
+                    height: a.size,
+                    borderRadius: a.radius,
+                    background: "#5EEAD4",
+                  }}
+                />
+              );
+            })()}
           </div>
           <div style={{ display: "flex", flexDirection: "column" }}>
             <span

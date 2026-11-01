@@ -1,7 +1,13 @@
 /**
- * Marca de Pixescript: monograma "P" con un pixel de acento.
+ * Marca de Pixescript: una "P" construida con bloques (guiño al pixel)
+ * y un pixel turquesa de acento en la esquina inferior derecha.
+ *
  * SVG puro: nítido a cualquier tamaño, sin imágenes que cargar.
+ * La geometría vive en lib/brand-mark.ts para que el favicon y el SVG
+ * no se desincronicen.
  */
+
+import { ACENTO, CELDAS, celda } from "@/lib/brand-mark";
 
 type Props = {
   size?: number;
@@ -32,13 +38,34 @@ export default function Logo({ size = 40, className = "", decorative = true }: P
 
       <rect width="64" height="64" rx="16" fill="url(#pixescript-tile)" />
 
-      {/* P: asta + ojo geométrico */}
-      <rect x="17" y="14" width="10" height="36" rx="5" fill="#FFFFFF" />
-      <circle cx="37" cy="27" r="13" fill="#FFFFFF" />
-      <circle cx="37" cy="27" r="6" fill="url(#pixescript-tile)" />
+      {CELDAS.map(([col, fila]) => {
+        const c = celda(col, fila);
+        return (
+          <rect
+            key={`${col}-${fila}`}
+            x={c.left}
+            y={c.top}
+            width={c.size}
+            height={c.size}
+            rx={c.radius}
+            fill="#FFFFFF"
+          />
+        );
+      })}
 
-      {/* Pixel de acento */}
-      <rect x="46" y="44" width="8" height="8" rx="2" fill="#5EEAD4" />
+      {(() => {
+        const a = celda(ACENTO[0], ACENTO[1]);
+        return (
+          <rect
+            x={a.left}
+            y={a.top}
+            width={a.size}
+            height={a.size}
+            rx={a.radius}
+            fill="#5EEAD4"
+          />
+        );
+      })()}
     </svg>
   );
 }
