@@ -1,51 +1,74 @@
 /**
- * Logotipo horizontal: la P de píxeles ES la primera letra de la palabra.
- * La P se dibuja en SVG y el resto se compone con Inter (la tipografía del sitio),
- * así el conjunto se lee como una sola palabra.
+ * Logotipo: la X de píxeles acompaña a la palabra y la doble x lleva el acento.
  *
- * Escala con el tamaño de letra: la altura de la P es la altura de mayúscula
- * de Inter (~0.73em), por lo que sirve igual en el navbar que en un banner.
+ * La baldosa y la X se dibujan en SVG con la geometría de lib/brand-mark.ts
+ * (la misma del favicon), y el texto usa Inter, la tipografía del sitio.
+ * Todo escala con el font-size: sirve igual en el navbar que en un banner.
  */
+
+import { ACENTO, BLOQUES, LIENZO, RADIO_BALDOSA, bloque } from "@/lib/brand-mark";
 
 type Props = {
   className?: string;
-  /** Color de la P: violeta claro sobre fondo oscuro, violeta oscuro sobre claro. */
+  /** Acento y color del texto: turquesa sobre oscuro, violeta sobre claro. */
   tone?: "oscuro" | "claro";
-  /** El color del texto lo hereda del contenedor. */
   label?: string;
 };
 
-export default function Wordmark({ className = "", tone = "oscuro", label = "Pixescript" }: Props) {
-  const violeta = tone === "claro" ? "#7C3AED" : "#A78BFA";
+export default function Wordmark({ className = "", tone = "oscuro", label = "Indexxel" }: Props) {
+  const acento = tone === "claro" ? "#7C3AED" : "#5EEAD4";
+  const centro = bloque(ACENTO[0], ACENTO[1]);
 
   return (
     <span
-      className={`inline-flex items-baseline ${className}`}
       role="img"
       aria-label={label}
+      className={`inline-flex items-center ${className}`}
+      style={{ gap: "0.18em" }}
     >
       <svg
-        viewBox="0 0 40 50"
+        viewBox={`0 0 ${LIENZO} ${LIENZO}`}
         aria-hidden="true"
         focusable="false"
-        style={{ height: "0.73em", width: "auto", marginRight: "0.03em" }}
+        style={{ width: "0.82em", height: "0.82em", flex: "none" }}
       >
-        <g fill={violeta}>
-          <rect width="10" height="10" />
-          <rect x="10" width="10" height="10" />
-          <rect x="20" width="10" height="10" />
-          <rect x="30" width="10" height="10" />
-          <rect y="10" width="10" height="10" />
-          <rect x="30" y="10" width="10" height="10" />
-          <rect y="20" width="10" height="10" />
-          <rect x="10" y="20" width="10" height="10" />
-          <rect x="20" y="20" width="10" height="10" />
-          <rect x="30" y="20" width="10" height="10" />
-          <rect y="30" width="10" height="10" />
-          <rect y="40" width="10" height="10" />
-        </g>
+        <defs>
+          <linearGradient id="indexxel-baldosa" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#8B5CF6" />
+            <stop offset="100%" stopColor="#4C1D95" />
+          </linearGradient>
+        </defs>
+
+        <rect width={LIENZO} height={LIENZO} rx={RADIO_BALDOSA} fill="url(#indexxel-baldosa)" />
+
+        {BLOQUES.map(([x, y]) => {
+          const b = bloque(x, y);
+          return (
+            <rect
+              key={`${x}-${y}`}
+              x={b.left}
+              y={b.top}
+              width={b.size}
+              height={b.size}
+              rx={b.radius}
+              fill="#FFFFFF"
+            />
+          );
+        })}
+
+        <rect
+          x={centro.left}
+          y={centro.top}
+          width={centro.size}
+          height={centro.size}
+          rx={centro.radius}
+          fill="#5EEAD4"
+        />
       </svg>
-      <span aria-hidden="true">ixescript</span>
+
+      <span aria-hidden="true">
+        Inde<span style={{ color: acento }}>xx</span>el
+      </span>
     </span>
   );
 }

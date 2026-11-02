@@ -18,6 +18,7 @@ import {
   etiquetaPresupuesto,
   fechaBogota,
 } from "@/lib/catalogo";
+import { BRAND } from "@/lib/brand";
 import { SITE_HOST, SITE_URL } from "@/lib/pricing";
 
 const WILSON_WA = "573012821174";
@@ -280,7 +281,7 @@ export default function PropuestaReview({ payload, token }) {
       )}
 
       <p className="text-center text-gray-400 text-xs mt-8">
-        Pixescript · Fase 2 — Propuestas con aprobación ·{" "}
+        {BRAND.name} · Fase 2 — Propuestas con aprobación ·{" "}
         <a
           href={SITE_URL}
           className="text-[#C2B280]/60 hover:text-[#C2B280]"

@@ -15,6 +15,7 @@ import {
   formatearCOP,
   formatearUSD,
 } from "@/lib/pricing";
+import { BRAND } from "@/lib/brand";
 
 const DESCRIPCIONES = {
   landing:
@@ -34,9 +35,8 @@ export default function JsonLd() {
         "@type": "WebSite",
         "@id": `${SITE_URL}/#website`,
         url: `${SITE_URL}/`,
-        name: "Pixescript",
-        description:
-          "Pixescript — desarrollo de software a la medida en Colombia. Portafolio de Wilson Valencia, desarrollador full-stack freelance.",
+        name: BRAND.name,
+        description: `${BRAND.name} — desarrollo de software a la medida en Colombia. Portafolio de Wilson Valencia, desarrollador full-stack freelance.`,
         inLanguage: "es-CO",
         publisher: { "@id": `${SITE_URL}/#persona` },
       },
@@ -72,11 +72,10 @@ export default function JsonLd() {
       {
         "@type": "ProfessionalService",
         "@id": `${SITE_URL}/#servicio`,
-        name: "Pixescript",
+        name: BRAND.name,
         url: `${SITE_URL}/`,
         image: `${SITE_URL}/opengraph-image`,
-        description:
-          "Pixescript: desarrollo de software a la medida en Colombia — landing pages, tiendas online, SaaS y sistemas de gestión. Cotización en menos de 24 horas.",
+        description: `${BRAND.name}: desarrollo de software a la medida en Colombia — landing pages, tiendas online, SaaS y sistemas de gestión. Cotización en menos de 24 horas.`,
         email: CONTACT_EMAIL,
         telephone: TELEFONO,
         priceRange: `${formatearCOP(PLANES[0].desde.cop)} - ${formatearCOP(

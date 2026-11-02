@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og";
-import { ACENTO, CELDAS, LIENZO, celda } from "@/lib/brand-mark";
+import { ACENTO, BLOQUES, LIENZO, bloque } from "@/lib/brand-mark";
 
 /**
  * Icono para la pantalla de inicio en iOS/iPadOS.
@@ -12,7 +12,7 @@ export const contentType = "image/png";
 const ESCALA = 180 / LIENZO;
 
 export default function AppleIcon() {
-  const acento = celda(ACENTO[0], ACENTO[1], ESCALA);
+  const centro = bloque(ACENTO[0], ACENTO[1], ESCALA);
 
   return new ImageResponse(
     (
@@ -25,18 +25,18 @@ export default function AppleIcon() {
           background: "linear-gradient(135deg, #8B5CF6 0%, #4C1D95 100%)",
         }}
       >
-        {CELDAS.map(([col, fila]) => {
-          const c = celda(col, fila, ESCALA);
+        {BLOQUES.map(([x, y]) => {
+          const b = bloque(x, y, ESCALA);
           return (
             <div
-              key={`${col}-${fila}`}
+              key={`${x}-${y}`}
               style={{
                 position: "absolute",
-                left: c.left,
-                top: c.top,
-                width: c.size,
-                height: c.size,
-                borderRadius: c.radius,
+                left: b.left,
+                top: b.top,
+                width: b.size,
+                height: b.size,
+                borderRadius: b.radius,
                 background: "#FFFFFF",
               }}
             />
@@ -45,11 +45,11 @@ export default function AppleIcon() {
         <div
           style={{
             position: "absolute",
-            left: acento.left,
-            top: acento.top,
-            width: acento.size,
-            height: acento.size,
-            borderRadius: acento.radius,
+            left: centro.left,
+            top: centro.top,
+            width: centro.size,
+            height: centro.size,
+            borderRadius: centro.radius,
             background: "#5EEAD4",
           }}
         />

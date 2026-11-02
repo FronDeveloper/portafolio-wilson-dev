@@ -12,6 +12,11 @@
  * ============================================================
  */
 
+/**
+ * URL pública del sitio. Hoy apunta al despliegue de Vercel porque el dominio
+ * propio aún no está comprado. Cuando exista `indexxel.com` se cambia aquí (o en
+ * NEXT_PUBLIC_SITE_URL) y con eso se actualizan canonical, OG, sitemap y firmas.
+ */
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://pixescript.vercel.app";
 

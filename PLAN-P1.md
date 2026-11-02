@@ -184,10 +184,10 @@ deuda de seguridad en dependencias.
 - GA4: cuenta `400061503` creada. Falta marcar `generate_lead` y `schedule_call` como
   eventos clave (Admin → Eventos) y, si se quiere automatizar por API, el **ID de propiedad**.
 - Métricas públicas, GitHub/LinkedIn, Cal.com y revisión legal del contrato/DPA.
-- Dominio: recomendación **`pixescript.com`** (más barato de renovar y más universal que
-  `.dev`; `.tech` descartado por renovación). Comprar uno solo ahora; `.dev` después con 301.
-  Cuando se compre: `NEXT_PUBLIC_SITE_URL` + `EMAIL_FROM` + firma de propuestas + correo
-  profesional.
+- Dominio: **`indexxel.com`** (marca actual). Verificar antes de pagar: página de
+  Facebook con el nombre exacto, Instagram `@indexxel` y búsqueda de marca "Indexcel"
+  (empresa de software de oficina cuya fonética es idéntica). Cuando se compre:
+  `NEXT_PUBLIC_SITE_URL` + `EMAIL_FROM` + firma de propuestas + correo profesional.
 
 ## Bloque J — Marca Pixescript (30 oct 2026)
 
@@ -202,3 +202,24 @@ deuda de seguridad en dependencias.
 - [x] A11y 100 y SEO 100 en `/`, `/about` y `/projects/faebo` tras los cambios.
 - [ ] Comprar dominio, apuntarlo en Vercel y actualizar `NEXT_PUBLIC_SITE_URL`.
 - [ ] Subir logo definitivo (si se genera uno nuevo) y reemplazar `public/logo.png`.
+
+## Bloque K — Renombrado a Indexxel (1 nov 2026)
+
+Meta rechaza la cadena "script" en el nombre de página de Facebook, y la pauta en
+Facebook es un canal real para el estudio. Se evaluaron alternativas con criterios de
+plataforma, dictado, dominio y usuarios.
+
+- [x] Nombre **Indexxel** (index + pixel; la doble x es la bisagra entre las dos palabras).
+- [x] Disponibilidad verificada: `.com` $12.03 con renovación igual, `.co`, `.dev` libres;
+      `@indexxel` libre en X, GitHub e Instagram; sin resultados en búsqueda.
+- [x] Marca en `lib/brand.ts`; títulos, metadatos y JSON-LD ahora leen de ahí.
+- [x] Icono nuevo: la X de píxeles (4 bloques + cruce turquesa) en favicon, apple-icon y OG.
+- [x] Logotipo `components/Wordmark.tsx`: baldosa + palabra, con la doble x en turquesa
+  (oscuro) o violeta (claro).
+- [x] Assets en `docs/marca/`: `indexxel-x.svg`, `indexxel-avatar-1080.png`,
+  `indexxel-propuestas.png`.
+- [x] A11y 100 y SEO 100 en local tras el cambio.
+- [ ] Comprar `indexxel.com` y hacer la migración de dominio/correo.
+- [ ] Página de Facebook "Indexxel" y cuentas sociales con el avatar nuevo.
+- [ ] Riesgo abierto: "Indexcel" (indexcel.com → endex.ai) suena idéntico; revisar
+  marcas en SIC y TMview antes de invertir en pauta.

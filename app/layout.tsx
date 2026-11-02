@@ -11,12 +11,13 @@ import { ConsentBanner } from "@/components/ConsentBanner";
 import SoloSitioPublico from "@/components/SoloSitioPublico";
 import { inter, playfair } from "@/lib/fonts";
 import { SITE_URL } from "@/lib/pricing";
+import { BRAND } from "@/lib/brand";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Pixescript — Desarrollo de software a la medida en Colombia",
-    template: "%s | Pixescript",
+    default: `${BRAND.name} — Desarrollo de software a la medida en Colombia`,
+    template: `%s | ${BRAND.name}`,
   },
   description:
     "Desarrollo de software a la medida en Colombia: sistemas de gestión, SaaS, e-commerce y dashboards con Next.js, TypeScript y Supabase. Cotización en menos de 24h.",
@@ -40,14 +41,14 @@ export const metadata: Metadata = {
     type: "website",
     locale: "es_CO",
     url: `${SITE_URL}/`,
-    siteName: "Pixescript",
-    title: "Pixescript — Desarrollo de software a la medida en Colombia",
+    siteName: BRAND.name,
+    title: `${BRAND.name} — Desarrollo de software a la medida en Colombia`,
     description:
       "Construyo sistemas de gestión, SaaS, e-commerce y dashboards con Next.js y Supabase. Soluciones a medida para empresas colombianas. Disponible para proyectos.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Pixescript — Desarrollo de software a la medida en Colombia",
+    title: `${BRAND.name} — Desarrollo de software a la medida en Colombia`,
     description:
       "Construyo sistemas de gestión, SaaS, e-commerce y dashboards con Next.js y Supabase. Disponible para proyectos.",
   },

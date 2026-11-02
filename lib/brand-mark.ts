@@ -1,35 +1,36 @@
 /**
- * Geometria de la marca Pixescript (una sola fuente para SVG y PNG).
+ * Geometría de la marca Indexxel (una sola fuente para SVG y PNG).
  *
- * La "P" vive en una rejilla de 5x5 celdas sobre un lienzo de 64x64.
+ * La "X" vive en una rejilla de 3x3 sobre un lienzo de 64x64: cuatro bloques
+ * blancos en las esquinas y uno turquesa en el cruce.
  */
 
-/** Celdas que forman la P: [columna, fila]. */
-export const CELDAS: ReadonlyArray<readonly [number, number]> = [
-  // trazo superior del ojo
-  [0, 0], [1, 0], [2, 0], [3, 0],
-  // laterales del ojo
-  [0, 1], [3, 1],
-  // trazo inferior del ojo
-  [0, 2], [1, 2], [2, 2], [3, 2],
-  // asta
-  [0, 3], [0, 4],
-];
-
-/** Celda del pixel turquesa (esquina inferior derecha). */
-export const ACENTO: readonly [number, number] = [4, 4];
-
-export const CELDA = 9.5;
-export const HUECO = 1;
-export const ORIGEN = 6.25;
 export const LIENZO = 64;
 
-/** Posicion y tamano de una celda, ya escalados al lienzo destino. */
-export function celda(col: number, fila: number, escala = 1, offset = 0) {
+/** Bloques blancos: las esquinas de la rejilla. */
+export const BLOQUES: ReadonlyArray<readonly [number, number]> = [
+  [8, 8],
+  [42, 8],
+  [8, 42],
+  [42, 42],
+];
+
+/** Celda turquesa del centro (el cruce de la X). */
+export const ACENTO: readonly [number, number] = [25, 25];
+
+/** Lado del bloque y radio de la esquina, sobre el lienzo de 64. */
+export const BLOQUE = 14;
+export const RADIO = 3;
+
+/** Radio de la baldosa que contiene la marca. */
+export const RADIO_BALDOSA = 16;
+
+/** Posición y tamaño de un bloque, ya escalados al lienzo destino. */
+export function bloque(x: number, y: number, escala = 1) {
   return {
-    left: offset + (ORIGEN + col * (CELDA + HUECO)) * escala,
-    top: offset + (ORIGEN + fila * (CELDA + HUECO)) * escala,
-    size: CELDA * escala,
-    radius: 2 * escala,
+    left: x * escala,
+    top: y * escala,
+    size: BLOQUE * escala,
+    radius: RADIO * escala,
   };
 }

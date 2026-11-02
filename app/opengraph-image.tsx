@@ -1,6 +1,7 @@
 import { ImageResponse } from "next/og";
 import { SITE_HOST } from "@/lib/pricing";
-import { ACENTO, CELDAS, LIENZO, celda } from "@/lib/brand-mark";
+import { BRAND } from "@/lib/brand";
+import { ACENTO, BLOQUES, LIENZO, bloque } from "@/lib/brand-mark";
 
 /**
  * Imagen para compartir el sitio en WhatsApp, LinkedIn y redes.
@@ -8,8 +9,7 @@ import { ACENTO, CELDAS, LIENZO, celda } from "@/lib/brand-mark";
  * (ver app/layout.tsx: no hay que declararla a mano).
  */
 
-export const alt =
-  "Pixescript — Desarrollo de software a la medida en Colombia";
+export const alt = `${BRAND.name} — Desarrollo de software a la medida en Colombia`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -70,25 +70,25 @@ export default function OpengraphImage() {
               position: "relative",
             }}
           >
-            {CELDAS.map(([col, fila]) => {
-              const c = celda(col, fila, 56 / LIENZO);
+            {BLOQUES.map(([x, y]) => {
+              const b = bloque(x, y, 56 / LIENZO);
               return (
                 <div
-                  key={`og-${col}-${fila}`}
+                  key={`og-${x}-${y}`}
                   style={{
                     position: "absolute",
-                    left: c.left,
-                    top: c.top,
-                    width: c.size,
-                    height: c.size,
-                    borderRadius: c.radius,
+                    left: b.left,
+                    top: b.top,
+                    width: b.size,
+                    height: b.size,
+                    borderRadius: b.radius,
                     background: "#FFFFFF",
                   }}
                 />
               );
             })}
             {(() => {
-              const a = celda(ACENTO[0], ACENTO[1], 56 / LIENZO);
+              const a = bloque(ACENTO[0], ACENTO[1], 56 / LIENZO);
               return (
                 <div
                   style={{
@@ -113,7 +113,7 @@ export default function OpengraphImage() {
                 letterSpacing: -0.4,
               }}
             >
-              Pixescript
+              Inde<span style={{ color: "#5EEAD4" }}>xx</span>el
             </span>
             <span
               style={{
