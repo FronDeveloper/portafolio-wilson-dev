@@ -10,34 +10,34 @@ export const metadata = {
 
 export default function GraciasPage() {
   return (
-    <main className="min-h-screen bg-[#0B0B0B] text-white flex items-center justify-center px-6">
+    <main className="min-h-screen bg-fondo text-tinta flex items-center justify-center px-6">
       <div className="max-w-2xl w-full text-center">
         <div className="mb-8">
-          <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-green-500/10 border-2 border-green-500/30 mb-6">
-            <FaCheckCircle className="text-green-400 text-5xl" aria-hidden="true" />
+          <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-green-50 border-2 border-green-200 mb-6">
+            <FaCheckCircle className="text-green-700 text-5xl" aria-hidden="true" />
           </div>
         </div>
 
         <h1 className="text-4xl md:text-5xl font-bold mb-4">
           ¡Gracias por tu{" "}
-          <span className="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-acento to-acento bg-clip-text text-transparent">
             solicitud!
           </span>
         </h1>
 
-        <p className="text-gray-300 text-lg mb-8 max-w-md mx-auto">
+        <p className="text-tinta text-lg mb-8 max-w-md mx-auto">
           Recibí tu mensaje y te voy a responder en menos de{" "}
-          <span className="text-white font-semibold">24 horas hábiles</span> con
+          <span className="text-tinta font-semibold">24 horas hábiles</span> con
           una propuesta inicial.
         </p>
 
-        <div className="bg-gradient-to-br from-[#111] to-[#0F0F0F] border border-gray-800 rounded-2xl p-8 mb-8 text-left">
-          <h2 className="text-white font-semibold mb-4 text-center">
+        <div className="bg-gradient-to-br from-acento-suave via-superficie to-acento-suave border border-borde rounded-2xl p-8 mb-8 text-left">
+          <h2 className="text-tinta font-semibold mb-4 text-center">
             ¿Qué sigue ahora?
           </h2>
-          <ol className="space-y-3 text-sm text-gray-300">
+          <ol className="space-y-3 text-sm text-tinta">
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-violet-500/20 text-violet-300 flex items-center justify-center text-xs font-bold">
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-acento/20 text-acento flex items-center justify-center text-xs font-bold">
                 1
               </span>
               <span>
@@ -46,7 +46,7 @@ export default function GraciasPage() {
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-violet-500/20 text-violet-300 flex items-center justify-center text-xs font-bold">
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-acento/20 text-acento flex items-center justify-center text-xs font-bold">
                 2
               </span>
               <span>
@@ -55,7 +55,7 @@ export default function GraciasPage() {
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-violet-500/20 text-violet-300 flex items-center justify-center text-xs font-bold">
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-acento/20 text-acento flex items-center justify-center text-xs font-bold">
                 3
               </span>
               <span>
@@ -66,15 +66,15 @@ export default function GraciasPage() {
           </ol>
         </div>
 
-        <div className="bg-[#111] border border-[#C2B280]/30 rounded-2xl p-6 mb-6">
-          <p className="text-sm text-gray-300 mb-4">
+        <div className="bg-superficie border border-acento/30 rounded-2xl p-6 mb-6">
+          <p className="text-sm text-tinta mb-4">
             ¿Prefieres no esperar el correo? Elige tú mismo el horario.
           </p>
           <AgendarLlamada ubicacion="gracias" className="w-full sm:w-auto" />
         </div>
 
         <div className="bg-green-500/5 border border-green-500/20 rounded-2xl p-6 mb-6">
-          <p className="text-sm text-gray-300 mb-3">
+          <p className="text-sm text-tinta mb-3">
             ¿Necesitas una respuesta más rápida?
           </p>
           <a
@@ -89,7 +89,7 @@ export default function GraciasPage() {
 
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-sm text-gray-300 hover:text-white transition"
+          className="inline-flex items-center gap-2 text-sm text-tinta hover:text-tinta transition"
         >
           Volver al portafolio <FaArrowRight aria-hidden="true" />
         </Link>

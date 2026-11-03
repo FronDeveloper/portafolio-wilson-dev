@@ -73,7 +73,7 @@ const modules = [
 
 export default function FlowBillProject() {
   return (
-    <main className="text-white min-h-screen">
+    <main className="min-h-screen bg-[#0D1117] text-white">
       <Navbar />
 
       <section className="px-8 md:px-20 py-20 max-w-4xl mx-auto">
@@ -288,23 +288,35 @@ export default function FlowBillProject() {
           </a>
         </div>
 
-        {/* Demo credentials */}
-        <div className="mt-6 bg-[#0f1117] border border-gray-800 rounded-xl p-5 text-sm">
-          <p className="text-gray-400 font-medium mb-3">Credenciales demo</p>
-          <div className="grid md:grid-cols-2 gap-4">
-            <div>
-              <p className="text-gray-400 text-xs mb-1">Panel de administración</p>
-              <p className="text-gray-300 font-mono text-xs">admin@flowbill.co</p>
-              <p className="text-gray-300 font-mono text-xs">demo2026</p>
-            </div>
-            <div>
-              <p className="text-gray-400 text-xs mb-1">Portal del cliente</p>
-              <p className="text-gray-300 font-mono text-xs">scastro@invandinas.com</p>
-              <p className="text-gray-300 font-mono text-xs">cliente123</p>
-            </div>
-          </div>
-        </div>
+        {/* Acceso a la demo — P0 del informe: no publicar credenciales */}
+        <p className="mt-6 text-sm text-gray-400">
+          ¿Quieres ver el sistema por dentro? Solicita acceso de demostración al escribirme.
+        </p>
 
+      </section>
+
+      {/* CTA de cierre — P1 del informe: los casos terminaban sin siguiente paso */}
+      <section className="border-t border-gray-800 mt-14 pt-10 pb-16 text-center">
+        <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">
+          ¿Quieres un sistema así para tu empresa?
+        </h2>
+        <p className="text-gray-400 max-w-xl mx-auto mb-7">
+          Cuéntame tu proceso y recibe cotización en menos de 24 horas, sin compromiso.
+        </p>
+        <div className="flex gap-4 justify-center flex-wrap">
+          <a
+            href="/cotizar"
+            className="inline-block px-6 py-3 bg-[#C2B280] text-black rounded-xl font-semibold hover:opacity-80 transition"
+          >
+            Cotizar mi proyecto →
+          </a>
+          <a
+            href="/contact"
+            className="inline-block px-6 py-3 border border-gray-600 text-gray-300 rounded-xl font-semibold hover:bg-white/10 transition"
+          >
+            Escríbeme directo
+          </a>
+        </div>
       </section>
     </main>
   );

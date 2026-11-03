@@ -51,18 +51,18 @@ export default function SeccionPrecios() {
         <div>
           <h2 className="text-3xl font-semibold mb-3">
             Inversión{" "}
-            <span className="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-acento to-acento bg-clip-text text-transparent">
               transparente
             </span>
           </h2>
-          <p className="text-gray-400 text-sm max-w-xl">
+          <p className="text-tinta-suave text-sm max-w-xl">
             Precios base orientativos. Cada proyecto se cotiza según
             necesidades, sin letras pequeñas.
           </p>
         </div>
 
         <div
-          className="inline-flex self-start sm:self-auto rounded-lg border border-gray-700 overflow-hidden text-xs"
+          className="inline-flex self-start sm:self-auto rounded-lg border border-borde overflow-hidden text-xs"
           role="group"
           aria-label="Moneda de los precios"
         >
@@ -74,8 +74,8 @@ export default function SeccionPrecios() {
               aria-pressed={moneda === m}
               className={`px-3 py-2 font-semibold transition ${
                 moneda === m
-                  ? "bg-[#C2B280] text-black"
-                  : "text-gray-300 hover:bg-gray-800"
+                  ? "bg-acento text-white"
+                  : "text-tinta hover:bg-fondo"
               }`}
             >
               {m}
@@ -90,29 +90,29 @@ export default function SeccionPrecios() {
             key={plan.id}
             className={`rounded-xl p-6 border transition-all duration-300 flex flex-col ${
               plan.destacado
-                ? "bg-gradient-to-b from-violet-600/10 to-cyan-600/5 border-violet-500/50 shadow-lg shadow-violet-500/10 relative"
-                : "bg-[#111] border-gray-800 hover:border-gray-600"
+                ? "bg-gradient-to-b from-acento-hover/10 to-acento-hover/5 border-acento/50 shadow-lg shadow-acento/20 relative"
+                : "bg-superficie border-borde hover:border-borde-fuerte"
             }`}
           >
             {plan.destacado && (
-              <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-violet-600 to-cyan-600 text-white text-[10px] font-bold px-3 py-1 rounded-full">
+              <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-acento-hover to-acento-hover text-white text-[10px] font-bold px-3 py-1 rounded-full">
                 RECOMENDADO
               </span>
             )}
-            <h3 className="font-bold text-white text-lg mb-1">{plan.nombre}</h3>
-            <p className="text-gray-400 text-xs mb-4">{plan.sub}</p>
+            <h3 className="font-bold text-tinta text-lg mb-1">{plan.nombre}</h3>
+            <p className="text-tinta-suave text-xs mb-4">{plan.sub}</p>
             <p className="text-3xl font-extrabold mb-1">
               <span
                 className={
                   plan.destacado
-                    ? "bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent"
-                    : "text-white"
+                    ? "bg-gradient-to-r from-acento to-acento bg-clip-text text-transparent"
+                    : "text-tinta"
                 }
               >
                 desde {precio(plan)}
               </span>
             </p>
-            <p className="text-gray-400 text-xs mb-5">
+            <p className="text-tinta-suave text-xs mb-5">
               {plan.plazo} · soporte {plan.soporteMeses}{" "}
               {plan.soporteMeses === 1 ? "mes" : "meses"}
             </p>
@@ -120,11 +120,11 @@ export default function SeccionPrecios() {
               {plan.incluye.map((f) => (
                 <li
                   key={f}
-                  className="flex items-center gap-2 text-gray-300 text-xs"
+                  className="flex items-center gap-2 text-tinta text-xs"
                 >
                   <span
                     className={
-                      plan.destacado ? "text-violet-400" : "text-green-400"
+                      plan.destacado ? "text-acento" : "text-green-700"
                     }
                     aria-hidden="true"
                   >
@@ -138,8 +138,8 @@ export default function SeccionPrecios() {
               href={`/cotizar?tipo=${plan.id}`}
               className={`block text-center py-2.5 rounded-xl font-semibold text-sm transition ${
                 plan.destacado
-                  ? "bg-gradient-to-r from-violet-600 to-cyan-600 text-white hover:opacity-90"
-                  : "border border-gray-700 hover:border-violet-500 hover:text-violet-400"
+                  ? "bg-gradient-to-r from-acento-hover to-acento-hover text-white hover:opacity-90"
+                  : "border border-borde hover:border-acento hover:text-acento"
               }`}
             >
               Solicitar cotización
@@ -151,11 +151,11 @@ export default function SeccionPrecios() {
       {/* Mantenimiento: 3 planes mensuales aprobados */}
       <div className="mt-12">
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-2 mb-6">
-          <h3 className="text-xl font-semibold text-white">
+          <h3 className="text-xl font-semibold text-tinta">
             Mantenimiento{" "}
-            <span className="text-[#C2B280]">mensual</span>
+            <span className="text-acento">mensual</span>
           </h3>
-          <p className="text-gray-400 text-xs">
+          <p className="text-tinta-suave text-xs">
             Hora adicional fuera de plan: {formatearCOP(HORA_EXTRA.cop)} COP /{" "}
             {formatearUSD(HORA_EXTRA.usd)} USD
           </p>
@@ -166,34 +166,34 @@ export default function SeccionPrecios() {
               key={plan.id}
               className={`relative rounded-xl p-6 border flex flex-col ${
                 plan.destacado
-                  ? "border-[#C2B280]/50 bg-gradient-to-b from-[#C2B280]/10 to-transparent shadow-lg shadow-[#C2B280]/5"
-                  : "bg-[#111] border-gray-800 hover:border-gray-600"
+                  ? "border-acento/50 bg-gradient-to-b from-acento/10 to-transparent shadow-lg shadow-acento/20"
+                  : "bg-superficie border-borde hover:border-borde-fuerte"
               }`}
             >
               {plan.destacado && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#C2B280] text-black text-[10px] font-bold px-3 py-1 rounded-full">
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-acento text-white text-[10px] font-bold px-3 py-1 rounded-full">
                   MÁS ELEGIDO
                 </span>
               )}
-              <h4 className="font-bold text-white text-base mb-1">
+              <h4 className="font-bold text-tinta text-base mb-1">
                 {plan.nombre}
               </h4>
-              <p className="text-gray-400 text-xs mb-4">{plan.sub}</p>
-              <p className="text-2xl font-extrabold text-white mb-1">
+              <p className="text-tinta-suave text-xs mb-4">{plan.sub}</p>
+              <p className="text-2xl font-extrabold text-tinta mb-1">
                 {precio(plan)}
-                <span className="text-sm text-gray-400 font-normal">/mes</span>
+                <span className="text-sm text-tinta-suave font-normal">/mes</span>
               </p>
-              <p className="text-gray-400 text-[11px] mb-4">
+              <p className="text-tinta-suave text-[11px] mb-4">
                 Incluye {plan.horas} h/mes · respuesta en {plan.respuesta}
               </p>
               <ul className="space-y-2 mb-6 flex-1">
                 {plan.incluye.map((f) => (
                   <li
                     key={f}
-                    className="flex items-start gap-2 text-gray-300 text-xs"
+                    className="flex items-start gap-2 text-tinta text-xs"
                   >
                     <span
-                      className="text-[#C2B280] mt-0.5"
+                      className="text-acento mt-0.5"
                       aria-hidden="true"
                     >
                       ✓
@@ -204,7 +204,7 @@ export default function SeccionPrecios() {
               </ul>
               <Link
                 href="/cotizar?tipo=mantenimiento"
-                className="block text-center py-2.5 rounded-xl font-semibold text-sm border border-[#C2B280]/50 text-[#C2B280] hover:bg-[#C2B280]/10 transition"
+                className="block text-center py-2.5 rounded-xl font-semibold text-sm border border-acento/50 text-acento hover:bg-acento/10 transition"
               >
                 Consultar mantenimiento
               </Link>
@@ -213,7 +213,7 @@ export default function SeccionPrecios() {
         </div>
       </div>
 
-      <p className="text-gray-400 text-xs text-center mt-4">
+      <p className="text-tinta-suave text-xs text-center mt-4">
         * Precios en pesos colombianos (COP) y en dólares (USD) para clientes
         internacionales. Plazos, complejidad e integraciones pueden modificar la
         cotización. Si necesitas factura electrónica, los impuestos se

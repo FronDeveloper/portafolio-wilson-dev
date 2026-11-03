@@ -27,7 +27,7 @@ export default function ProjectCard({
       }}
       whileHover={{ scale: 1.03, y: -5 }}
       transition={{ type: "spring", stiffness: 200, damping: 15 }}
-      className="bg-[#111] border border-gray-800 rounded-2xl overflow-hidden hover:border-[#C2B280] transition flex flex-col"
+      className="bg-superficie border border-borde rounded-2xl overflow-hidden hover:border-acento transition flex flex-col"
     >
       <Link href={link}>
         <div className="relative w-full h-48 overflow-hidden cursor-pointer">
@@ -40,22 +40,22 @@ export default function ProjectCard({
           />
           {status === "proximamente" && (
             <div className="absolute inset-0 bg-black/70 flex items-center justify-center">
-              <span className="text-yellow-400 text-sm font-semibold px-2 py-1 rounded">Próximamente</span>
+              <span className="text-amber-700 text-sm font-semibold px-2 py-1 rounded">Próximamente</span>
             </div>
           )}
-          <div className="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 transition flex items-center justify-center">
-            <span className="text-white text-sm">Ver caso de estudio</span>
+          <div className="absolute inset-0 bg-tinta/40 opacity-0 hover:opacity-100 transition flex items-center justify-center">
+            <span className="text-tinta text-sm">Ver caso de estudio</span>
           </div>
         </div>
       </Link>
 
       <div className="p-6 flex flex-col justify-between flex-1">
         <div>
-          <CardTitle className="text-xl font-semibold text-[#C2B280]">
+          <CardTitle className="text-xl font-semibold text-acento">
             {title}
           </CardTitle>
 
-          <p className="text-gray-400 mt-3 text-sm">
+          <p className="text-tinta-suave mt-3 text-sm">
             {description}
           </p>
 
@@ -65,12 +65,12 @@ export default function ProjectCard({
               {metrics.map((metric, idx) => (
                 <div
                   key={idx}
-                  className="min-w-0 bg-[#0B0B0B] border border-gray-800 rounded-lg p-2 text-center"
+                  className="min-w-0 bg-fondo border border-borde rounded-lg p-2 text-center"
                 >
-                  <p className="text-[#C2B280] font-bold text-base sm:text-lg leading-tight break-words">
+                  <p className="text-acento font-bold text-base sm:text-lg leading-tight break-words">
                     {metric.value}
                   </p>
-                  <p className="text-gray-400 text-[10px] leading-tight mt-1 break-words">
+                  <p className="text-tinta-suave text-[10px] leading-tight mt-1 break-words">
                     {metric.label}
                   </p>
                 </div>
@@ -78,18 +78,18 @@ export default function ProjectCard({
             </div>
           )}
 
-          <div className="mt-4 text-sm text-gray-400">
+          <div className="mt-4 text-sm text-tinta-suave">
             <p>
-              <span className="text-white font-medium">Problema:</span> {problem}
+              <span className="text-tinta font-medium">Problema:</span> {problem}
             </p>
             <p className="mt-2">
-              <span className="text-white font-medium">Solución:</span> {solution}
+              <span className="text-tinta font-medium">Solución:</span> {solution}
             </p>
           </div>
 
           <div className="flex flex-wrap gap-1 mt-4">
             {tech.split(" / ").map((t, idx) => (
-              <span key={idx} className="text-xs text-gray-300 bg-gray-900 px-2 py-1 rounded">
+              <span key={idx} className="text-xs text-tinta bg-fondo px-2 py-1 rounded">
                 {t}
               </span>
             ))}
@@ -102,13 +102,13 @@ export default function ProjectCard({
               href={liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-[#C2B280] hover:underline inline-flex items-center gap-1"
+              className="text-sm text-acento hover:underline inline-flex items-center gap-1"
               onClick={(e) => e.stopPropagation()}
             >
               Ver en vivo <FaArrowRight className="text-[10px]" />
             </a>
           )}
-          <Link href={link} className="text-sm text-white hover:text-[#C2B280] underline inline-flex items-center gap-1">
+          <Link href={link} className="text-sm text-tinta hover:text-acento underline inline-flex items-center gap-1">
             Caso de estudio <FaArrowRight className="text-[10px]" />
           </Link>
         </div>

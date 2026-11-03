@@ -23,6 +23,12 @@ function isRateLimited(ip: string): boolean {
     hits.set(ip, { count: 1, reset: now + WINDOW_MS });
     if (hits.size > 500) {
       for (const [key, value] of hits) if (now > value.reset) hits.delete(key);
+      // Cota dura: si un flood de IPs nuevas llena el mapa dentro de la
+      // ventana, expulsa la entrada más antigua en vez de crecer sin límite.
+      if (hits.size > 500) {
+        const masAntigua = hits.keys().next();
+        if (!masAntigua.done) hits.delete(masAntigua.value);
+      }
     }
     return false;
   }

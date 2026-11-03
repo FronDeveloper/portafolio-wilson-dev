@@ -11,10 +11,10 @@ export default function Hero() {
   return (
     <section className="relative flex flex-col md:flex-row justify-between items-center px-8 md:px-20 min-h-screen pt-16 md:pt-24 lg:pt-20 xl:pt-0 overflow-hidden">
 
-      {/* Fondo con glow gradiente */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-600/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-cyan-500/8 rounded-full blur-3xl" />
+      {/* Fondo con un tinte muy tenue: en claro, un halo fuerte se ve como una mancha. */}
+      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+        <div className="absolute left-1/4 top-1/4 h-96 w-96 rounded-full bg-acento/[0.05] blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 h-80 w-80 rounded-full bg-acento/[0.04] blur-3xl" />
       </div>
 
       {/* IZQUIERDA */}
@@ -26,18 +26,18 @@ export default function Hero() {
           className="mb-6 text-center md:text-left"
         >
           {/* Badge de disponibilidad */}
-          <div className="inline-flex items-center gap-2 bg-green-500/10 border border-green-500/30 px-3 py-1 rounded-full mb-4">
+          <div className="inline-flex items-center gap-2 bg-green-50 border border-green-200 px-3 py-1 rounded-full mb-4">
             <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-            <span className="text-green-400 text-xs font-semibold">Disponible para nuevos proyectos</span>
+            <span className="text-green-700 text-xs font-semibold">Disponible para nuevos proyectos</span>
           </div>
 
-          <p className="text-2xl md:text-3xl font-bold text-white block tracking-tight">
+          <p className="text-2xl md:text-3xl font-bold text-tinta block tracking-tight">
             {BRAND.name}
           </p>
-          <p className="text-sm md:text-base text-[#C2B280] mt-1 font-medium">
+          <p className="text-sm md:text-base text-acento mt-1 font-medium">
             {BRAND.descriptor}
           </p>
-          <p className="text-xs md:text-sm text-gray-400 mt-2">
+          <p className="text-xs md:text-sm text-tinta-suave mt-2">
             {BRAND.founder} · {BRAND.founderRole} · {BRAND.stack}
           </p>
         </motion.div>
@@ -50,11 +50,11 @@ export default function Hero() {
         >
           Convierto ideas en{" "}
           <span className="relative inline-block">
-            <span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-cyan-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-acento via-acento to-acento bg-clip-text text-transparent">
               sistemas que venden
             </span>
             <motion.span
-              className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-violet-400 to-cyan-400"
+              className="absolute bottom-0 left-0 hidden h-0.5 w-full origin-left bg-acento md:block"
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ delay: 0.8, duration: 0.6 }}
@@ -66,10 +66,10 @@ export default function Hero() {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.6 }}
-          className="mt-6 text-gray-400 text-lg"
+          className="mt-6 text-tinta-suave text-lg"
         >
           No solo programo — construyo plataformas que{" "}
-          <span className="text-white font-medium">automatizan tu operación, generan ventas y eliminan el trabajo manual.</span>{" "}
+          <span className="text-tinta font-medium">automatizan tu operación, generan ventas y eliminan el trabajo manual.</span>{" "}
           E-commerce, SaaS y dashboards a medida con Next.js y Supabase.
         </motion.p>
 
@@ -86,10 +86,10 @@ export default function Hero() {
             { value: "100%", label: "Trabajo remoto" },
           ].map((k) => (
             <div key={k.label}>
-              <p className="text-2xl font-bold bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
+              <p className="text-2xl font-bold bg-gradient-to-r from-acento to-acento bg-clip-text text-transparent">
                 {k.value}
               </p>
-              <p className="text-gray-400 text-xs">{k.label}</p>
+              <p className="text-tinta-suave text-xs">{k.label}</p>
             </div>
           ))}
         </motion.div>
@@ -103,13 +103,13 @@ export default function Hero() {
         >
           <Link
             href="/projects"
-            className="px-6 py-3 bg-gradient-to-r from-violet-600 to-cyan-600 text-white font-semibold rounded-xl hover:opacity-90 transition hover:scale-105 transform shadow-lg shadow-violet-500/25"
+            className="px-6 py-3 bg-acento text-white font-semibold rounded-xl hover:bg-acento-hover transition hover:scale-105 transform shadow-lg shadow-acento/20"
           >
             Ver casos de estudio
           </Link>
           <Link
             href="/cotizar"
-            className="px-6 py-3 border border-gray-600 rounded-xl hover:border-violet-500 hover:text-violet-400 transition hover:scale-105 transform"
+            className="px-6 py-3 border border-borde-fuerte rounded-xl hover:border-acento hover:text-acento transition hover:scale-105 transform"
           >
             Cotizar mi proyecto
           </Link>
@@ -128,7 +128,7 @@ export default function Hero() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Perfil de LinkedIn de Wilson Valencia"
-          className="hover:text-violet-400 transition hover:scale-110 transform"
+          className="hover:text-acento transition hover:scale-110 transform"
         >
           <FaLinkedin aria-hidden="true" />
         </a>
@@ -137,14 +137,14 @@ export default function Hero() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Perfil de GitHub de Wilson Valencia"
-          className="hover:text-violet-400 transition hover:scale-110 transform"
+          className="hover:text-acento transition hover:scale-110 transform"
         >
           <FaGithub aria-hidden="true" />
         </a>
         <a
           href="mailto:wilson.arroyo12@gmail.com"
           aria-label="Escribir un correo a Wilson Valencia"
-          className="hover:text-cyan-400 transition hover:scale-110 transform"
+          className="hover:text-acento transition hover:scale-110 transform"
         >
           <MdEmail aria-hidden="true" />
         </a>

@@ -100,7 +100,7 @@ const features = [
 
 export default function PlataformaEducativaProject() {
   return (
-    <main className="text-white min-h-screen">
+    <main className="min-h-screen bg-[#0D1117] text-white">
       <Navbar />
 
       <section className="px-8 md:px-20 py-20 max-w-4xl mx-auto">
@@ -259,37 +259,10 @@ export default function PlataformaEducativaProject() {
           </div>
         </div>
 
-        {/* Demo credentials */}
-        <div className="bg-[#111] border border-gray-800 rounded-2xl p-7 mb-12">
-          <h2 className="text-xl font-semibold mb-4 text-white">
-            🔑 Credenciales de demostración
-          </h2>
-          <p className="text-gray-400 text-sm mb-4">
-            Puedes probar todos los portales con estos usuarios de demo:
-          </p>
-          <div className="grid md:grid-cols-2 gap-3 text-sm">
-            <div className="bg-[#0B0B0B] border border-gray-800 rounded-lg p-3">
-              <p className="text-[#C2B280] font-semibold">👨‍💼 Rector</p>
-              <p className="text-gray-400 mt-1">Usuario: <code className="text-white">100000001</code></p>
-              <p className="text-gray-400">Clave: <code className="text-white">Rector2025!</code></p>
-            </div>
-            <div className="bg-[#0B0B0B] border border-gray-800 rounded-lg p-3">
-              <p className="text-[#C2B280] font-semibold">👨‍🏫 Docente</p>
-              <p className="text-gray-400 mt-1">Usuario: <code className="text-white">100000002</code></p>
-              <p className="text-gray-400">Clave: <code className="text-white">Docente2025!</code></p>
-            </div>
-            <div className="bg-[#0B0B0B] border border-gray-800 rounded-lg p-3">
-              <p className="text-[#C2B280] font-semibold">🎓 Estudiante</p>
-              <p className="text-gray-400 mt-1">Usuario: <code className="text-white">100000003</code></p>
-              <p className="text-gray-400">Clave: <code className="text-white">Estudiante2025!</code></p>
-            </div>
-            <div className="bg-[#0B0B0B] border border-gray-800 rounded-lg p-3">
-              <p className="text-[#C2B280] font-semibold">👨‍👩‍👧 Padre</p>
-              <p className="text-gray-400 mt-1">Usuario: <code className="text-white">100000004</code></p>
-              <p className="text-gray-400">Clave: <code className="text-white">Padre2025!</code></p>
-            </div>
-          </div>
-        </div>
+        {/* Acceso a la demo — P0 del informe: no publicar credenciales */}
+        <p className="mt-6 text-sm text-gray-400">
+          ¿Quieres ver el sistema por dentro? Solicita acceso de demostración al escribirme.
+        </p>
 
         {/* CTAs */}
         <div className="flex gap-4 flex-wrap">
@@ -316,6 +289,30 @@ export default function PlataformaEducativaProject() {
             className="inline-block px-6 py-3 bg-green-700 text-white rounded-xl font-semibold hover:bg-green-800 transition"
           >
             💬 Solicitar para mi colegio
+          </a>
+        </div>
+      </section>
+
+      {/* CTA de cierre — P1 del informe: los casos terminaban sin siguiente paso */}
+      <section className="border-t border-gray-800 mt-14 pt-10 pb-16 text-center">
+        <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">
+          ¿Quieres un sistema así para tu empresa?
+        </h2>
+        <p className="text-gray-400 max-w-xl mx-auto mb-7">
+          Cuéntame tu proceso y recibe cotización en menos de 24 horas, sin compromiso.
+        </p>
+        <div className="flex gap-4 justify-center flex-wrap">
+          <a
+            href="/cotizar"
+            className="inline-block px-6 py-3 bg-[#C2B280] text-black rounded-xl font-semibold hover:opacity-80 transition"
+          >
+            Cotizar mi proyecto →
+          </a>
+          <a
+            href="/contact"
+            className="inline-block px-6 py-3 border border-gray-600 text-gray-300 rounded-xl font-semibold hover:bg-white/10 transition"
+          >
+            Escríbeme directo
           </a>
         </div>
       </section>

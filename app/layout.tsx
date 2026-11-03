@@ -1,9 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import ChatWidget from "@/components/ChatWidget";
 import ScrollToTop from "@/components/ScrollToTop";
-import ParticleBackground from "@/components/ParticleBackground";
 import JsonLd from "@/components/JsonLd";
 import { MetaPixel } from "@/components/MetaPixel";
 import { Analytics } from "@/components/Analytics";
@@ -60,6 +59,21 @@ export const metadata: Metadata = {
   verification: {
     google: "J2D9fhF-07xUjupnLJnm7QjZMsDwrmSORoJmaVK91cA",
   },
+  manifest: "/site.webmanifest.json",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0F294E",
+  colorScheme: "light",
 };
 
 export default function RootLayout({
@@ -71,16 +85,14 @@ export default function RootLayout({
       className={`${inter.variable} ${playfair.variable} h-full antialiased`}
     >
       <body
-        className={`${inter.className} min-h-full flex flex-col relative bg-[#0B0B0B]`}
+        className={`${inter.className} min-h-full flex flex-col relative bg-fondo text-tinta`}
       >
         <a
           href="#contenido"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:bg-[#C2B280] focus:text-black focus:px-4 focus:py-2 focus:rounded-lg focus:font-semibold"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:bg-acento focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:font-semibold"
         >
           Saltar al contenido
         </a>
-
-        <ParticleBackground />
 
         <div id="contenido" className="relative z-10 flex flex-col min-h-screen">
           {children}

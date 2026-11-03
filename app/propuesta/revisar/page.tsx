@@ -61,14 +61,14 @@ export default async function RevisarPropuestaPage({
   if (!resultado.ok) {
     const aviso = avisos[resultado.razon] || avisos.firma;
     return (
-      <main className="min-h-screen flex items-center justify-center bg-[#0B0B0B] px-4">
-        <div className="max-w-md w-full bg-[#111] border border-[#333] rounded-2xl p-10 text-center">
+      <main className="min-h-screen flex items-center justify-center bg-fondo px-4">
+        <div className="max-w-md w-full bg-superficie border border-borde rounded-2xl p-10 text-center">
           <div className="text-5xl mb-4">{aviso.icono}</div>
-          <h1 className="text-[#C2B280] text-2xl font-bold mb-3">{aviso.titulo}</h1>
-          <p className="text-gray-400 text-sm leading-relaxed mb-8">{aviso.detalle}</p>
+          <h1 className="text-tinta text-2xl font-bold mb-3">{aviso.titulo}</h1>
+          <p className="text-tinta-suave text-sm leading-relaxed mb-8">{aviso.detalle}</p>
           <a
             href={SITE_URL}
-            className="inline-block bg-[#C2B280] text-black font-semibold text-sm px-7 py-3 rounded-xl hover:opacity-80 transition"
+            className="inline-block bg-acento text-white font-semibold text-sm px-7 py-3 rounded-xl hover:opacity-80 transition"
           >
             Volver al portafolio
           </a>
@@ -78,7 +78,7 @@ export default async function RevisarPropuestaPage({
   }
 
   return (
-    <main className="min-h-screen bg-[#0B0B0B] px-4 py-10">
+    <main className="min-h-screen bg-fondo px-4 py-10">
       <PropuestaReview payload={resultado.payload} token={t} />
     </main>
   );

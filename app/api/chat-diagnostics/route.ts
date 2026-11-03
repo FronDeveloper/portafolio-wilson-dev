@@ -17,7 +17,7 @@ export const dynamic = "force-dynamic";
 export const maxDuration = 60;
 
 const GROQ_MODELS_URL = "https://api.groq.com/openai/v1/models";
-const FROM = "Alma Diagnóstico <onboarding@resend.dev>";
+const FROM = `Alma Diagnóstico <${process.env.EMAIL_FROM || "onboarding@resend.dev"}>`;
 
 function hintResend(message: string): string {
   const m = message.toLowerCase();

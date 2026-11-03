@@ -267,11 +267,11 @@ export default function ChatWidget() {
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? "Cerrar chat con Alma" : "Abrir chat con Alma"}
         aria-expanded={open}
-        className="fixed bottom-6 right-6 z-[70] w-14 h-14 rounded-full bg-gradient-to-br from-[#C2B280] to-[#9a8a5e] text-black shadow-xl shadow-black/40 flex items-center justify-center hover:scale-110 active:scale-95 transition motion-reduce:transform-none"
+        className="fixed bottom-6 right-6 z-[70] w-14 h-14 rounded-full bg-gradient-to-br from-acento to-acento-hover text-black shadow-xl shadow-tinta/20 flex items-center justify-center hover:scale-110 active:scale-95 transition motion-reduce:transform-none"
       >
         {open ? <FaTimes className="text-xl" /> : <FaFeatherAlt className="text-xl" />}
         {!open && (
-          <span className="absolute inset-0 rounded-full bg-[#C2B280] animate-ping opacity-20 pointer-events-none motion-reduce:animate-none" />
+          <span className="absolute inset-0 rounded-full bg-acento animate-ping opacity-20 pointer-events-none motion-reduce:animate-none" />
         )}
       </button>
 
@@ -283,18 +283,18 @@ export default function ChatWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 24, scale: 0.96 }}
             transition={{ duration: 0.22, ease: "easeOut" }}
-            className="fixed z-[70] bottom-24 right-4 sm:right-6 w-[calc(100vw-2rem)] max-w-[400px] h-[min(620px,calc(100vh-8rem))] bg-[#0B0B0B] border border-[#333] rounded-2xl shadow-2xl shadow-black/60 flex flex-col overflow-hidden"
+            className="fixed z-[70] bottom-24 right-4 sm:right-6 w-[calc(100vw-2rem)] max-w-[400px] h-[min(620px,calc(100vh-8rem))] bg-fondo border border-borde rounded-2xl shadow-2xl shadow-tinta/20 flex flex-col overflow-hidden"
             role="dialog"
             aria-label="Chat con Alma, asistente virtual"
           >
             {/* Encabezado */}
-            <div className="flex items-center gap-3 px-4 py-3.5 border-b border-[#222] bg-[#111]/60">
-              <div className="w-10 h-10 rounded-full bg-[#C2B280]/15 border border-[#C2B280]/40 flex items-center justify-center text-[#C2B280]">
+            <div className="flex items-center gap-3 px-4 py-3.5 border-b border-borde bg-superficie/60">
+              <div className="w-10 h-10 rounded-full bg-acento/15 border border-acento/40 flex items-center justify-center text-acento">
                 <FaFeatherAlt aria-hidden="true" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-white font-semibold text-sm leading-tight">Alma</p>
-                <p className="text-gray-400 text-xs flex items-center gap-1.5">
+                <p className="text-tinta font-semibold text-sm leading-tight">Alma</p>
+                <p className="text-tinta-suave text-xs flex items-center gap-1.5">
                   <span
                     className="w-1.5 h-1.5 rounded-full bg-green-400 inline-block"
                     aria-hidden="true"
@@ -307,7 +307,7 @@ export default function ChatWidget() {
                   onClick={limpiarConversacion}
                   aria-label="Borrar conversación"
                   title="Borrar conversación"
-                  className="text-gray-400 hover:text-red-400 transition p-1.5"
+                  className="text-tinta-suave hover:text-red-700 transition p-1.5"
                 >
                   <FaTrash className="text-sm" />
                 </button>
@@ -315,7 +315,7 @@ export default function ChatWidget() {
               <button
                 onClick={() => setOpen(false)}
                 aria-label="Cerrar chat"
-                className="text-gray-400 hover:text-white transition p-1.5"
+                className="text-tinta-suave hover:text-tinta transition p-1.5"
               >
                 <FaTimes />
               </button>
@@ -331,13 +331,13 @@ export default function ChatWidget() {
               {mensajes.length === 0 && (
                 <div className="text-center py-8 px-4">
                   <FaFeatherAlt
-                    className="text-3xl text-[#C2B280]/50 mx-auto mb-3"
+                    className="text-3xl text-acento/50 mx-auto mb-3"
                     aria-hidden="true"
                   />
-                  <p className="text-gray-200 text-sm font-medium mb-1">
+                  <p className="text-tinta text-sm font-medium mb-1">
                     ¡Hola! Soy Alma 🕊
                   </p>
-                  <p className="text-gray-400 text-xs leading-relaxed">
+                  <p className="text-tinta-suave text-xs leading-relaxed">
                     Cuéntame qué necesitas para tu proyecto y te orientaré con
                     los precios y servicios de Wilson.
                   </p>
@@ -352,8 +352,8 @@ export default function ChatWidget() {
                   <div
                     className={`max-w-[85%] px-3.5 py-2.5 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap ${
                       m.role === "user"
-                        ? "bg-[#C2B280] text-black rounded-br-md"
-                        : "bg-[#1a1a1a] text-gray-200 rounded-bl-md border border-[#262626]"
+                        ? "bg-acento text-white rounded-br-md"
+                        : "bg-fondo text-tinta rounded-bl-md border border-borde"
                     }`}
                   >
                     {m.content}
@@ -363,12 +363,12 @@ export default function ChatWidget() {
 
               {enviando && (
                 <div className="flex justify-start">
-                  <div className="bg-[#1a1a1a] border border-[#262626] px-4 py-3 rounded-2xl rounded-bl-md">
+                  <div className="bg-fondo border border-borde px-4 py-3 rounded-2xl rounded-bl-md">
                     <span className="sr-only">Alma está escribiendo</span>
                     <div className="flex gap-1.5" aria-hidden="true">
-                      <span className="w-2 h-2 bg-[#C2B280]/70 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-                      <span className="w-2 h-2 bg-[#C2B280]/70 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-                      <span className="w-2 h-2 bg-[#C2B280]/70 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+                      <span className="w-2 h-2 bg-acento/70 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+                      <span className="w-2 h-2 bg-acento/70 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+                      <span className="w-2 h-2 bg-acento/70 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
                     </div>
                   </div>
                 </div>
@@ -376,16 +376,16 @@ export default function ChatWidget() {
 
               {/* Lead entregado a Wilson */}
               {leadState === "saved" && (
-                <div className="bg-[#0d2013] border border-green-500/40 rounded-xl p-4 text-center">
-                  <p className="text-green-300 text-sm font-semibold mb-1">
+                <div className="bg-green-50 border border-green-200 rounded-xl p-4 text-center">
+                  <p className="text-green-700 text-sm font-semibold mb-1">
                     ✅ Wilson ya recibió tu mensaje
                   </p>
-                  <p className="text-gray-300 text-xs mb-3">
+                  <p className="text-tinta text-xs mb-3">
                     Te escribirá al contacto que dejaste.
                   </p>
                   <button
                     onClick={() => setShowPropuesta(true)}
-                    className="w-full bg-[#C2B280] hover:bg-[#d4c69a] text-black font-bold text-xs py-2.5 rounded-lg transition mb-2"
+                    className="w-full bg-acento hover:bg-acento-hover text-white font-bold text-xs py-2.5 rounded-lg transition mb-2"
                   >
                     📝 Solicitar mi propuesta
                   </button>
@@ -406,11 +406,11 @@ export default function ChatWidget() {
 
               {/* Lead registrado, entrega sin confirmar */}
               {leadState === "pending" && (
-                <div className="bg-[#231d0d] border border-[#C2B280]/40 rounded-xl p-4 text-center">
-                  <p className="text-[#C2B280] text-sm font-semibold mb-1">
+                <div className="bg-acento-suave border border-acento/25 rounded-xl p-4 text-center">
+                  <p className="text-acento text-sm font-semibold mb-1">
                     📩 Tu mensaje quedó registrado
                   </p>
-                  <p className="text-gray-300 text-xs mb-3">
+                  <p className="text-tinta text-xs mb-3">
                     Para respuesta inmediata, escríbele directo:
                   </p>
                   <button
@@ -421,7 +421,7 @@ export default function ChatWidget() {
                   </button>
                   <button
                     onClick={() => setShowPropuesta(true)}
-                    className="w-full bg-[#C2B280] hover:bg-[#d4c69a] text-black font-bold text-xs py-2.5 rounded-lg transition"
+                    className="w-full bg-acento hover:bg-acento-hover text-white font-bold text-xs py-2.5 rounded-lg transition"
                   >
                     📝 Solicitar mi propuesta
                   </button>
@@ -436,7 +436,7 @@ export default function ChatWidget() {
                       key={s}
                       onClick={() => enviarMensaje(s)}
                       disabled={enviando}
-                      className="text-[11px] text-[#C2B280] border border-[#C2B280]/40 hover:bg-[#C2B280]/10 rounded-full px-3 py-1.5 transition disabled:opacity-50"
+                      className="text-[11px] text-acento border border-acento/40 hover:bg-acento/10 rounded-full px-3 py-1.5 transition disabled:opacity-50"
                     >
                       {s}
                     </button>
@@ -448,11 +448,11 @@ export default function ChatWidget() {
             </div>
 
             {/* Input */}
-            <div className="p-3 border-t border-[#222] bg-[#111]/60">
+            <div className="p-3 border-t border-borde bg-superficie/60">
               {/* Handoff: en cualquier momento el visitante puede saltar a WhatsApp */}
               <button
                 onClick={whatsappDirecto}
-                className="w-full mb-2 flex items-center justify-center gap-2 text-[11px] text-gray-300 hover:text-white border border-[#2a2a2a] hover:border-[#25D366]/50 rounded-lg py-2 transition"
+                className="w-full mb-2 flex items-center justify-center gap-2 text-[11px] text-tinta hover:text-tinta border border-borde hover:border-[#25D366]/50 rounded-lg py-2 transition"
               >
                 <FaWhatsapp className="text-[#25D366]" aria-hidden="true" />
                 ¿Prefieres hablar con Wilson? Escríbele por WhatsApp
@@ -472,24 +472,24 @@ export default function ChatWidget() {
                   placeholder="Escribe tu mensaje…"
                   maxLength={600}
                   aria-label="Escribe tu mensaje a Alma"
-                  className="flex-1 min-w-0 bg-[#0B0B0B] border border-[#333] focus:border-[#C2B280] rounded-full px-4 py-2.5 text-sm text-white outline-none transition-colors"
+                  className="flex-1 min-w-0 bg-fondo border border-borde focus:border-acento rounded-full px-4 py-2.5 text-sm text-tinta outline-none transition-colors"
                 />
                 <button
                   onClick={() => enviarMensaje()}
                   disabled={enviando || !input.trim()}
                   aria-label="Enviar mensaje"
-                  className="w-10 h-10 rounded-full bg-[#C2B280] text-black flex items-center justify-center hover:scale-105 active:scale-95 transition disabled:opacity-40 disabled:hover:scale-100"
+                  className="w-10 h-10 rounded-full bg-acento text-white flex items-center justify-center hover:scale-105 active:scale-95 transition disabled:opacity-40 disabled:hover:scale-100"
                 >
                   <FaPaperPlane className="text-sm" />
                 </button>
               </div>
 
-              <p className="text-[10px] text-gray-400 leading-snug mt-2 flex items-start gap-1.5">
+              <p className="text-[10px] text-tinta-suave leading-snug mt-2 flex items-start gap-1.5">
                 <FaLock className="mt-0.5 shrink-0" aria-hidden="true" />
                 <span>
                   Si dejas tu contacto, la conversación se envía por correo a
                   Wilson para responderte.{" "}
-                  <Link href="/privacidad" className="underline hover:text-[#C2B280]">
+                  <Link href="/privacidad" className="underline hover:text-acento">
                     Privacidad
                   </Link>
                 </span>

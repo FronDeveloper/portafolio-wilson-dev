@@ -170,7 +170,13 @@ export function rateLimitOk(
   }
   hits.push(now);
   hitsPorIp.set(ip, hits);
-  if (hitsPorIp.size > 5000) hitsPorIp.clear(); // higiene de memoria
+  if (hitsPorIp.size > 5000) {
+    // Higiene de memoria SIN reiniciar el conteo de todos: expulsa solo la
+    // entrada más antigua. Un flood de IPs nuevas ya no puede limpiar el
+    // límite de las demás (bug señalado en el informe, P0-4).
+    const masAntigua = hitsPorIp.keys().next();
+    if (!masAntigua.done) hitsPorIp.delete(masAntigua.value);
+  }
   return true;
 }
 

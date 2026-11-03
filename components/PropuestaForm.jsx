@@ -56,6 +56,7 @@ export default function PropuestaForm({ lead, historial, onClose }) {
   const [consent, setConsent] = useState(false);
   const [estado, setEstado] = useState("form"); // form | loading | success | error
   const [errorMsg, setErrorMsg] = useState("");
+  const [sitioWeb, setSitioWeb] = useState(""); // honeypot anti-bots (P0-4)
 
   const enviar = async (e) => {
     e.preventDefault();
@@ -80,6 +81,7 @@ export default function PropuestaForm({ lead, historial, onClose }) {
           nombre: nombre.trim(),
           whatsapp: whatsapp.trim(),
           email: email.trim(),
+          sitio_web: sitioWeb,
           tipo,
           presupuesto,
           detalles: detalles.trim(),
@@ -120,20 +122,20 @@ export default function PropuestaForm({ lead, historial, onClose }) {
         role="dialog"
         aria-modal="true"
         aria-labelledby="propuesta-titulo"
-        className="relative w-full max-w-md bg-[#0B0B0B] border border-[#333] rounded-2xl shadow-2xl max-h-[92vh] overflow-y-auto"
+        className="relative w-full max-w-md bg-fondo border border-borde rounded-2xl shadow-2xl max-h-[92vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Encabezado */}
-        <div className="sticky top-0 bg-[#0B0B0B]/95 backdrop-blur border-b border-[#222] px-6 pt-5 pb-4 flex items-start justify-between z-10">
+        <div className="sticky top-0 bg-fondo/95 backdrop-blur border-b border-borde px-6 pt-5 pb-4 flex items-start justify-between z-10">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-[#C2B280]/15 border border-[#C2B280]/40 flex items-center justify-center text-[#C2B280]">
+            <div className="w-10 h-10 rounded-full bg-acento/15 border border-acento/40 flex items-center justify-center text-acento">
               <FaFeatherAlt aria-hidden="true" />
             </div>
             <div>
-              <h3 id="propuesta-titulo" className="text-white font-bold leading-tight">
+              <h3 id="propuesta-titulo" className="text-tinta font-bold leading-tight">
                 Solicita tu propuesta
               </h3>
-              <p className="text-gray-400 text-xs">
+              <p className="text-tinta-suave text-xs">
                 Wilson la prepara y te la envía por WhatsApp
               </p>
             </div>
@@ -141,7 +143,7 @@ export default function PropuestaForm({ lead, historial, onClose }) {
           <button
             onClick={onClose}
             aria-label="Cerrar formulario de propuesta"
-            className="text-gray-400 hover:text-white transition p-1"
+            className="text-tinta-suave hover:text-tinta transition p-1"
           >
             <FaTimes />
           </button>
@@ -150,8 +152,22 @@ export default function PropuestaForm({ lead, historial, onClose }) {
         <div className="px-6 py-6">
           {estado === "form" && (
             <form onSubmit={enviar} className="space-y-4">
+        {/* Honeypot anti-bots (P0-4): los humanos no lo ven. Si un bot lo
+            llena, el servidor descarta el envío en silencio. */}
+        <div className="hidden" aria-hidden="true">
+          <label htmlFor="sitio_web">No llenes este campo</label>
+          <input
+            id="sitio_web"
+            name="sitio_web"
+            type="text"
+            tabIndex={-1}
+            autoComplete="off"
+            value={sitioWeb}
+            onChange={(e) => setSitioWeb(e.target.value)}
+          />
+        </div>
               <div>
-                <label htmlFor="prop-nombre" className="block text-gray-300 text-xs mb-1.5">
+                <label htmlFor="prop-nombre" className="block text-tinta text-xs mb-1.5">
                   Tu nombre *
                 </label>
                 <input
@@ -163,14 +179,14 @@ export default function PropuestaForm({ lead, historial, onClose }) {
                   maxLength={80}
                   autoComplete="name"
                   placeholder="Ej: Andrea Gómez"
-                  className="w-full bg-[#111] border border-[#333] focus:border-[#C2B280] rounded-lg px-4 py-3 text-sm text-white outline-none transition-colors"
+                  className="w-full bg-superficie border border-borde focus:border-acento rounded-lg px-4 py-3 text-sm text-tinta outline-none transition-colors"
                 />
               </div>
 
               <div>
-                <label htmlFor="prop-whatsapp" className="block text-gray-300 text-xs mb-1.5">
+                <label htmlFor="prop-whatsapp" className="block text-tinta text-xs mb-1.5">
                   Tu WhatsApp{" "}
-                  <span className="text-gray-400">(aquí recibirás la propuesta)</span>
+                  <span className="text-tinta-suave">(aquí recibirás la propuesta)</span>
                 </label>
                 <input
                   id="prop-whatsapp"
@@ -180,14 +196,14 @@ export default function PropuestaForm({ lead, historial, onClose }) {
                   maxLength={25}
                   autoComplete="tel"
                   placeholder="Ej: 301 234 5678"
-                  className="w-full bg-[#111] border border-[#333] focus:border-[#C2B280] rounded-lg px-4 py-3 text-sm text-white outline-none transition-colors"
+                  className="w-full bg-superficie border border-borde focus:border-acento rounded-lg px-4 py-3 text-sm text-tinta outline-none transition-colors"
                 />
               </div>
 
               <div>
-                <label htmlFor="prop-email" className="block text-gray-300 text-xs mb-1.5">
+                <label htmlFor="prop-email" className="block text-tinta text-xs mb-1.5">
                   Tu correo{" "}
-                  <span className="text-gray-400">(opcional, si prefieres email)</span>
+                  <span className="text-tinta-suave">(opcional, si prefieres email)</span>
                 </label>
                 <input
                   id="prop-email"
@@ -197,20 +213,20 @@ export default function PropuestaForm({ lead, historial, onClose }) {
                   maxLength={120}
                   autoComplete="email"
                   placeholder="tu@correo.com"
-                  className="w-full bg-[#111] border border-[#333] focus:border-[#C2B280] rounded-lg px-4 py-3 text-sm text-white outline-none transition-colors"
+                  className="w-full bg-superficie border border-borde focus:border-acento rounded-lg px-4 py-3 text-sm text-tinta outline-none transition-colors"
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="prop-tipo" className="block text-gray-300 text-xs mb-1.5">
+                  <label htmlFor="prop-tipo" className="block text-tinta text-xs mb-1.5">
                     Tipo de proyecto
                   </label>
                   <select
                     id="prop-tipo"
                     value={tipo}
                     onChange={(e) => setTipo(e.target.value)}
-                    className="w-full bg-[#111] border border-[#333] focus:border-[#C2B280] rounded-lg px-3 py-3 text-sm text-white outline-none transition-colors"
+                    className="w-full bg-superficie border border-borde focus:border-acento rounded-lg px-3 py-3 text-sm text-tinta outline-none transition-colors"
                   >
                     {TIPOS_PROYECTO.map((t) => (
                       <option key={t.value} value={t.value}>
@@ -220,14 +236,14 @@ export default function PropuestaForm({ lead, historial, onClose }) {
                   </select>
                 </div>
                 <div>
-                  <label htmlFor="prop-presupuesto" className="block text-gray-300 text-xs mb-1.5">
+                  <label htmlFor="prop-presupuesto" className="block text-tinta text-xs mb-1.5">
                     Presupuesto
                   </label>
                   <select
                     id="prop-presupuesto"
                     value={presupuesto}
                     onChange={(e) => setPresupuesto(e.target.value)}
-                    className="w-full bg-[#111] border border-[#333] focus:border-[#C2B280] rounded-lg px-3 py-3 text-sm text-white outline-none transition-colors"
+                    className="w-full bg-superficie border border-borde focus:border-acento rounded-lg px-3 py-3 text-sm text-tinta outline-none transition-colors"
                   >
                     {PRESUPUESTOS.map((p) => (
                       <option key={p.id} value={p.id}>
@@ -239,7 +255,7 @@ export default function PropuestaForm({ lead, historial, onClose }) {
               </div>
 
               <div>
-                <label htmlFor="prop-detalles" className="block text-gray-300 text-xs mb-1.5">
+                <label htmlFor="prop-detalles" className="block text-tinta text-xs mb-1.5">
                   Cuéntame tu proyecto
                 </label>
                 <textarea
@@ -249,22 +265,22 @@ export default function PropuestaForm({ lead, historial, onClose }) {
                   rows={4}
                   maxLength={1000}
                   placeholder="Ej: Tengo una marca de ropa y quiero vender por internet…"
-                  className="w-full bg-[#111] border border-[#333] focus:border-[#C2B280] rounded-lg px-4 py-3 text-sm text-white outline-none transition-colors resize-none"
+                  className="w-full bg-superficie border border-borde focus:border-acento rounded-lg px-4 py-3 text-sm text-tinta outline-none transition-colors resize-none"
                 />
               </div>
 
-              <label className="flex items-start gap-2.5 text-[11px] text-gray-300 leading-relaxed cursor-pointer">
+              <label className="flex items-start gap-2.5 text-[11px] text-tinta leading-relaxed cursor-pointer">
                 <input
                   type="checkbox"
                   checked={consent}
                   onChange={(e) => setConsent(e.target.checked)}
                   required
-                  className="mt-0.5 h-4 w-4 accent-[#C2B280] shrink-0"
+                  className="mt-0.5 h-4 w-4 accent-acento shrink-0"
                 />
                 <span>
                   Autorizo a Wilson Valencia a tratar mis datos para responder
                   esta solicitud, conforme a la{" "}
-                  <Link href="/privacidad" className="text-[#C2B280] underline">
+                  <Link href="/privacidad" className="text-acento underline">
                     política de privacidad
                   </Link>
                   . *
@@ -272,7 +288,7 @@ export default function PropuestaForm({ lead, historial, onClose }) {
               </label>
 
               {errorMsg && (
-                <p className="text-red-400 text-xs flex items-center gap-2" role="alert">
+                <p className="text-red-700 text-xs flex items-center gap-2" role="alert">
                   <FaExclamationTriangle aria-hidden="true" /> {errorMsg}
                 </p>
               )}
@@ -280,12 +296,12 @@ export default function PropuestaForm({ lead, historial, onClose }) {
               <button
                 type="submit"
                 disabled={!consent}
-                className="w-full bg-[#C2B280] hover:bg-[#d4c69a] text-black font-bold py-3.5 rounded-xl transition text-sm flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-acento hover:bg-acento-hover text-white font-bold py-3.5 rounded-xl transition text-sm flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <FaFeatherAlt aria-hidden="true" /> Enviar mi solicitud ✨
               </button>
 
-              <p className="text-gray-400 text-[11px] text-center leading-relaxed">
+              <p className="text-tinta-suave text-[11px] text-center leading-relaxed">
                 Wilson revisa tu solicitud personalmente y te envía la propuesta
                 por WhatsApp. Tus datos no se comparten con terceros para
                 publicidad.
@@ -295,9 +311,9 @@ export default function PropuestaForm({ lead, historial, onClose }) {
 
           {estado === "loading" && (
             <div className="text-center py-10" aria-live="polite">
-              <div className="w-14 h-14 mx-auto mb-6 rounded-full border-2 border-[#333] border-t-[#C2B280] animate-spin" />
-              <p className="text-white font-semibold mb-2">Preparando tu solicitud…</p>
-              <p className="text-gray-400 text-xs">
+              <div className="w-14 h-14 mx-auto mb-6 rounded-full border-2 border-borde border-t-acento animate-spin" />
+              <p className="text-tinta font-semibold mb-2">Preparando tu solicitud…</p>
+              <p className="text-tinta-suave text-xs">
                 Estoy revisando tu proyecto y los servicios de Wilson.
                 <br />
                 Toma entre 10 y 20 segundos 🕊
@@ -307,17 +323,17 @@ export default function PropuestaForm({ lead, historial, onClose }) {
 
           {estado === "success" && (
             <div className="text-center py-8">
-              <FaCheckCircle className="text-green-400 text-5xl mx-auto mb-5" aria-hidden="true" />
-              <h4 className="text-white font-bold text-lg mb-2">¡Solicitud recibida!</h4>
-              <p className="text-gray-300 text-sm leading-relaxed mb-6">
+              <FaCheckCircle className="text-green-700 text-5xl mx-auto mb-5" aria-hidden="true" />
+              <h4 className="text-tinta font-bold text-lg mb-2">¡Solicitud recibida!</h4>
+              <p className="text-tinta text-sm leading-relaxed mb-6">
                 Wilson recibió tu solicitud y está preparando tu propuesta
                 personalizada.
                 <br />
-                <span className="text-[#C2B280]">Te escribirá muy pronto 🚀</span>
+                <span className="text-acento">Te escribirá muy pronto 🚀</span>
               </p>
               <button
                 onClick={onClose}
-                className="bg-[#C2B280] hover:bg-[#d4c69a] text-black font-semibold text-sm py-3 px-8 rounded-xl transition"
+                className="bg-acento hover:bg-acento-hover text-white font-semibold text-sm py-3 px-8 rounded-xl transition"
               >
                 Entendido, listo ✅
               </button>
@@ -326,13 +342,13 @@ export default function PropuestaForm({ lead, historial, onClose }) {
 
           {estado === "error" && (
             <div className="text-center py-8">
-              <FaExclamationTriangle className="text-[#C2B280] text-5xl mx-auto mb-5" aria-hidden="true" />
-              <h4 className="text-white font-bold text-lg mb-2">Uy, algo salió mal</h4>
-              <p className="text-gray-300 text-sm leading-relaxed mb-6">{errorMsg}</p>
+              <FaExclamationTriangle className="text-acento text-5xl mx-auto mb-5" aria-hidden="true" />
+              <h4 className="text-tinta font-bold text-lg mb-2">Uy, algo salió mal</h4>
+              <p className="text-tinta text-sm leading-relaxed mb-6">{errorMsg}</p>
               <div className="flex flex-col gap-3">
                 <button
                   onClick={() => setEstado("form")}
-                  className="bg-[#C2B280] hover:bg-[#d4c69a] text-black font-bold py-3 rounded-xl transition text-sm"
+                  className="bg-acento hover:bg-acento-hover text-white font-bold py-3 rounded-xl transition text-sm"
                 >
                   Intentar de nuevo
                 </button>
@@ -342,7 +358,7 @@ export default function PropuestaForm({ lead, historial, onClose }) {
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 border border-[#333] hover:border-[#25D366] text-gray-300 font-semibold py-3 rounded-xl transition text-sm"
+                  className="inline-flex items-center justify-center gap-2 border border-borde hover:border-[#25D366] text-tinta font-semibold py-3 rounded-xl transition text-sm"
                 >
                   <FaWhatsapp className="text-[#25D366]" aria-hidden="true" /> Pedirla por WhatsApp
                 </a>

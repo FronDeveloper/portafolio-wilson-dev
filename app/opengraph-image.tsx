@@ -1,17 +1,82 @@
 import { ImageResponse } from "next/og";
 import { SITE_HOST } from "@/lib/pricing";
 import { BRAND } from "@/lib/brand";
-import { ACENTO, BLOQUES, LIENZO, bloque } from "@/lib/brand-mark";
+import { PALETA } from "@/lib/paleta";
 
 /**
- * Imagen para compartir el sitio en WhatsApp, LinkedIn y redes.
- * Next.js la sirve en /opengraph-image y la inyecta sola en los metadatos
- * (ver app/layout.tsx: no hay que declararla a mano).
+ * Imagen para compartir el sitio en WhatsApp, LinkedIn y redes (1200×630).
+ * Next.js la sirve en /opengraph-image y la inyecta sola en los metadatos.
+ *
+ * Tema claro: fondo de la paleta, baldosa azul noche y titulares en tinta.
  */
 
 export const alt = `${BRAND.name} — Desarrollo de software a la medida en Colombia`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
+
+/** La baldosa [x], igual que el favicon, dibujada con divs (Satori no traza paths). */
+function Marca({ lado = 64 }: { lado?: number }) {
+  const S = lado / 64;
+
+  const corchete = (izquierda: boolean) => {
+    const base = {
+      position: "absolute" as const,
+      top: 15.1 * S,
+      width: 16.3 * S,
+      height: 35.3 * S,
+      borderTop: `${3.75 * S}px solid ${PALETA.bracket}`,
+      borderBottom: `${3.75 * S}px solid ${PALETA.bracket}`,
+      boxSizing: "border-box" as const,
+      display: "flex",
+    };
+    return izquierda
+      ? {
+          ...base,
+          left: 15 * S,
+          borderLeft: `${3.75 * S}px solid ${PALETA.bracket}`,
+          borderTopLeftRadius: 4 * S,
+          borderBottomLeftRadius: 4 * S,
+        }
+      : {
+          ...base,
+          left: 32.75 * S,
+          borderRight: `${3.75 * S}px solid ${PALETA.bracket}`,
+          borderTopRightRadius: 4 * S,
+          borderBottomRightRadius: 4 * S,
+        };
+  };
+
+  const trazo = (rot: number, color: string) => ({
+    position: "absolute" as const,
+    left: 19.8 * S,
+    top: 29.9 * S,
+    width: 24.4 * S,
+    height: 5.25 * S,
+    borderRadius: 1 * S,
+    background: color,
+    transform: `rotate(${rot}deg)`,
+    display: "flex",
+  });
+
+  return (
+    <div
+      style={{
+        width: lado,
+        height: lado,
+        position: "relative",
+        background: PALETA.tile,
+        borderRadius: 12 * S,
+        display: "flex",
+        flex: "none",
+      }}
+    >
+      <div style={corchete(true)} />
+      <div style={corchete(false)} />
+      <div style={trazo(-45, PALETA.xClaro)} />
+      <div style={trazo(45, PALETA.xAcento)} />
+    </div>
+  );
+}
 
 export default function OpengraphImage() {
   return new ImageResponse(
@@ -23,103 +88,61 @@ export default function OpengraphImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "#0B0B0B",
-          padding: "72px 80px",
+          background: PALETA.fondo,
+          padding: "68px 80px",
           position: "relative",
           fontFamily:
             "system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
         }}
       >
-        {/* Halo dorado decorativo */}
+        {/* Halo azul tenue */}
         <div
           style={{
             position: "absolute",
-            top: -180,
+            top: -200,
             right: -160,
-            width: 560,
-            height: 560,
+            width: 620,
+            height: 620,
             borderRadius: "50%",
             background:
-              "radial-gradient(circle, rgba(194,178,128,0.22) 0%, rgba(194,178,128,0) 70%)",
+              "radial-gradient(circle, rgba(29,78,216,0.12) 0%, rgba(29,78,216,0) 70%)",
             display: "flex",
           }}
         />
         <div
           style={{
             position: "absolute",
-            bottom: -220,
-            left: -180,
-            width: 620,
-            height: 620,
+            bottom: -240,
+            left: -200,
+            width: 640,
+            height: 640,
             borderRadius: "50%",
             background:
-              "radial-gradient(circle, rgba(194,178,128,0.12) 0%, rgba(194,178,128,0) 70%)",
+              "radial-gradient(circle, rgba(77,148,240,0.10) 0%, rgba(77,148,240,0) 70%)",
             display: "flex",
           }}
         />
 
         {/* Encabezado */}
-        <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
-          <div
-            style={{
-              width: 56,
-              height: 56,
-              borderRadius: 14,
-              background: "linear-gradient(135deg, #8B5CF6 0%, #4C1D95 100%)",
-              display: "flex",
-              position: "relative",
-            }}
-          >
-            {BLOQUES.map(([x, y]) => {
-              const b = bloque(x, y, 56 / LIENZO);
-              return (
-                <div
-                  key={`og-${x}-${y}`}
-                  style={{
-                    position: "absolute",
-                    left: b.left,
-                    top: b.top,
-                    width: b.size,
-                    height: b.size,
-                    borderRadius: b.radius,
-                    background: "#FFFFFF",
-                  }}
-                />
-              );
-            })}
-            {(() => {
-              const a = bloque(ACENTO[0], ACENTO[1], 56 / LIENZO);
-              return (
-                <div
-                  style={{
-                    position: "absolute",
-                    left: a.left,
-                    top: a.top,
-                    width: a.size,
-                    height: a.size,
-                    borderRadius: a.radius,
-                    background: "#5EEAD4",
-                  }}
-                />
-              );
-            })()}
-          </div>
-          <div style={{ display: "flex", flexDirection: "column" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+          <Marca />
+          <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
             <span
               style={{
-                color: "#FFFFFF",
-                fontSize: 26,
+                color: PALETA.tinta,
+                fontSize: 32,
                 fontWeight: 700,
-                letterSpacing: -0.4,
+                letterSpacing: -0.6,
               }}
             >
-              Inde<span style={{ color: "#5EEAD4" }}>xx</span>el
+              {BRAND.name}
             </span>
             <span
               style={{
-                color: "#C2B280",
-                fontSize: 17,
-                letterSpacing: 2.4,
+                color: PALETA.acento,
+                fontSize: 15,
+                fontWeight: 600,
+                letterSpacing: 3,
                 textTransform: "uppercase",
               }}
             >
@@ -129,46 +152,46 @@ export default function OpengraphImage() {
         </div>
 
         {/* Mensaje principal */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
           <span
             style={{
-              color: "#FFFFFF",
+              color: PALETA.tinta,
               fontSize: 62,
               fontWeight: 800,
               lineHeight: 1.12,
-              letterSpacing: -1.6,
+              letterSpacing: -1.8,
             }}
           >
             Software a medida
           </span>
           <span
             style={{
-              color: "#C2B280",
+              color: PALETA.acento,
               fontSize: 62,
               fontWeight: 800,
               lineHeight: 1.12,
-              letterSpacing: -1.6,
+              letterSpacing: -1.8,
             }}
           >
             para hacer crecer
           </span>
           <span
             style={{
-              color: "#FFFFFF",
+              color: PALETA.tinta,
               fontSize: 62,
               fontWeight: 800,
               lineHeight: 1.12,
-              letterSpacing: -1.6,
+              letterSpacing: -1.8,
             }}
           >
             tu negocio
           </span>
           <span
             style={{
-              color: "#A3A3A3",
-              fontSize: 26,
+              color: PALETA.tintaSuave,
+              fontSize: 25,
               lineHeight: 1.4,
-              marginTop: 16,
+              marginTop: 18,
             }}
           >
             Sistemas de gestión, SaaS, e-commerce y dashboards · Next.js y
@@ -176,35 +199,41 @@ export default function OpengraphImage() {
           </span>
         </div>
 
-        {/* Pie con datos de contacto */}
+        {/* Pie */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            borderTop: "1px solid #2A2A2A",
+            borderTop: `1px solid ${PALETA.borde}`,
             paddingTop: 26,
           }}
         >
-          <div style={{ display: "flex", gap: 14 }}>
+          <div style={{ display: "flex", gap: 12 }}>
             {["Colombia", "Remoto", "Cotización en 24 h"].map((chip) => (
               <div
                 key={chip}
                 style={{
                   display: "flex",
-                  color: "#D6CFB8",
-                  border: "1px solid #3A3831",
-                  background: "#151515",
+                  color: PALETA.tintaSuave,
+                  border: `1px solid ${PALETA.borde}`,
+                  background: PALETA.superficie,
                   borderRadius: 999,
-                  padding: "10px 22px",
-                  fontSize: 20,
+                  padding: "9px 20px",
+                  fontSize: 19,
                 }}
               >
                 {chip}
               </div>
             ))}
           </div>
-          <span style={{ color: "#C2B280", fontSize: 23, fontWeight: 600 }}>
+          <span
+            style={{
+              color: PALETA.acento,
+              fontSize: 22,
+              fontWeight: 600,
+            }}
+          >
             {SITE_HOST}
           </span>
         </div>

@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { SITE_HOST, SITE_URL } from "@/lib/pricing";
+import Wordmark from "@/components/Wordmark";
 
 /**
  * Panel privado de propuestas — Fase 2.
@@ -69,19 +70,19 @@ function mdToHtmlBody(md: string): string {
     if (!line) continue;
     if (line.startsWith("### ")) {
       out.push(
-        `<h3 style="color:#1a1a1a; font-size:15px; margin:18px 0 6px;">${inline(line.slice(4))}</h3>`
+        `<h3 style="color:#0F294E; font-size:15px; margin:18px 0 6px;">${inline(line.slice(4))}</h3>`
       );
     } else if (line.startsWith("## ")) {
       out.push(
-        `<h2 style="color:#0B0B0B; font-size:18px; border-bottom:2px solid #C2B280; padding-bottom:6px; margin:26px 0 10px;">${inline(line.slice(3))}</h2>`
+        `<h2 style="color:#0F294E; font-size:18px; border-bottom:2px solid #1D4ED8; padding-bottom:6px; margin:26px 0 10px;">${inline(line.slice(3))}</h2>`
       );
     } else if (isLi) {
       out.push(
-        `<li style="color:#333; font-size:14px; line-height:1.7; margin:4px 0;">${inline(line.replace(/^[-*]\s+/, ""))}</li>`
+        `<li style="color:#3A4A63; font-size:14px; line-height:1.7; margin:4px 0;">${inline(line.replace(/^[-*]\s+/, ""))}</li>`
       );
     } else {
       out.push(
-        `<p style="color:#333; font-size:14px; line-height:1.8; margin:8px 0;">${inline(line)}</p>`
+        `<p style="color:#3A4A63; font-size:14px; line-height:1.8; margin:8px 0;">${inline(line)}</p>`
       );
     }
   }
@@ -99,52 +100,52 @@ function buildProposalHtml(md: string, clientName: string): string {
 <html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Propuesta — ${escapeHtml(clientName)}</title></head>
-<body style="margin:0; background:#f4f1ea; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;">
+<body style="margin:0; background:#F4F7FB; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;">
 <div style="max-width:720px; margin:0 auto; background:#ffffff; padding:48px 52px;">
   <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:34px;">
     <div>
-      <p style="margin:0; font-size:20px; font-weight:700; color:#0B0B0B;">Wilson Valencia</p>
-      <p style="margin:2px 0 0; font-size:12px; color:#8a7a55;">Desarrollador Full-Stack — ${SITE_HOST}</p>
+      <p style="margin:0; font-size:20px; font-weight:700; color:#0F294E;">Wilson Valencia</p>
+      <p style="margin:2px 0 0; font-size:12px; color:#52657E;">Desarrollador Full-Stack — ${SITE_HOST}</p>
     </div>
-    <p style="margin:0; font-size:12px; color:#999;">${hoy}</p>
+    <p style="margin:0; font-size:12px; color:#6B7A90;">${hoy}</p>
   </div>
-  <div style="background:#0B0B0B; color:#fff; border-radius:10px; padding:18px 22px; margin-bottom:10px;">
-    <p style="margin:0; font-size:15px; font-weight:600; color:#C2B280;">Propuesta de desarrollo de software</p>
-    <p style="margin:3px 0 0; font-size:13px; color:#ccc;">Preparada para ${escapeHtml(clientName)}</p>
+  <div style="background:#0F294E; color:#fff; border-radius:10px; padding:18px 22px; margin-bottom:10px;">
+    <p style="margin:0; font-size:15px; font-weight:600; color:#FFFFFF;">Propuesta de desarrollo de software</p>
+    <p style="margin:3px 0 0; font-size:13px; color:#C7D3E6;">Preparada para ${escapeHtml(clientName)}</p>
   </div>
 ${mdToHtmlBody(md)}
-  <div style="margin-top:34px; border:1px solid #e0dbcd; border-radius:10px; padding:20px 24px; background:#faf8f1;">
-    <p style="margin:0 0 6px; font-size:13px; font-weight:700; color:#0B0B0B;">Aceptación de la propuesta</p>
-    <p style="margin:0 0 16px; font-size:12px; line-height:1.7; color:#555;">
+  <div style="margin-top:34px; border:1px solid #D8E1EC; border-radius:10px; padding:20px 24px; background:#F4F7FB;">
+    <p style="margin:0 0 6px; font-size:13px; font-weight:700; color:#0F294E;">Aceptación de la propuesta</p>
+    <p style="margin:0 0 16px; font-size:12px; line-height:1.7; color:#52657E;">
       Para iniciar el proyecto, responde este documento escribiendo “Aprobado” y realiza el
       anticipo del 50%. La propuesta tiene una validez de 15 días calendario desde la fecha de emisión.
     </p>
-    <p style="margin:0 0 16px; font-size:12px; line-height:1.7; color:#555;">
+    <p style="margin:0 0 16px; font-size:12px; line-height:1.7; color:#52657E;">
       ¿Quieres resolver dudas antes de aprobar? Agenda una llamada de 15 minutos aquí:
-      <a href="https://cal.com/wvalencia/llamada-inicial" style="color:#6E5A20;">cal.com/wvalencia/llamada-inicial</a>
+      <a href="https://cal.com/wvalencia/llamada-inicial" style="color:#1D4ED8;">cal.com/wvalencia/llamada-inicial</a>
     </p>
-    <table style="width:100%; border-collapse:collapse; font-size:12px; color:#555;">
+    <table style="width:100%; border-collapse:collapse; font-size:12px; color:#52657E;">
       <tr>
         <td style="width:50%; padding:0 12px 0 0; vertical-align:bottom;">
-          <div style="border-bottom:1px solid #999; height:34px;"></div>
+          <div style="border-bottom:1px solid #94A3B8; height:34px;"></div>
           <p style="margin:4px 0 0;">Firma del cliente</p>
         </td>
         <td style="width:50%; padding:0 0 0 12px; vertical-align:bottom;">
-          <div style="border-bottom:1px solid #999; height:34px;"></div>
+          <div style="border-bottom:1px solid #94A3B8; height:34px;"></div>
           <p style="margin:4px 0 0;">Fecha de aprobación</p>
         </td>
       </tr>
     </table>
-    <p style="margin:14px 0 0; font-size:12px; color:#555;">
-      <strong style="color:#0B0B0B;">Wilson Valencia</strong> — Desarrollador Full-Stack<br>
+    <p style="margin:14px 0 0; font-size:12px; color:#52657E;">
+      <strong style="color:#0F294E;">Wilson Valencia</strong> — Desarrollador Full-Stack<br>
       WhatsApp +57 301 2821174 · wilson.arroyo12@gmail.com
     </p>
   </div>
-  <div style="margin-top:28px; border-top:1px solid #e5e0d5; padding-top:18px;">
-    <p style="margin:0; font-size:12px; color:#777;">
+  <div style="margin-top:28px; border-top:1px solid #D8E1EC; padding-top:18px;">
+    <p style="margin:0; font-size:12px; color:#6B7A90;">
       Wilson Valencia · WhatsApp +57 301 2821174 ·
-      <a href="${SITE_URL}" style="color:#8a7a55;">${SITE_HOST}</a> ·
-      <a href="https://cal.com/wvalencia/llamada-inicial" style="color:#8a7a55;">Agendar 15 min</a>
+      <a href="${SITE_URL}" style="color:#52657E;">${SITE_HOST}</a> ·
+      <a href="https://cal.com/wvalencia/llamada-inicial" style="color:#52657E;">Agendar 15 min</a>
     </p>
   </div>
 </div>
@@ -328,17 +329,17 @@ export default function PanelPage() {
   // ── Pantalla de sesión ─────────────────────────────────────────────────────
   if (session !== "in") {
     return (
-      <div className="fixed inset-0 z-[100] overflow-y-auto bg-[#0B0B0B] flex items-center justify-center px-4">
+      <div className="fixed inset-0 z-[100] overflow-y-auto bg-fondo flex items-center justify-center px-4">
         <div className="w-full max-w-sm">
           <div className="text-center mb-8">
-            <div className="w-14 h-14 mx-auto rounded-full bg-gradient-to-br from-[#C2B280] to-[#a08b5f] flex items-center justify-center text-2xl mb-4">
-              🦋
+            <div className="flex justify-center mb-4">
+              <Wordmark tamano={44} className="text-xl font-semibold" />
             </div>
-            <h1 className="text-white text-xl font-semibold">Panel de propuestas</h1>
-            <p className="text-gray-400 text-sm mt-1">Acceso privado de Wilson</p>
+            <h1 className="text-tinta text-xl font-semibold">Panel de propuestas</h1>
+            <p className="text-tinta-suave text-sm mt-1">Acceso privado de Wilson</p>
           </div>
           {session === "checking" ? (
-            <p className="text-center text-gray-400 text-sm">Verificando sesión…</p>
+            <p className="text-center text-tinta-suave text-sm">Verificando sesión…</p>
           ) : (
             <form onSubmit={handleLogin} className="space-y-4">
               <input
@@ -348,19 +349,19 @@ export default function PanelPage() {
                 placeholder="Contraseña del panel"
                 autoFocus
                 aria-label="Contraseña del panel"
-                className="w-full bg-[#1a1a1a] border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#C2B280]/60"
+                className="w-full bg-fondo border border-borde rounded-xl px-4 py-3 text-tinta placeholder-tinta-suave focus:outline-none focus:border-acento/60"
               />
               {loginError && (
-                <p className="text-red-400 text-xs">{loginError}</p>
+                <p className="text-red-700 text-xs">{loginError}</p>
               )}
               <button
                 type="submit"
                 disabled={loggingIn || !password}
-                className="w-full bg-[#C2B280] hover:bg-[#d4c493] disabled:opacity-40 text-black font-semibold py-3 rounded-xl transition"
+                className="w-full bg-acento hover:bg-acento-hover disabled:opacity-40 text-white font-semibold py-3 rounded-xl transition"
               >
                 {loggingIn ? "Entrando…" : "Entrar"}
               </button>
-              <p className="text-gray-400 text-[11px] text-center">
+              <p className="text-tinta-suave text-[11px] text-center">
                 La contraseña se define en la variable de entorno PANEL_PASSWORD.
               </p>
             </form>
@@ -372,34 +373,34 @@ export default function PanelPage() {
 
   // ── Panel principal ─────────────────────────────────────────────────────────
   return (
-    <div className="fixed inset-0 z-[100] overflow-y-auto bg-[#0B0B0B]">
+    <div className="fixed inset-0 z-[100] overflow-y-auto bg-fondo">
       <div className="max-w-3xl mx-auto px-4 py-8 sm:py-10">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h1 className="text-white text-lg sm:text-xl font-semibold">
-              Panel de propuestas <span className="text-[#C2B280]">· privado</span>
+            <h1 className="text-tinta text-lg sm:text-xl font-semibold">
+              Panel de propuestas <span className="text-acento">· privado</span>
             </h1>
-            <p className="text-gray-400 text-xs mt-0.5">
+            <p className="text-tinta-suave text-xs mt-0.5">
               Genera borradores con IA, edítalos y apruébalos tú. Nada se envía solo.
             </p>
           </div>
           <div className="flex items-center gap-2">
             <Link
               href="/panel/leads"
-              className="text-gray-400 hover:text-white text-xs border border-gray-700 hover:border-gray-500 rounded-lg px-3 py-2 transition"
+              className="text-tinta-suave hover:text-tinta text-xs border border-borde hover:border-borde-fuerte rounded-lg px-3 py-2 transition"
             >
               📊 Leads
             </Link>
             <Link
               href="/panel/proyectos"
-              className="text-gray-400 hover:text-white text-xs border border-gray-700 hover:border-gray-500 rounded-lg px-3 py-2 transition"
+              className="text-tinta-suave hover:text-tinta text-xs border border-borde hover:border-borde-fuerte rounded-lg px-3 py-2 transition"
             >
               🗂 Proyectos
             </Link>
             <button
               onClick={handleLogout}
-              className="text-gray-400 hover:text-white text-xs border border-gray-700 hover:border-gray-500 rounded-lg px-3 py-2 transition"
+              className="text-tinta-suave hover:text-tinta text-xs border border-borde hover:border-borde-fuerte rounded-lg px-3 py-2 transition"
             >
               Salir
             </button>
@@ -407,12 +408,12 @@ export default function PanelPage() {
         </div>
 
         {/* Aviso de entrega */}
-        <div className="bg-[#C2B280]/10 border border-[#C2B280]/30 rounded-xl px-4 py-3 mb-6">
-          <p className="text-[#C2B280] text-xs font-semibold mb-1">
+        <div className="bg-acento/10 border border-acento/30 rounded-xl px-4 py-3 mb-6">
+          <p className="text-acento text-xs font-semibold mb-1">
             Cómo se entrega una propuesta
           </p>
-          <p className="text-gray-400 text-xs leading-relaxed">
-            Genera el borrador → <strong className="text-gray-200">edítalo a tu gusto</strong> →
+          <p className="text-tinta-suave text-xs leading-relaxed">
+            Genera el borrador → <strong className="text-tinta">edítalo a tu gusto</strong> →
             cópialo y envíalo por WhatsApp/email, o descárgalo como HTML elegante
             (imprimible a PDF). El envío automático directo al cliente llegará en la
             Fase 3, cuando verifiques tu propio dominio en Resend.
@@ -420,9 +421,9 @@ export default function PanelPage() {
         </div>
 
         {/* Formulario del lead */}
-        <div className="bg-[#111] border border-gray-800 rounded-2xl p-5 mb-6">
-          <h2 className="text-white text-sm font-semibold mb-4">
-            1 · Datos del lead <span className="text-gray-400 font-normal">(pégalos desde el email del lead)</span>
+        <div className="bg-superficie border border-borde rounded-2xl p-5 mb-6">
+          <h2 className="text-tinta text-sm font-semibold mb-4">
+            1 · Datos del lead <span className="text-tinta-suave font-normal">(pégalos desde el email del lead)</span>
           </h2>
           <div className="grid sm:grid-cols-2 gap-3">
             <input
@@ -430,20 +431,20 @@ export default function PanelPage() {
               onChange={(e) => setForm({ ...form, clientName: e.target.value })}
               placeholder="Nombre del cliente *"
               maxLength={80}
-              className="bg-[#1a1a1a] border border-gray-700 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#C2B280]/60 min-w-0"
+              className="bg-fondo border border-borde rounded-xl px-3.5 py-2.5 text-sm text-tinta placeholder-tinta-suave focus:outline-none focus:border-acento/60 min-w-0"
             />
             <input
               value={form.contact}
               onChange={(e) => setForm({ ...form, contact: e.target.value })}
               placeholder="Contacto (WhatsApp o email)"
               maxLength={120}
-              className="bg-[#1a1a1a] border border-gray-700 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#C2B280]/60 min-w-0"
+              className="bg-fondo border border-borde rounded-xl px-3.5 py-2.5 text-sm text-tinta placeholder-tinta-suave focus:outline-none focus:border-acento/60 min-w-0"
             />
             <select
               value={form.projectType}
               onChange={(e) => setForm({ ...form, projectType: e.target.value })}
               aria-label="Tipo de proyecto"
-              className="bg-[#1a1a1a] border border-gray-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-[#C2B280]/60 min-w-0"
+              className="bg-fondo border border-borde rounded-xl px-3.5 py-2.5 text-sm text-tinta focus:outline-none focus:border-acento/60 min-w-0"
             >
               {TIPOS.map((t) => (
                 <option key={t.id} value={t.id}>
@@ -456,7 +457,7 @@ export default function PanelPage() {
               onChange={(e) => setForm({ ...form, budget: e.target.value })}
               placeholder="Presupuesto indicado (ej: $2M - $3M COP)"
               maxLength={80}
-              className="bg-[#1a1a1a] border border-gray-700 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#C2B280]/60 min-w-0"
+              className="bg-fondo border border-borde rounded-xl px-3.5 py-2.5 text-sm text-tinta placeholder-tinta-suave focus:outline-none focus:border-acento/60 min-w-0"
             />
           </div>
           <textarea
@@ -465,7 +466,7 @@ export default function PanelPage() {
             placeholder="Necesidad del cliente * — pega aquí lo que contó en el chat o el resumen del email del lead…"
             rows={4}
             maxLength={2000}
-            className="w-full mt-3 bg-[#1a1a1a] border border-gray-700 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#C2B280]/60 resize-y"
+            className="w-full mt-3 bg-fondo border border-borde rounded-xl px-3.5 py-2.5 text-sm text-tinta placeholder-tinta-suave focus:outline-none focus:border-acento/60 resize-y"
           />
           <textarea
             value={form.extra}
@@ -473,26 +474,26 @@ export default function PanelPage() {
             placeholder="Detalles extra (opcional): plazos, referencias, integraciones que mencionó…"
             rows={2}
             maxLength={1500}
-            className="w-full mt-3 bg-[#1a1a1a] border border-gray-700 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#C2B280]/60 resize-y"
+            className="w-full mt-3 bg-fondo border border-borde rounded-xl px-3.5 py-2.5 text-sm text-tinta placeholder-tinta-suave focus:outline-none focus:border-acento/60 resize-y"
           />
 
           <button
             onClick={generate}
             disabled={generating}
-            className="mt-4 w-full sm:w-auto bg-[#C2B280] hover:bg-[#d4c493] disabled:opacity-40 text-black font-semibold text-sm px-6 py-3 rounded-xl transition"
+            className="mt-4 w-full sm:w-auto bg-acento hover:bg-acento-hover disabled:opacity-40 text-white font-semibold text-sm px-6 py-3 rounded-xl transition"
           >
             {generating ? "✍️ Redactando borrador…" : "✨ Generar borrador de propuesta"}
           </button>
-          {genError && <p className="text-red-400 text-xs mt-3">{genError}</p>}
+          {genError && <p className="text-red-700 text-xs mt-3">{genError}</p>}
         </div>
 
         {/* Borrador editable */}
         {proposal && (
-          <div className="bg-[#111] border border-gray-800 rounded-2xl p-5 mb-6">
-            <h2 className="text-white text-sm font-semibold mb-1">
-              2 · Borrador — revísalo y edítalo <span className="text-gray-400 font-normal">(Markdown simple)</span>
+          <div className="bg-superficie border border-borde rounded-2xl p-5 mb-6">
+            <h2 className="text-tinta text-sm font-semibold mb-1">
+              2 · Borrador — revísalo y edítalo <span className="text-tinta-suave font-normal">(Markdown simple)</span>
             </h2>
-            <p className="text-gray-400 text-xs mb-3">
+            <p className="text-tinta-suave text-xs mb-3">
               Tu requisito: nada sale sin tu aprobación. Todo lo que escribas aquí es
               lo que se copia o descarga.
             </p>
@@ -500,31 +501,31 @@ export default function PanelPage() {
               value={proposal}
               onChange={(e) => setProposal(e.target.value)}
               rows={18}
-              className="w-full bg-[#1a1a1a] border border-gray-700 rounded-xl px-4 py-3 text-[13px] text-gray-100 font-mono leading-relaxed focus:outline-none focus:border-[#C2B280]/60 resize-y"
+              className="w-full bg-fondo border border-borde rounded-xl px-4 py-3 text-[13px] text-tinta font-mono leading-relaxed focus:outline-none focus:border-acento/60 resize-y"
             />
             <div className="flex flex-wrap gap-2 mt-4">
               <button
                 onClick={copyPlain}
-                className="bg-[#C2B280] hover:bg-[#d4c493] text-black font-semibold text-xs px-4 py-2.5 rounded-lg transition"
+                className="bg-acento hover:bg-acento-hover text-white font-semibold text-xs px-4 py-2.5 rounded-lg transition"
               >
                 📋 Copiar para WhatsApp/email
               </button>
               <button
                 onClick={downloadHtml}
-                className="bg-[#1a1a1a] hover:bg-[#262626] border border-gray-700 text-gray-100 text-xs px-4 py-2.5 rounded-lg transition"
+                className="bg-fondo hover:bg-fondo border border-borde text-tinta text-xs px-4 py-2.5 rounded-lg transition"
               >
                 ⬇️ Descargar HTML (PDF)
               </button>
               <button
                 onClick={saveToHistory}
-                className="bg-[#1a1a1a] hover:bg-[#262626] border border-gray-700 text-gray-100 text-xs px-4 py-2.5 rounded-lg transition"
+                className="bg-fondo hover:bg-fondo border border-borde text-tinta text-xs px-4 py-2.5 rounded-lg transition"
               >
                 💾 Guardar en historial
               </button>
               <button
                 onClick={generate}
                 disabled={generating}
-                className="bg-[#1a1a1a] hover:bg-[#262626] border border-gray-700 text-gray-100 disabled:opacity-40 text-xs px-4 py-2.5 rounded-lg transition"
+                className="bg-fondo hover:bg-fondo border border-borde text-tinta disabled:opacity-40 text-xs px-4 py-2.5 rounded-lg transition"
               >
                 🔄 Regenerar
               </button>
@@ -534,14 +535,14 @@ export default function PanelPage() {
 
         {/* Historial */}
         {history.length > 0 && (
-          <div className="bg-[#111] border border-gray-800 rounded-2xl p-5 mb-10">
+          <div className="bg-superficie border border-borde rounded-2xl p-5 mb-10">
             <div className="flex items-center justify-between mb-3">
-              <h2 className="text-white text-sm font-semibold">
-                Historial <span className="text-gray-400 font-normal">({history.length}/20 · solo este navegador)</span>
+              <h2 className="text-tinta text-sm font-semibold">
+                Historial <span className="text-tinta-suave font-normal">({history.length}/20 · solo este navegador)</span>
               </h2>
               <button
                 onClick={() => persistHistory([])}
-                className="text-gray-400 hover:text-red-400 text-[11px] transition"
+                className="text-tinta-suave hover:text-red-700 text-[11px] transition"
               >
                 Vaciar
               </button>
@@ -550,29 +551,29 @@ export default function PanelPage() {
               {history.map((h) => (
                 <li
                   key={h.id}
-                  className="flex items-center justify-between gap-3 bg-[#1a1a1a] border border-gray-800 rounded-xl px-4 py-3"
+                  className="flex items-center justify-between gap-3 bg-fondo border border-borde rounded-xl px-4 py-3"
                 >
                   <div className="min-w-0">
-                    <p className="text-gray-100 text-sm truncate">
+                    <p className="text-tinta text-sm truncate">
                       {h.clientName}{" "}
-                      <span className="text-gray-400 text-xs">
+                      <span className="text-tinta-suave text-xs">
                         · {TIPOS.find((t) => t.id === h.projectType)?.label || h.projectType}
                       </span>
                     </p>
-                    <p className="text-gray-400 text-[11px]">
+                    <p className="text-tinta-suave text-[11px]">
                       {new Date(h.date).toLocaleString("es-CO", { dateStyle: "medium", timeStyle: "short" })}
                     </p>
                   </div>
                   <div className="flex gap-2 shrink-0">
                     <button
                       onClick={() => loadFromHistory(h)}
-                      className="text-[#C2B280] hover:text-[#d4c493] text-xs transition"
+                      className="text-acento hover:text-acento-hover text-xs transition"
                     >
                       Abrir
                     </button>
                     <button
                       onClick={() => removeFromHistory(h.id)}
-                      className="text-gray-400 hover:text-red-400 text-xs transition"
+                      className="text-tinta-suave hover:text-red-700 text-xs transition"
                     >
                       Borrar
                     </button>
@@ -583,14 +584,14 @@ export default function PanelPage() {
           </div>
         )}
 
-        <p className="text-gray-400 text-[11px] text-center pb-6">
+        <p className="text-tinta-suave text-[11px] text-center pb-6">
           Panel privado · no indexado · WhatsApp {WHATSAPP.replace("57", "+57 ")}
         </p>
       </div>
 
       {/* Toast */}
       {toast && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[110] bg-[#C2B280] text-black text-xs font-semibold px-5 py-3 rounded-xl shadow-xl">
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[110] bg-acento text-white text-xs font-semibold px-5 py-3 rounded-xl shadow-xl">
           {toast}
         </div>
       )}

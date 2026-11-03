@@ -29,7 +29,7 @@ export default function WhatsAppButton() {
       <FaWhatsapp className="text-2xl" />
       <span className="hidden md:inline ml-2 text-sm font-semibold pr-2">WhatsApp</span>
 
-      <span className="md:hidden absolute left-full ml-3 bg-black/90 text-white text-xs px-3 py-1.5 rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition pointer-events-none">
+      <span className="md:hidden absolute left-full ml-3 bg-white/95 text-tinta text-xs px-3 py-1.5 rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition pointer-events-none">
         ¿Hablamos?
       </span>
 

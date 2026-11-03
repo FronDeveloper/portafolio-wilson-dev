@@ -105,12 +105,12 @@ export default function CotizarPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#0B0B0B] text-white relative">
-      <header className="border-b border-gray-800/50 backdrop-blur-sm bg-[#0B0B0B]/80 sticky top-0 z-40">
+    <main className="min-h-screen bg-fondo text-tinta relative">
+      <header className="border-b border-borde/50 backdrop-blur-sm bg-fondo/80 sticky top-0 z-40">
         <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link
             href="/"
-            className="flex items-center gap-2 text-sm text-gray-300 hover:text-white transition"
+            className="flex items-center gap-2 text-sm text-tinta hover:text-tinta transition"
           >
             <FaArrowLeft aria-hidden="true" /> Volver al portafolio
           </Link>
@@ -118,7 +118,7 @@ export default function CotizarPage() {
             href="https://wa.me/573012821174?text=Hola%20Wilson%2C%20vi%20tu%20portafolio%20y%20quiero%20cotizar%20un%20proyecto"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-sm bg-green-500/10 border border-green-500/30 text-green-300 px-3 py-1.5 rounded-lg hover:bg-green-500/20 transition"
+            className="flex items-center gap-2 text-sm bg-green-50 border border-green-200 text-green-700 px-3 py-1.5 rounded-lg hover:bg-green-500/20 transition"
           >
             <FaWhatsapp aria-hidden="true" /> WhatsApp directo
           </a>
@@ -127,29 +127,29 @@ export default function CotizarPage() {
 
       <section className="max-w-3xl mx-auto px-6 py-12 md:py-20">
         <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 bg-violet-500/10 border border-violet-500/30 px-3 py-1 rounded-full mb-4">
-            <span className="text-violet-300 text-xs font-semibold">
+          <div className="inline-flex items-center gap-2 bg-acento/10 border border-acento/30 px-3 py-1 rounded-full mb-4">
+            <span className="text-acento text-xs font-semibold">
               ⚡ RESPUESTA EN 24 HORAS
             </span>
           </div>
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
             Cotiza tu proyecto{" "}
-            <span className="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-acento to-acento bg-clip-text text-transparent">
               sin compromiso
             </span>
           </h1>
-          <p className="text-gray-300 max-w-xl mx-auto">
+          <p className="text-tinta max-w-xl mx-auto">
             Cuéntame qué necesitas. En menos de 24 horas te envío una propuesta
             inicial con alcance, precio y tiempo de entrega.
           </p>
         </div>
 
-        <div className="mb-6 flex flex-col gap-4 rounded-2xl border border-violet-500/30 bg-violet-500/5 p-5 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mb-6 flex flex-col gap-4 rounded-2xl border border-acento/30 bg-acento/5 p-5 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p className="text-sm font-semibold text-white">
+            <p className="text-sm font-semibold text-tinta">
               ¿Prefieres hablarlo en vivo?
             </p>
-            <p className="text-xs text-gray-300">
+            <p className="text-xs text-tinta">
               15 minutos por videollamada, sin compromiso.
             </p>
           </div>
@@ -161,11 +161,11 @@ export default function CotizarPage() {
           />
         </div>
 
-        <div className="bg-gradient-to-br from-[#111] to-[#0F0F0F] border border-gray-800 rounded-2xl p-6 md:p-10">
+        <div className="bg-gradient-to-br from-acento-suave via-superficie to-acento-suave border border-borde rounded-2xl p-6 md:p-10">
           {error && (
             <div
               role="alert"
-              className="mb-6 bg-red-500/10 border border-red-500/30 text-red-300 text-sm p-3 rounded-lg"
+              className="mb-6 bg-red-500/10 border border-red-500/30 text-red-700 text-sm p-3 rounded-lg"
             >
               {error}
             </div>
@@ -175,7 +175,7 @@ export default function CotizarPage() {
             <div>
               <label
                 htmlFor="cot-nombre"
-                className="block text-sm font-medium text-gray-200 mb-2"
+                className="block text-sm font-medium text-tinta mb-2"
               >
                 Nombre *
               </label>
@@ -189,7 +189,7 @@ export default function CotizarPage() {
                 autoComplete="name"
                 maxLength={80}
                 placeholder="¿Cómo te llamas?"
-                className="w-full bg-[#0B0B0B] border border-gray-800 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-violet-500 transition"
+                className="w-full bg-fondo border border-borde rounded-xl px-4 py-3 text-tinta text-sm outline-none focus:border-acento transition"
               />
             </div>
 
@@ -197,7 +197,7 @@ export default function CotizarPage() {
               <div>
                 <label
                   htmlFor="cot-email"
-                  className="block text-sm font-medium text-gray-200 mb-2"
+                  className="block text-sm font-medium text-tinta mb-2"
                 >
                   Email *
                 </label>
@@ -211,13 +211,13 @@ export default function CotizarPage() {
                   autoComplete="email"
                   maxLength={120}
                   placeholder="tu@email.com"
-                  className="w-full bg-[#0B0B0B] border border-gray-800 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-violet-500 transition"
+                  className="w-full bg-fondo border border-borde rounded-xl px-4 py-3 text-tinta text-sm outline-none focus:border-acento transition"
                 />
               </div>
               <div>
                 <label
                   htmlFor="cot-whatsapp"
-                  className="block text-sm font-medium text-gray-200 mb-2"
+                  className="block text-sm font-medium text-tinta mb-2"
                 >
                   WhatsApp *
                 </label>
@@ -231,7 +231,7 @@ export default function CotizarPage() {
                   autoComplete="tel"
                   maxLength={30}
                   placeholder="+57 300 123 4567"
-                  className="w-full bg-[#0B0B0B] border border-gray-800 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-violet-500 transition"
+                  className="w-full bg-fondo border border-borde rounded-xl px-4 py-3 text-tinta text-sm outline-none focus:border-acento transition"
                 />
               </div>
             </div>
@@ -239,7 +239,7 @@ export default function CotizarPage() {
             <div>
               <label
                 htmlFor="cot-tipo"
-                className="block text-sm font-medium text-gray-200 mb-2"
+                className="block text-sm font-medium text-tinta mb-2"
               >
                 Tipo de proyecto *
               </label>
@@ -249,7 +249,7 @@ export default function CotizarPage() {
                 value={formData.projectType}
                 onChange={handleChange}
                 required
-                className="w-full bg-[#0B0B0B] border border-gray-800 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-violet-500 transition"
+                className="w-full bg-fondo border border-borde rounded-xl px-4 py-3 text-tinta text-sm outline-none focus:border-acento transition"
               >
                 <option value="">Selecciona una opción</option>
                 {TIPOS_PROYECTO.map((t) => (
@@ -263,7 +263,7 @@ export default function CotizarPage() {
             <div>
               <label
                 htmlFor="cot-presupuesto"
-                className="block text-sm font-medium text-gray-200 mb-2"
+                className="block text-sm font-medium text-tinta mb-2"
               >
                 Presupuesto aproximado *
               </label>
@@ -273,7 +273,7 @@ export default function CotizarPage() {
                 value={formData.budget}
                 onChange={handleChange}
                 required
-                className="w-full bg-[#0B0B0B] border border-gray-800 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-violet-500 transition"
+                className="w-full bg-fondo border border-borde rounded-xl px-4 py-3 text-tinta text-sm outline-none focus:border-acento transition"
               >
                 <option value="">Selecciona un rango</option>
                 {PRESUPUESTOS.map((b) => (
@@ -282,7 +282,7 @@ export default function CotizarPage() {
                   </option>
                 ))}
               </select>
-              <p className="text-gray-400 text-xs mt-1.5">
+              <p className="text-tinta-suave text-xs mt-1.5">
                 Rangos en COP con equivalente aproximado en USD. Si estás fuera
                 de Colombia, elige el rango más cercano.
               </p>
@@ -291,7 +291,7 @@ export default function CotizarPage() {
             <div>
               <label
                 htmlFor="cot-descripcion"
-                className="block text-sm font-medium text-gray-200 mb-2"
+                className="block text-sm font-medium text-tinta mb-2"
               >
                 Cuéntame del proyecto
               </label>
@@ -303,26 +303,26 @@ export default function CotizarPage() {
                 rows={4}
                 maxLength={2000}
                 placeholder="¿Qué problema quieres resolver? ¿Qué funcionalidades necesitas? Mientras más detalle, mejor."
-                className="w-full bg-[#0B0B0B] border border-gray-800 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-violet-500 transition resize-none"
+                className="w-full bg-fondo border border-borde rounded-xl px-4 py-3 text-tinta text-sm outline-none focus:border-acento transition resize-none"
               />
             </div>
 
-            <label className="flex items-start gap-3 text-xs text-gray-300 leading-relaxed cursor-pointer">
+            <label className="flex items-start gap-3 text-xs text-tinta leading-relaxed cursor-pointer">
               <input
                 type="checkbox"
                 checked={consent}
                 onChange={(e) => setConsent(e.target.checked)}
                 required
-                className="mt-0.5 h-4 w-4 accent-violet-500 shrink-0"
+                className="mt-0.5 h-4 w-4 accent-acento shrink-0"
               />
               <span>
                 Autorizo a Wilson Valencia a tratar mis datos para responder
                 esta solicitud, conforme a la{" "}
-                <Link href="/privacidad" className="text-violet-300 underline">
+                <Link href="/privacidad" className="text-acento underline">
                   política de privacidad
                 </Link>{" "}
                 y los{" "}
-                <Link href="/terminos" className="text-violet-300 underline">
+                <Link href="/terminos" className="text-acento underline">
                   términos
                 </Link>
                 . *
@@ -332,7 +332,7 @@ export default function CotizarPage() {
             <button
               type="submit"
               disabled={loading || !consent}
-              className="w-full bg-gradient-to-r from-violet-600 to-cyan-600 text-white py-4 rounded-xl font-semibold text-sm hover:opacity-90 transition flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-gradient-to-r from-acento-hover to-acento-hover text-white py-4 rounded-xl font-semibold text-sm hover:opacity-90 transition flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? (
                 "Enviando..."
@@ -343,7 +343,7 @@ export default function CotizarPage() {
               )}
             </button>
 
-            <div className="flex flex-wrap justify-center gap-4 text-xs text-gray-400 pt-2">
+            <div className="flex flex-wrap justify-center gap-4 text-xs text-tinta-suave pt-2">
               <span className="flex items-center gap-1">
                 <FaCheckCircle className="text-green-500" aria-hidden="true" /> Sin compromiso
               </span>
@@ -357,13 +357,13 @@ export default function CotizarPage() {
           </form>
         </div>
 
-        <p className="text-center text-xs text-gray-400 mt-8">
+        <p className="text-center text-xs text-tinta-suave mt-8">
           ¿Prefieres hablar directamente?{" "}
           <a
             href="https://wa.me/573012821174?text=Hola%20Wilson%2C%20vi%20tu%20portafolio%20y%20quiero%20cotizar%20un%20proyecto"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-violet-300 underline underline-offset-2 hover:text-violet-200"
+            className="text-acento underline underline-offset-2 hover:text-acento"
           >
             Escríbeme por WhatsApp
           </a>

@@ -24,15 +24,15 @@ export function ConsentReset() {
       : "Sin decisión guardada";
 
   return (
-    <div className="not-prose flex flex-col sm:flex-row sm:items-center gap-3 bg-[#111] border border-gray-800 rounded-xl p-4 my-4 text-sm">
-      <p className="flex-1 text-gray-300">
+    <div className="not-prose flex flex-col sm:flex-row sm:items-center gap-3 bg-superficie border border-borde rounded-xl p-4 my-4 text-sm">
+      <p className="flex-1 text-tinta">
         Estado actual:{" "}
-        <span className="text-white font-medium">{estado}</span>
+        <span className="text-tinta font-medium">{estado}</span>
       </p>
       <button
         type="button"
         onClick={openConsentSettings}
-        className="shrink-0 px-4 py-2 rounded-lg bg-[#C2B280] text-black font-semibold text-xs hover:bg-[#d4c69a] transition"
+        className="shrink-0 px-4 py-2 rounded-lg bg-acento text-white font-semibold text-xs hover:bg-acento-hover transition"
       >
         Cambiar preferencia
       </button>

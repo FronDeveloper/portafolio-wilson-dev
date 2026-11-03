@@ -87,11 +87,11 @@ export default function Faq() {
       <div className="text-center mb-10">
         <h2 className="text-3xl font-semibold mb-3">
           Preguntas{" "}
-          <span className="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-acento to-acento bg-clip-text text-transparent">
             frecuentes
           </span>
         </h2>
-        <p className="text-gray-400 text-sm">
+        <p className="text-tinta-suave text-sm">
           Lo que todos preguntan antes de arrancar un proyecto. Si te queda
           alguna duda, la resolvemos hoy mismo.
         </p>
@@ -101,13 +101,13 @@ export default function Faq() {
         {FAQS.map((f) => (
           <details
             key={f.q}
-            className="group bg-[#111] border border-gray-800 rounded-xl overflow-hidden hover:border-gray-600 transition-colors"
+            className="group bg-superficie border border-borde rounded-xl overflow-hidden hover:border-borde-fuerte transition-colors"
           >
-            <summary className="flex items-center justify-between gap-4 cursor-pointer list-none px-5 py-4 text-sm md:text-base font-semibold text-gray-200 [&::-webkit-details-marker]:hidden">
+            <summary className="flex items-center justify-between gap-4 cursor-pointer list-none px-5 py-4 text-sm md:text-base font-semibold text-tinta [&::-webkit-details-marker]:hidden">
               <span>{f.q}</span>
-              <FaChevronDown className="text-violet-400 text-xs flex-shrink-0 transition-transform duration-300 group-open:rotate-180" />
+              <FaChevronDown className="text-acento text-xs flex-shrink-0 transition-transform duration-300 group-open:rotate-180" />
             </summary>
-            <p className="px-5 pb-5 text-gray-300 text-sm leading-relaxed">
+            <p className="px-5 pb-5 text-tinta text-sm leading-relaxed">
               {f.a}
             </p>
           </details>
@@ -119,7 +119,7 @@ export default function Faq() {
           href="https://wa.me/573012821174?text=Hola%20Wilson%2C%20tengo%20una%20pregunta%20sobre%20tu%20servicio%20%F0%9F%98%8A"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 text-sm text-gray-300 hover:text-violet-400 transition-colors"
+          className="inline-flex items-center gap-2 text-sm text-tinta hover:text-acento transition-colors"
         >
           <FaWhatsapp className="text-[#25D366]" />
           ¿Otra duda? Escríbeme por WhatsApp y la resuelvo hoy mismo

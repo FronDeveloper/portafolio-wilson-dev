@@ -16,21 +16,23 @@ export default function AboutPage() {
   // CAMBIO 3: Supabase, TypeScript y PostgreSQL agregados
   // CAMBIO 4: perfil humanizado
   const skills = [
-    { name: "Next.js",      icon: <SiNextdotjs />,    color: "#FFFFFF" },
+    // Los colores de marca se oscurecen cuando el original no alcanza a leerse
+    // sobre blanco (Next.js era blanco puro, React y Tailwind eran casi neón).
+    { name: "Next.js",      icon: <SiNextdotjs />,    color: "#0F294E" },
     { name: "TypeScript",   icon: <SiTypescript />,   color: "#3178C6" },
-    { name: "React",        icon: <FaReact />,         color: "#61DAFB" },
-    { name: "Supabase",     icon: <SiSupabase />,      color: "#3ECF8E" },
+    { name: "React",        icon: <FaReact />,         color: "#087EA4" },
+    { name: "Supabase",     icon: <SiSupabase />,      color: "#059669" },
     { name: "PostgreSQL",   icon: <SiPostgresql />,    color: "#336791" },
-    { name: "Tailwind CSS", icon: <SiTailwindcss />,   color: "#06B6D4" },
+    { name: "Tailwind CSS", icon: <SiTailwindcss />,   color: "#0891B2" },
     { name: "Node.js",      icon: <FaNodeJs />,        color: "#339933" },
     { name: "Flutter",      icon: <SiFlutter />,       color: "#02569B" },
-    { name: "Firebase",     icon: <SiFirebase />,      color: "#FFCA28" },
+    { name: "Firebase",     icon: <SiFirebase />,      color: "#D97706" },
     { name: "MongoDB",      icon: <FaDatabase />,      color: "#47A248" },
-    { name: "Apps Móviles", icon: <FaMobileAlt />,     color: "#C2B280" },
+    { name: "Apps Móviles", icon: <FaMobileAlt />,     color: "#1D4ED8" },
   ];
 
   return (
-    <main className="text-white min-h-screen">
+    <main className="text-tinta min-h-screen">
       <Navbar />
 
       <section className="px-8 md:px-20 py-24">
@@ -46,7 +48,7 @@ export default function AboutPage() {
               transition={{ duration: 0.6 }}
               className="space-y-6"
             >
-              <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-2xl overflow-hidden border border-[#C2B280]/30 shadow-lg mx-auto md:mx-0">
+              <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-2xl overflow-hidden border border-acento/30 shadow-lg mx-auto md:mx-0">
                 <Image
                   src="/profile.jpg"
                   alt="Wilson Valencia"
@@ -57,9 +59,9 @@ export default function AboutPage() {
                 />
               </div>
 
-              <div className="bg-[#111] p-6 rounded-xl border border-gray-800">
-                <h3 className="text-lg font-semibold mb-4 text-[#C2B280]">Contacto directo</h3>
-                <div className="space-y-2 text-gray-400">
+              <div className="bg-superficie p-6 rounded-xl border border-borde">
+                <h3 className="text-lg font-semibold mb-4 text-acento">Contacto directo</h3>
+                <div className="space-y-2 text-tinta-suave">
                   <p>📍 Medellín, Colombia</p>
                   <p>💻 Trabajo remoto global</p>
                   <p>📧 wilson.arroyo12@gmail.com</p>
@@ -67,7 +69,7 @@ export default function AboutPage() {
                 </div>
                 <a
                   href="/cotizar"
-                  className="inline-block mt-4 w-full text-center px-4 py-2 bg-[#C2B280] text-black font-semibold rounded-xl hover:opacity-80 transition"
+                  className="inline-block mt-4 w-full text-center px-4 py-2 bg-acento text-white font-semibold rounded-xl hover:opacity-80 transition"
                 >
                   Contáctame
                 </a>
@@ -82,11 +84,11 @@ export default function AboutPage() {
               className="space-y-6"
             >
               <h1 className="text-3xl md:text-4xl font-bold">
-                Sobre <span className="text-[#C2B280]">mí</span>
+                Sobre <span className="text-acento">mí</span>
               </h1>
 
               {/* CAMBIO 4: párrafo humanizado */}
-              <div className="space-y-4 text-gray-400 leading-relaxed">
+              <div className="space-y-4 text-tinta-suave leading-relaxed">
                 <p>
                   Soy Wilson Valencia, desarrollador full-stack con base en
                   Medellín, Colombia. Me dedico a construir aplicaciones web
@@ -112,21 +114,21 @@ export default function AboutPage() {
               </div>
 
               <div className="grid grid-cols-2 gap-4 mt-6">
-                <div className="bg-[#111] p-3 rounded-lg border border-gray-800">
-                  <p className="text-[#C2B280] text-xl font-bold">7+</p>
-                  <p className="text-gray-400 text-sm">Proyectos</p>
+                <div className="bg-superficie p-3 rounded-lg border border-borde">
+                  <p className="text-acento text-xl font-bold">7+</p>
+                  <p className="text-tinta-suave text-sm">Proyectos</p>
                 </div>
-                <div className="bg-[#111] p-3 rounded-lg border border-gray-800">
-                  <p className="text-[#C2B280] text-xl font-bold">24h</p>
-                  <p className="text-gray-400 text-sm">Respuesta garantizada</p>
+                <div className="bg-superficie p-3 rounded-lg border border-borde">
+                  <p className="text-acento text-xl font-bold">24h</p>
+                  <p className="text-tinta-suave text-sm">Respuesta garantizada</p>
                 </div>
-                <div className="bg-[#111] p-3 rounded-lg border border-gray-800">
-                  <p className="text-[#C2B280] text-xl font-bold">30d</p>
-                  <p className="text-gray-400 text-sm">Soporte post-lanzamiento</p>
+                <div className="bg-superficie p-3 rounded-lg border border-borde">
+                  <p className="text-acento text-xl font-bold">30d</p>
+                  <p className="text-tinta-suave text-sm">Soporte post-lanzamiento</p>
                 </div>
-                <div className="bg-[#111] p-3 rounded-lg border border-gray-800">
-                  <p className="text-[#C2B280] text-xl font-bold">Remote</p>
-                  <p className="text-gray-400 text-sm">Trabajo global</p>
+                <div className="bg-superficie p-3 rounded-lg border border-borde">
+                  <p className="text-acento text-xl font-bold">Remote</p>
+                  <p className="text-tinta-suave text-sm">Trabajo global</p>
                 </div>
               </div>
             </motion.div>
@@ -140,7 +142,7 @@ export default function AboutPage() {
             className="mt-20"
           >
             <h2 className="text-2xl font-semibold mb-8 text-center">
-              Tecnologías que <span className="text-[#C2B280]">domino</span>
+              Tecnologías que <span className="text-acento">domino</span>
             </h2>
             <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
               {skills.map((skill, index) => (
@@ -150,7 +152,7 @@ export default function AboutPage() {
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: index * 0.05 }}
                   whileHover={{ scale: 1.05, y: -5 }}
-                  className="bg-[#111] p-4 rounded-xl border border-gray-800 hover:border-[#C2B280] transition text-center group"
+                  className="bg-superficie p-4 rounded-xl border border-borde hover:border-acento transition text-center group"
                 >
                   <div
                     className="text-3xl mb-2 group-hover:scale-110 transition flex justify-center"
@@ -159,7 +161,7 @@ export default function AboutPage() {
                   >
                     {skill.icon}
                   </div>
-                  <p className="text-xs text-gray-400">{skill.name}</p>
+                  <p className="text-xs text-tinta-suave">{skill.name}</p>
                 </motion.div>
               ))}
             </div>
@@ -172,12 +174,12 @@ export default function AboutPage() {
             transition={{ delay: 0.6 }}
             className="mt-16 text-center"
           >
-            <p className="text-gray-400 mb-4">
+            <p className="text-tinta-suave mb-4">
               ¿Tienes un proyecto en mente o quieres saber más sobre mi trabajo?
             </p>
             <a
               href="/cotizar"
-              className="inline-block px-8 py-3 bg-[#C2B280] text-black font-semibold rounded-xl hover:opacity-80 transition"
+              className="inline-block px-8 py-3 bg-acento text-white font-semibold rounded-xl hover:opacity-80 transition"
             >
               Hablemos de tu proyecto
             </a>

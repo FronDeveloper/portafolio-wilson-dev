@@ -37,7 +37,7 @@ export default function ScrollToTop() {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           onClick={scrollToTop}
-          className="fixed bottom-24 right-6 z-40 bg-[#C2B280] text-black p-3 rounded-full shadow-lg hover:opacity-80 transition focus:outline-none"
+          className="fixed bottom-24 right-6 z-40 bg-acento text-white p-3 rounded-full shadow-lg hover:opacity-80 transition focus:outline-none"
           aria-label="Volver arriba"
         >
           <FaArrowUp className="text-lg" />

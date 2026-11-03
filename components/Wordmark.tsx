@@ -1,73 +1,115 @@
 /**
- * Logotipo: la X de píxeles acompaña a la palabra y la doble x lleva el acento.
+ * Logotipo de Indexxel: baldosa [x] + palabra.
  *
  * La baldosa y la X se dibujan en SVG con la geometría de lib/brand-mark.ts
- * (la misma del favicon), y el texto usa Inter, la tipografía del sitio.
- * Todo escala con el font-size: sirve igual en el navbar que en un banner.
+ * (la misma de los iconos) y los colores de lib/paleta.ts. El texto usa la
+ * tipografía del sitio (Inter) y hereda el color del contenedor.
+ *
+ * La baldosa tiene tamaño propio en píxeles: por debajo de 24 px los corchetes
+ * miden menos de un píxel y se empastan, así que ahí se usa la variante
+ * compacta (solo la X).
  */
 
-import { ACENTO, BLOQUES, LIENZO, RADIO_BALDOSA, bloque } from "@/lib/brand-mark";
+import {
+  CORCHETES,
+  LIENZO,
+  RADIO_BALDOSA,
+  TRAZO_CORCHETE,
+  TRAZO_X,
+  X_COMPACTA,
+  X_TRAZOS,
+} from "@/lib/brand-mark";
+import { PALETA } from "@/lib/paleta";
 
 type Props = {
   className?: string;
-  /** Acento y color del texto: turquesa sobre oscuro, violeta sobre claro. */
-  tone?: "oscuro" | "claro";
   label?: string;
+  /** Lado de la baldosa en píxeles. Mínimo legible: 24. */
+  tamano?: number;
+  variante?: "completo" | "compacto";
 };
 
-export default function Wordmark({ className = "", tone = "oscuro", label = "Indexxel" }: Props) {
-  const acento = tone === "claro" ? "#7C3AED" : "#5EEAD4";
-  const centro = bloque(ACENTO[0], ACENTO[1]);
+export default function Wordmark({
+  className = "",
+  label = "Indexxel",
+  tamano = 28,
+  variante = "completo",
+}: Props) {
+  const compacto = variante === "compacto" || tamano < 24;
 
   return (
     <span
       role="img"
       aria-label={label}
       className={`inline-flex items-center ${className}`}
-      style={{ gap: "0.18em" }}
+      style={{ gap: "0.4em" }}
     >
       <svg
         viewBox={`0 0 ${LIENZO} ${LIENZO}`}
         aria-hidden="true"
         focusable="false"
-        style={{ width: "0.82em", height: "0.82em", flex: "none" }}
+        style={{ width: tamano, height: tamano, flex: "none" }}
       >
-        <defs>
-          <linearGradient id="indexxel-baldosa" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#8B5CF6" />
-            <stop offset="100%" stopColor="#4C1D95" />
-          </linearGradient>
-        </defs>
-
-        <rect width={LIENZO} height={LIENZO} rx={RADIO_BALDOSA} fill="url(#indexxel-baldosa)" />
-
-        {BLOQUES.map(([x, y]) => {
-          const b = bloque(x, y);
-          return (
-            <rect
-              key={`${x}-${y}`}
-              x={b.left}
-              y={b.top}
-              width={b.size}
-              height={b.size}
-              rx={b.radius}
-              fill="#FFFFFF"
-            />
-          );
-        })}
-
         <rect
-          x={centro.left}
-          y={centro.top}
-          width={centro.size}
-          height={centro.size}
-          rx={centro.radius}
-          fill="#5EEAD4"
+          width={LIENZO}
+          height={LIENZO}
+          rx={RADIO_BALDOSA}
+          fill={PALETA.tile}
         />
+
+        {!compacto &&
+          CORCHETES.map((d) => (
+            <path
+              key={d}
+              d={d}
+              stroke={PALETA.bracket}
+              strokeWidth={TRAZO_CORCHETE}
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          ))}
+
+        {compacto ? (
+          <>
+            <path
+              d={X_COMPACTA.trazos[0]}
+              stroke={PALETA.xClaro}
+              strokeWidth={X_COMPACTA.ancho}
+              fill="none"
+              strokeLinecap="round"
+            />
+            <path
+              d={X_COMPACTA.trazos[1]}
+              stroke={PALETA.xAcento}
+              strokeWidth={X_COMPACTA.ancho}
+              fill="none"
+              strokeLinecap="round"
+            />
+          </>
+        ) : (
+          <>
+            <path
+              d={X_TRAZOS.claro}
+              stroke={PALETA.xClaro}
+              strokeWidth={TRAZO_X}
+              fill="none"
+            />
+            <path
+              d={X_TRAZOS.acento}
+              stroke={PALETA.xAcento}
+              strokeWidth={TRAZO_X}
+              fill="none"
+            />
+          </>
+        )}
       </svg>
 
-      <span aria-hidden="true">
-        Inde<span style={{ color: acento }}>xx</span>el
+      <span
+        aria-hidden="true"
+        style={{ fontWeight: 600, letterSpacing: "-0.012em" }}
+      >
+        Indexxel
       </span>
     </span>
   );

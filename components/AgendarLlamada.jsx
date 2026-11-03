@@ -17,12 +17,12 @@ import { CAL_URL } from "@/lib/pricing";
 import { trackGAEvent } from "@/lib/analytics/meta-events";
 
 const VARIANTES = {
-  primario: "bg-[#C2B280] hover:bg-[#d4c69a] text-black font-bold px-6 py-3",
+  primario: "bg-acento hover:bg-acento-hover text-white font-bold px-6 py-3",
   secundario:
-    "border border-[#C2B280]/50 text-[#C2B280] hover:bg-[#C2B280]/10 font-semibold px-6 py-3",
+    "border border-acento/50 text-acento hover:bg-acento/10 font-semibold px-6 py-3",
   violeta:
-    "border border-violet-500/40 text-violet-200 hover:bg-violet-500/10 font-semibold px-6 py-3",
-  chat: "w-full bg-[#C2B280] hover:bg-[#d4c69a] text-black font-bold text-xs py-2.5 px-4",
+    "border border-acento/40 text-acento hover:bg-acento/10 font-semibold px-6 py-3",
+  chat: "w-full bg-acento hover:bg-acento-hover text-white font-bold text-xs py-2.5 px-4",
 };
 
 export default function AgendarLlamada({

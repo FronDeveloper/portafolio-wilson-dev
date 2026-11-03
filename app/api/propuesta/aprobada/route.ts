@@ -52,7 +52,7 @@ export async function POST(request: Request) {
     try {
       const resend = getResend();
       await resend.emails.send({
-        from: "Alma Propuestas <onboarding@resend.dev>",
+        from: `Alma Propuestas <${process.env.EMAIL_FROM || "onboarding@resend.dev"}>`,
         to: [NOTIFY_EMAIL],
         subject: `✅ Propuesta aprobada y enviada a ${n}`,
         html: `

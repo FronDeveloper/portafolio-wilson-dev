@@ -76,6 +76,14 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Datos inválidos" }, { status: 400 });
     }
 
+    // Honeypot anti-bots (P0-4): campo oculto "sitio_web". Los humanos no lo
+    // ven; si llega con contenido es un bot: se responde éxito y se descarta
+    // en silencio, para no enseñarle al bot qué señales lo delatan.
+    const sitioWeb = typeof body.sitio_web === "string" ? body.sitio_web.trim() : "";
+    if (sitioWeb) {
+      return NextResponse.json({ success: true });
+    }
+
     const name = texto(body.name, 80);
     const email = texto(body.email, 120);
     const whatsapp = texto(body.whatsapp, 30);
