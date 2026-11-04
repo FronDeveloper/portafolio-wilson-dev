@@ -13,7 +13,7 @@ export const metadata = {
 
 export default function Home() {
   return (
-    <main className="text-tinta min-h-screen pb-24">
+    <main className="text-tinta min-h-screen">
 
       <Navbar />
       <Hero />
@@ -22,7 +22,7 @@ export default function Home() {
       <section className="px-8 md:px-20 py-16 max-w-5xl mx-auto">
         <h2 className="text-3xl font-semibold mb-10 text-center">
           ¿En qué puedo{" "}
-          <span className="bg-gradient-to-r from-acento to-acento bg-clip-text text-transparent">
+          <span className="texto-gradiente-clara">
             ayudarte?
           </span>
         </h2>
@@ -69,7 +69,7 @@ export default function Home() {
       <section className="px-8 md:px-20 py-16 max-w-5xl mx-auto">
         <h2 className="text-3xl font-semibold mb-10 text-center">
           ¿Por qué trabajar{" "}
-          <span className="bg-gradient-to-r from-acento to-acento bg-clip-text text-transparent">
+          <span className="texto-gradiente-clara">
             conmigo?
           </span>
         </h2>
@@ -107,7 +107,7 @@ export default function Home() {
       <section className="px-8 md:px-20 py-16 max-w-5xl mx-auto">
         <h2 className="text-3xl font-semibold mb-3 text-center">
           Resultados{" "}
-          <span className="bg-gradient-to-r from-acento to-acento bg-clip-text text-transparent">
+          <span className="texto-gradiente-clara">
             reales
           </span>
         </h2>
@@ -207,21 +207,22 @@ export default function Home() {
       {/* FAQ — acordeón SEO-friendly con schema FAQPage */}
       <Faq />
 
-      {/* CTA FINAL */}
+      {/* CTA FINAL — tarjeta navy que conecta con el hero y el footer */}
       <section className="px-8 md:px-20 py-16 max-w-5xl mx-auto">
-        <div className="relative bg-gradient-to-br from-acento-suave via-superficie to-acento-suave border border-acento/30 rounded-2xl p-10 text-center overflow-hidden">
-          {/* Glow decorativo */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-px bg-gradient-to-r from-transparent via-acento/50 to-transparent" />
-          <h2 className="text-3xl font-bold mb-3">
+        <div className="superficie-navy relative border border-white/10 rounded-2xl p-10 text-center overflow-hidden text-texto-claro">
+          {/* Rejilla tenue + glow decorativo */}
+          <div className="rejilla-navy pointer-events-none absolute inset-0" aria-hidden="true" />
+          <div className="linea-gradiente absolute top-0 left-1/2 -translate-x-1/2 w-64" aria-hidden="true" />
+          <h2 className="relative text-3xl font-bold mb-3 text-texto-claro">
             ¿Tienes un proyecto en mente?
           </h2>
-          <p className="text-tinta-suave mb-8 max-w-md mx-auto text-sm">
+          <p className="relative text-texto-claro-suave mb-8 max-w-md mx-auto text-sm">
             Cuéntame tu idea y en menos de 24 horas te doy una propuesta inicial sin compromiso.
           </p>
-          <div className="flex gap-4 justify-center flex-wrap">
+          <div className="relative flex gap-4 justify-center flex-wrap">
             <Link
               href="/cotizar"
-              className="px-8 py-3 bg-gradient-to-r from-acento-hover to-acento-hover text-white rounded-xl font-semibold hover:opacity-90 transition shadow-lg shadow-acento/20"
+              className="boton-gradiente px-8 py-3 rounded-xl font-semibold transition shadow-lg shadow-[#6366f1]/25"
             >
               Escribirme ahora →
             </Link>
@@ -229,14 +230,14 @@ export default function Home() {
               href="https://wa.me/573012821174?text=Hola%20Wilson%2C%20vi%20tu%20portafolio%20y%20me%20interesa%20hablar%20sobre%20un%20proyecto"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-8 py-3 border border-borde rounded-xl font-semibold hover:border-acento hover:text-acento transition"
+              className="px-8 py-3 border border-white/20 rounded-xl font-semibold hover:border-white/50 hover:bg-white/5 hover:text-white transition"
             >
               💬 WhatsApp
             </a>
           </div>
-          <p className="text-tinta-suave text-xs mt-5">
+          <p className="relative text-texto-claro-suave text-xs mt-5">
             O escríbeme a{" "}
-            <a href="mailto:wilson.arroyo12@gmail.com" className="text-acento hover:underline">
+            <a href="mailto:wilson.arroyo12@gmail.com" className="text-[#8ab4ff] hover:underline">
               wilson.arroyo12@gmail.com
             </a>
           </p>

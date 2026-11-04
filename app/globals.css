@@ -91,3 +91,84 @@ select:focus {
     scrollbar-width: thin;
   }
 }
+
+/**
+ * Anclas navy + gradiente de marca.
+ *
+ * Trae al sitio el lenguaje de las portadas de redes: fondo azul marino
+ * profundo con rejilla y brillos, y el gradiente azul → violeta del titular
+ * "sistemas que venden". El cuerpo del sitio sigue siendo claro; el navy se
+ * usa como ancla en hero, navbar, tarjeta CTA y footer.
+ */
+:root {
+  --navy-950: #050d1f;
+  --navy-900: #0a1730;
+  --navy-800: #12264d;
+  --texto-claro: #eef4ff;
+  --texto-claro-suave: #9db2cc;
+  --linea-navy: rgba(148, 180, 255, 0.14);
+  /* Gradiente sobre navy (portadas): azul claro → violeta. */
+  --gradiente-marca: linear-gradient(95deg, #4c9fff 0%, #6366f1 50%, #a78bfa 100%);
+  /* Gradiente sobre fondo claro: azul institucional → violeta. */
+  --gradiente-marca-clara: linear-gradient(95deg, #1d4ed8 0%, #6366f1 55%, #7c3aed 100%);
+}
+
+@theme inline {
+  --color-navy-950: var(--navy-950);
+  --color-navy-900: var(--navy-900);
+  --color-navy-800: var(--navy-800);
+  --color-texto-claro: var(--texto-claro);
+  --color-texto-claro-suave: var(--texto-claro-suave);
+}
+
+/* Texto con el gradiente de marca (usar en spans dentro de titulares). */
+.texto-gradiente {
+  background-image: var(--gradiente-marca);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Igual que .texto-gradiente pero con paradas legibles sobre fondo claro. */
+.texto-gradiente-clara {
+  background-image: var(--gradiente-marca-clara);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/*
+ * Superficie navy con dos halos radiales (azul arriba a la derecha, violeta
+ * abajo a la izquierda) sobre una base con degradado vertical.
+ */
+.superficie-navy {
+  background:
+    radial-gradient(1100px 520px at 82% -10%, rgba(59, 130, 246, 0.2), transparent 60%),
+    radial-gradient(900px 500px at 6% 108%, rgba(139, 92, 246, 0.15), transparent 55%),
+    linear-gradient(180deg, var(--navy-900) 0%, var(--navy-950) 100%);
+}
+
+/* Rejilla tenue como la de las portadas; se desvanece hacia los bordes. */
+.rejilla-navy {
+  background-image:
+    linear-gradient(var(--linea-navy) 1px, transparent 1px),
+    linear-gradient(90deg, var(--linea-navy) 1px, transparent 1px);
+  background-size: 44px 44px;
+  -webkit-mask-image: radial-gradient(75% 70% at 50% 40%, black 30%, transparent 100%);
+  mask-image: radial-gradient(75% 70% at 50% 40%, black 30%, transparent 100%);
+}
+
+/* Botón primario sobre navy: gradiente con texto oscuro (como la portada). */
+.boton-gradiente {
+  background-image: var(--gradiente-marca);
+  color: #071022;
+}
+.boton-gradiente:hover {
+  filter: brightness(1.08);
+}
+
+/* Línea de 1 px con el gradiente (separador del footer, glows de tarjetas). */
+.linea-gradiente {
+  height: 1px;
+  background-image: var(--gradiente-marca);
+}
