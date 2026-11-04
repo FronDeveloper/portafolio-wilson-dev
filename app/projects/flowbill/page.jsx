@@ -14,7 +14,7 @@ export const metadata = {
     "kanban next.js typescript",
   ],
   openGraph: {
-    images: ["/opengraph-image"],
+    images: ["/og-indexxel.png"],
     title: "FlowBill — Sistema SaaS de gestión y facturación",
     description:
       "Sistema completo para agencias creativas: Kanban, facturación con IVA, portal del cliente y reportes financieros. Construido con Next.js 14 y Supabase.",

@@ -13,7 +13,7 @@ export const metadata = {
     "desarrollo ecommerce colombia producción",
   ],
   openGraph: {
-    images: ["/opengraph-image"],
+    images: ["/og-indexxel.png"],
     title: "Pisarte — Ecommerce de calzado en producción",
     description:
       "Tienda online real de calzado con 50+ pedidos procesados. Pasarela de pago, catálogo y diseño optimizado para conversiones. Construida con Next.js.",

@@ -14,7 +14,7 @@ export const metadata = {
     "next.js 15 ecommerce stripe wompi",
   ],
   openGraph: {
-    images: ["/opengraph-image"],
+    images: ["/og-indexxel.png"],
     title: "Mínimo Studio — E-commerce con pasarelas colombianas",
     description:
       "Tienda online con Stripe, Wompi, PSE y Efecty. Panel admin, autenticación, carrito y gestión de inventario. Next.js 15 + Prisma + PostgreSQL.",

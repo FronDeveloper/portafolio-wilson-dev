@@ -12,7 +12,7 @@ export const metadata = {
   ],
   alternates: { canonical: "/cotizar" },
   openGraph: {
-    images: ["/opengraph-image"],
+    images: ["/og-indexxel.png"],
     title: "Cotiza tu proyecto — Respuesta en 24h",
     description:
       "Landing, e-commerce o sistema a medida: recibe tu propuesta con precio y plazo en menos de 24h. Sin compromiso.",

@@ -13,12 +13,12 @@
  */
 
 /**
- * URL pública del sitio. Hoy apunta al despliegue de Vercel porque el dominio
- * propio aún no está comprado. Cuando exista `indexxel.com` se cambia aquí (o en
- * NEXT_PUBLIC_SITE_URL) y con eso se actualizan canonical, OG, sitemap y firmas.
+ * URL pública del sitio. `indexxel.com` es el canónico (sin www y sin
+ * mayúsculas); desde aquí salen canonical, OG, sitemap, JSON-LD y firmas.
+ * Se puede sobreescribir con NEXT_PUBLIC_SITE_URL (útil en previews).
  */
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://pixescript.vercel.app";
+  process.env.NEXT_PUBLIC_SITE_URL || "https://indexxel.com";
 
 /** Dominio sin protocolo, para textos y firmas. */
 export const SITE_HOST = SITE_URL.replace(/^https?:\/\//, "").replace(/\/$/, "");

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     "desarrollo web a medida cotización",
   ],
   openGraph: {
-    images: ["/opengraph-image"],
+    images: ["/og-indexxel.png"],
     title: "Contacto — Cotiza tu proyecto web",
     description:
       "Cuéntame tu idea y recibe una propuesta en menos de 24 horas. Desarrollo web a medida en Colombia.",

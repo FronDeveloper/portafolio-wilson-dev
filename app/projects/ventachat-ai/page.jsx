@@ -15,7 +15,7 @@ export const metadata = {
     "chatbot atención al cliente 24/7",
   ],
   openGraph: {
-    images: ["/opengraph-image"],
+    images: ["/og-indexxel.png"],
     title: "VentaChat AI — Bot de WhatsApp con IA 24/7",
     description:
       "Atiende tu WhatsApp con IA: respuestas en ~2 segundos, derivación a humano y conversaciones guardadas en base de datos. Demo en vivo disponible.",

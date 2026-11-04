@@ -13,7 +13,7 @@ export const metadata = {
     "diseño web fundación html css",
   ],
   openGraph: {
-    images: ["/opengraph-image"],
+    images: ["/og-indexxel.png"],
     title: "Fundación FAEBO — Sitio institucional social",
     description:
       "Página institucional para fundación social colombiana. Diseño claro, accesible y enfocado en generar confianza para donantes.",

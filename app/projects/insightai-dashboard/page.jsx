@@ -14,7 +14,7 @@ export const metadata = {
     "dashboard negocios colombia",
   ],
   openGraph: {
-    images: ["/opengraph-image"],
+    images: ["/og-indexxel.png"],
     title: "InsightAI Dashboard — IA para análisis de negocio",
     description:
       "Dashboard con inteligencia artificial para tiendas: métricas en tiempo real, análisis de ventas y asistente IA. Stack: Next.js y Supabase.",

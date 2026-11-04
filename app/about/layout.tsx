@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     "desarrollo software freelance",
   ],
   openGraph: {
-    images: ["/opengraph-image"],
+    images: ["/og-indexxel.png"],
     title: "Sobre mí — Desarrollador Full-Stack",
     description:
       "Desarrollador full-stack en Medellín. Construyo aplicaciones web a medida con Next.js, TypeScript y Supabase. Disponible para proyectos.",

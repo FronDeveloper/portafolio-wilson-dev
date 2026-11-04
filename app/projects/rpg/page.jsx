@@ -16,7 +16,7 @@ export const metadata = {
     "solo leveling fitness app",
   ],
   openGraph: {
-    images: ["/opengraph-image"],
+    images: ["/og-indexxel.png"],
     title: "ARISE — App RPG de entrenamiento en Google Play",
     description:
       "App que convierte tu entrenamiento en un RPG al estilo Solo Leveling. Construida con Flutter y Firebase. Disponible en Google Play.",

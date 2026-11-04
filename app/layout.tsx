@@ -44,12 +44,21 @@ export const metadata: Metadata = {
     title: `${BRAND.name} — Desarrollo de software a la medida en Colombia`,
     description:
       "Construyo sistemas de gestión, SaaS, e-commerce y dashboards con Next.js y Supabase. Soluciones a medida para empresas colombianas. Disponible para proyectos.",
+    images: [
+      {
+        url: "/og-indexxel.png",
+        width: 1200,
+        height: 630,
+        alt: `${BRAND.name} — Convierto ideas en sistemas que venden`,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: `${BRAND.name} — Desarrollo de software a la medida en Colombia`,
     description:
       "Construyo sistemas de gestión, SaaS, e-commerce y dashboards con Next.js y Supabase. Disponible para proyectos.",
+    images: ["/og-indexxel.png"],
   },
   robots: {
     index: true,

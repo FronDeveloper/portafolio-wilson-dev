@@ -14,7 +14,7 @@ export const metadata = {
     "notificaciones whatsapp citas",
   ],
   openGraph: {
-    images: ["/opengraph-image"],
+    images: ["/og-indexxel.png"],
     title: "AgendaPro — Sistema de citas para negocios",
     description:
       "Sistema de agendamiento con calendario interactivo, notificaciones automáticas y portal de reservas. Construido con Next.js y Supabase.",

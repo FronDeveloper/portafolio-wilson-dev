@@ -17,7 +17,7 @@ export const metadata = {
     "plataforma escolar php",
   ],
   openGraph: {
-    images: ["/opengraph-image"],
+    images: ["/og-indexxel.png"],
     title: "Plataforma Educativa Multi-Institución — Sitios web para colegios",
     description:
       "Plataforma completa para colegios: sitio público, panel admin, portales para docentes, padres y estudiantes. Multi-institución, 6 roles, personalizable. Demo en vivo.",

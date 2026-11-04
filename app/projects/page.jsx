@@ -8,7 +8,7 @@ export const metadata = {
     "Proyectos reales de Wilson Valencia: FlowBill (SaaS de gestión), tiendas online con pasarelas colombianas, dashboards y apps publicadas en Google Play.",
   alternates: { canonical: "/projects" },
   openGraph: {
-    images: ["/opengraph-image"],
+    images: ["/og-indexxel.png"],
     title: "Proyectos y casos de estudio",
     description:
       "Proyectos reales en producción: SaaS de gestión, e-commerce con pagos colombianos y apps publicadas en Play Store.",
@@ -18,7 +18,7 @@ export const metadata = {
 
 export default function ProjectsPage() {
   return (
-    <main className="text-white min-h-screen">
+    <main className="text-tinta min-h-screen">
       <Navbar />
       <Projects headingLevel="h1" />
       <Footer />

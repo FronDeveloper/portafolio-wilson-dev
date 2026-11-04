@@ -21,7 +21,7 @@ export default function Projects({ headingLevel = "h2" }) {
         <Heading className="text-3xl md:text-4xl font-bold mb-4">
           Casos de <span className="text-acento">estudio</span>
         </Heading>
-        <p className="text-tinta max-w-2xl mx-auto">
+        <p className="text-tinta-suave max-w-2xl mx-auto">
           Cada caso documenta el problema, la solución y lo que quedó funcionando
           en producción.
         </p>
