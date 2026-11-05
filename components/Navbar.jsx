@@ -10,6 +10,7 @@ const ENLACES = [
   { href: "/", label: "Inicio" },
   { href: "/about", label: "Sobre mí" },
   { href: "/projects", label: "Proyectos" },
+  { href: "/ventachat", label: "VentaChat" },
   { href: "/contact", label: "Contacto" },
 ];
 

@@ -124,6 +124,9 @@ export default function VentaChatAIProject() {
         </div>
 
         <div className="flex gap-4 flex-wrap">
+          <Link href="/ventachat" className="boton-gradiente inline-block rounded-full px-5 py-2.5 font-semibold text-white transition hover:brightness-110">
+            Ver la landing del producto →
+          </Link>
           <a
             href="https://ventachat-ai-demo.vercel.app"
             target="_blank"

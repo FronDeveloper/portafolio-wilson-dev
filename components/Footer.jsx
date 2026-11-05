@@ -33,6 +33,12 @@ export default function Footer() {
               <Link href="/cotizar" className="text-texto-claro-suave hover:text-white transition">
                 Cotizar
               </Link>
+              <Link href="/ventachat" className="text-texto-claro-suave hover:text-white transition">
+                VentaChat
+              </Link>
+              <Link href="/costo-tienda-online-colombia" className="text-texto-claro-suave hover:text-white transition">
+                Guía de precios
+              </Link>
               <Link href="/contact" className="text-texto-claro-suave hover:text-white transition">
                 Contacto
               </Link>
